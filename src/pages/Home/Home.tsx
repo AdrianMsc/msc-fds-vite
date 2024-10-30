@@ -15,16 +15,15 @@ const Home = () => {
           <span className="animate-pulse delay-400">.</span>
         </h1>
         <ul>
-          {/* <li>
-          <Link to="/home">Home</Link>
-        </li> 
+          <li>
+            <Link to="/home">Home</Link>
+          </li>
           <li>
             <Link to="/getting-started">Getting Started</Link>
           </li>
           <li>
             <Link to="/component-status">Component Status</Link>
           </li>
-          */}
         </ul>
       </main>
     </>
