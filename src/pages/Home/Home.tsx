@@ -1,33 +1,73 @@
 import { Link } from "react-router-dom";
+import Lottie from "react-lottie";
+import animation from "../../assets/animation.json";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faArrowRight,
+  faArrowUpRightFromSquare,
+  faBook,
+} from "@fortawesome/free-solid-svg-icons";
 
-const Home = () => {
+export default function Home() {
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: animation,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice",
+    },
+  };
+
   return (
-    <>
-      <main className="flex bg-gray-900 h-screen w-screen items-center justify-center flex-col text-center text-white">
-        <img
-          src="https://www.mscdirect.com/favicon.ico"
-          alt=""
-          className="animate-bounce rounded-full"
-        />
-        <h1 className="text-4xl font-bold my-4">
-          Work In Progress <span className="animate-pulse">.</span>
-          <span className="animate-pulse delay-200">.</span>
-          <span className="animate-pulse delay-400">.</span>
+    <main className="flex justify-center items-center h-screen m-auto">
+      <div className="flex flex-col justify-center px-5 lg:w-[45%]">
+        <h1 className="font-normal text-[4rem] leading-none">
+          Welcome to MSC <br />
+          Design System
         </h1>
-        <ul>
-          <li>
-            <Link to="/home">Home</Link>
-          </li>
-          <li>
-            <Link to="/getting-started">Getting Started</Link>
-          </li>
-          <li>
-            <Link to="/component-status">Component Status</Link>
-          </li>
-        </ul>
-      </main>
-    </>
-  );
-};
+        <h3 className="font-light text-left">
+          Empowering Innovation Through Unified Design.
+        </h3>
 
-export default Home;
+        <div className="py-5 flex flex-wrap place-content-between w-fit">
+          <Link className="msc-btn msc-btn-blue-solid mr-5" to="/docs">
+            Go to Docs
+            <FontAwesomeIcon
+              icon={faArrowRight}
+              className="ml-2"
+              height={16}
+              width={16}
+            />
+          </Link>
+
+          <a
+            className="msc-text-link py-3 mr-4"
+            // to="https://adrianmsc.github.io/msc-fuel-design-system-react/?path=/docs/configure-your-project--docs"
+          >
+            Storybook
+            <FontAwesomeIcon
+              icon={faBook}
+              className="mr-5 ml-2 text-[#ff4785]"
+              height={16}
+              width={16}
+            />
+          </a>
+
+          <a
+            className="msc-text-link py-3"
+            // to="https://ds-blog-ten.vercel.app/"
+          >
+            Release Notes
+            <FontAwesomeIcon
+              icon={faArrowUpRightFromSquare}
+              className="ml-2"
+              height={16}
+              width={16}
+            />
+          </a>
+        </div>
+      </div>
+      <Lottie options={defaultOptions} height={600} width={600} />
+    </main>
+  );
+}
