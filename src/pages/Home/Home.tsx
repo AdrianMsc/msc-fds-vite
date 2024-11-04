@@ -30,7 +30,10 @@ export default function Home() {
         </h3>
 
         <div className="py-5 flex flex-wrap place-content-between w-fit">
-          <Link className="msc-btn msc-btn-blue-solid mr-5" to="/docs">
+          <Link
+            className="msc-btn msc-btn-blue-solid mr-5"
+            to="/getting-started"
+          >
             Go to Docs
             <FontAwesomeIcon
               icon={faArrowRight}
