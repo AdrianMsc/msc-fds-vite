@@ -1,10 +1,9 @@
-
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const MscAlphabeticPager = () => {
   const alphabet = [..."ABCDEFGHIJKLMNOPQRSTUVWXYZ", "0-9"];
-  const pagerContainerRef = useRef(null);
-  const pagerListRef = useRef(null);
+  const pagerContainerRef = useRef<HTMLDivElement | null>(null);
+  const pagerListRef = useRef<HTMLUListElement | null>(null);
   const [scrollBreakpoint, setScrollBreakpoint] = useState(750);
 
   useEffect(() => {
@@ -32,21 +31,27 @@ const MscAlphabeticPager = () => {
       const pagerList = pagerListRef.current;
       const pagerContainer = pagerContainerRef.current;
 
-      if (pagerList.scrollLeft >= scrollBreakpoint) {
-        pagerContainer.classList.remove("msc-pager-container-after");
-      } else if (pagerList.scrollLeft > 1) {
-        pagerContainer.classList.add("msc-pager-container-before");
-        pagerContainer.classList.add("msc-pager-container-after");
-      } else if (pagerList.scrollLeft < 1) {
-        pagerContainer.classList.remove("msc-pager-container-before");
+      if (pagerList && pagerContainer) {
+        if (pagerList.scrollLeft >= scrollBreakpoint) {
+          pagerContainer.classList.remove("msc-pager-container-after");
+        } else if (pagerList.scrollLeft > 1) {
+          pagerContainer.classList.add("msc-pager-container-before");
+          pagerContainer.classList.add("msc-pager-container-after");
+        } else if (pagerList.scrollLeft < 1) {
+          pagerContainer.classList.remove("msc-pager-container-before");
+        }
       }
     };
 
     const pagerList = pagerListRef.current;
-    pagerList.addEventListener("scroll", handleScroll);
+    if (pagerList) {
+      pagerList.addEventListener("scroll", handleScroll);
+    }
 
     return () => {
-      pagerList.removeEventListener("scroll", handleScroll);
+      if (pagerList) {
+        pagerList.removeEventListener("scroll", handleScroll);
+      }
     };
   }, [scrollBreakpoint]);
 

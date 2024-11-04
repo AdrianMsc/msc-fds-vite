@@ -1,26 +1,35 @@
-export const MscButton = ({
+type Variant = "solid" | "outline" | "transparent";
+type Size = "default" | "small";
+
+interface MscButtonProps {
+  label?: string;
+  variant?: Variant;
+  size?: Size;
+  loading?: boolean;
+  icon?: string;
+}
+
+export const MscButton: React.FC<MscButtonProps> = ({
   label = "Button",
   variant = "solid",
   size = "default",
   loading = false,
   icon = "",
 }) => {
-  const variantClasses = {
+  const variantClasses: Record<Variant, string> = {
     solid: "msc-btn msc-btn-blue-solid",
     outline: "msc-btn msc-btn-blue-outline",
     transparent: "msc-btn msc-btn-transparent",
   };
 
-  const variantSizes = {
+  const variantSizes: Record<Size, string> = {
     default: "",
     small: "msc-btn-sm",
   };
 
   const ico = <i className={`${icon} mr-2`}></i>;
 
-  const className = `${variantClasses[variant] || variantClasses.solid} ${
-    variantSizes[size] || variantSizes.default
-  }`;
+  const className = `${variantClasses[variant]} ${variantSizes[size]}`;
 
   return (
     <button className={className}>

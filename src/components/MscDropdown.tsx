@@ -251,7 +251,7 @@ const MscDropdown = ({
           </div>
           {isOpen && (
             <div className="numeric-dropdown-options-container">
-              {numericOptions.map((option) => (
+              {numericOptions.map((option: any) => (
                 <div
                   key={option}
                   className="numeric-dropdown-options"

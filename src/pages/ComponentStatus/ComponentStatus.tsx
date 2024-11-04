@@ -15,6 +15,8 @@ const ComponentStatus = () => {
           <Link to="/component-status">Component Status</Link>
         </li> */}
       </ul>
+
+      <h2>Fetch Data</h2>
     </>
   );
 };
