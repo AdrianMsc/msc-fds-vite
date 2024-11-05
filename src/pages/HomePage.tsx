@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import Lottie from "react-lottie";
-import animation from "../../assets/animation.json";
+import animation from "../assets/animation.json";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowRight,
@@ -20,8 +20,8 @@ export default function Home() {
 
   return (
     <main className="flex justify-center items-center h-screen m-auto">
-      <div className="flex flex-col justify-center px-5 lg:w-[45%]">
-        <h1 className="font-normal text-[4rem] leading-none">
+      <div className="flex flex-col justify-center px-10 lg:w-[45%]">
+        <h1 className="font-normal text-[3rem] xl:text-[4rem] leading-none text-balance mb-3">
           Welcome to MSC <br />
           Design System
         </h1>
@@ -29,11 +29,8 @@ export default function Home() {
           Empowering Innovation Through Unified Design.
         </h3>
 
-        <div className="py-5 flex flex-wrap place-content-between w-fit">
-          <Link
-            className="msc-btn msc-btn-blue-solid mr-5"
-            to="/getting-started"
-          >
+        <div className="py-5 flex flex-wrap place-content-around w-fit items-center">
+          <Link className="msc-btn msc-btn-blue-solid mr-5" to="/docs">
             Go to Docs
             <FontAwesomeIcon
               icon={faArrowRight}
@@ -43,9 +40,9 @@ export default function Home() {
             />
           </Link>
 
-          <a
+          <Link
             className="msc-text-link py-3 mr-4"
-            // to="https://adrianmsc.github.io/msc-fuel-design-system-react/?path=/docs/configure-your-project--docs"
+            to="https://adrianmsc.github.io/msc-fuel-design-system-react/?path=/docs/configure-your-project--docs"
           >
             Storybook
             <FontAwesomeIcon
@@ -54,11 +51,11 @@ export default function Home() {
               height={16}
               width={16}
             />
-          </a>
+          </Link>
 
-          <a
+          <Link
             className="msc-text-link py-3"
-            // to="https://ds-blog-ten.vercel.app/"
+            to="https://ds-blog-ten.vercel.app/"
           >
             Release Notes
             <FontAwesomeIcon
@@ -67,7 +64,7 @@ export default function Home() {
               height={16}
               width={16}
             />
-          </a>
+          </Link>
         </div>
       </div>
       <Lottie options={defaultOptions} height={600} width={600} />

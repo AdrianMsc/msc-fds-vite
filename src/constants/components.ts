@@ -200,7 +200,7 @@ const componentStatusData: Category[] = [
     category: "Layout",
     components: [
       {
-        name: "Dividers",
+        name: "Divider",
         statuses: [
           { platform: "Figma", status: "✅" },
           { platform: "Guidelines", status: "✅" },

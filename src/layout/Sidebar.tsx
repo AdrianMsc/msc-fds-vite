@@ -8,9 +8,7 @@ import formatComponentName from "../utils/formatComponentName.ts";
 
 const Sidebar = () => {
   return (
-    <aside
-      className={`p-5 bg-white sm:max-w-[200px] sm:min-w-[200px] sm:flex flex-col gap-1 overflow-auto hidden`}
-    >
+    <aside className="p-5 bg-white sm:max-w-[200px] sm:min-w-[200px] sm:flex flex-col gap-1 overflow-auto hidden">
       <strong>Start Here</strong>
       <Link to="/docs" className="ml-5">
         Getting Started
