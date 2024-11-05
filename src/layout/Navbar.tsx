@@ -1,20 +1,15 @@
-"use client";
-import { useContext } from "react";
-import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
-import MscLogo from "@/assets/MscLogo";
-import { SidebarContext } from "@/context/SidebarCtx";
+import MscLogo from "../assets/MscLogo";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
-  const { toggleSidebar } = useContext(SidebarContext);
-
   return (
     <header className="bg-white overflow-hidden shadow p-5 flex w-screen fixed justify-between">
-      <Link href="/">
+      <Link to="/">
         <MscLogo />
       </Link>
-      <button className="sm:hidden" onClick={toggleSidebar}>
+      <button className="sm:hidden">
         <FontAwesomeIcon icon={faBars} />
       </button>
     </header>

@@ -1,4 +1,20 @@
-const componentStatusData = [
+export interface Status {
+  platform: string;
+  status: string;
+}
+
+export interface Component {
+  name: string;
+  statuses: Status[];
+  comment: string;
+}
+
+export interface Category {
+  category: string;
+  components: Component[];
+}
+
+const componentStatusData: Category[] = [
   {
     category: "Foundations",
     components: [
