@@ -1,4 +1,8 @@
-const MscTypography = ({ text }) => {
+interface MscTypographyProps {
+  text: string;
+}
+
+const MscTypography: React.FC<MscTypographyProps> = ({ text }) => {
   return (
     <>
       <h1>{text}</h1>

@@ -46,11 +46,7 @@ const MscToggle = ({ variant = "Default" }) => {
               disabled
               className="peer sr-only"
             />
-            <div
-              before="Yes"
-              after="No"
-              className="msc-toggle-container-disabled"
-            ></div>
+            <div className="msc-toggle-container-disabled before:content-['Yes'] after:content-['No']"></div>
             <div className="msc-toggle-dot-disabled"></div>
           </div>
         </label>
@@ -67,11 +63,7 @@ const MscToggle = ({ variant = "Default" }) => {
               defaultChecked={true}
               className="peer sr-only"
             />
-            <div
-              before="Yes"
-              after="No"
-              className="msc-toggle-container-text"
-            ></div>
+            <div className="msc-toggle-container-text before:content-['Yes'] after:content-['No']"></div>
             <div className="msc-toggle-dot-text"></div>
           </div>
         </label>
@@ -87,16 +79,8 @@ const MscToggle = ({ variant = "Default" }) => {
               id="toggleAddress"
               className="peer sr-only"
             />
-            <div
-              before="Residential"
-              after="Commercial"
-              className="msc-toggle-container-text-lg"
-            ></div>
-            <div
-              before="Residential"
-              after="Commercial"
-              className="msc-toggle-dot-text-lg"
-            ></div>
+            <div className="msc-toggle-container-text-lg before:content-['Residential'] after:content-['Commercial']"></div>
+            <div className="msc-toggle-dot-text-lg before:content-['Residential'] after:content-['Commercial']"></div>
           </div>
         </label>
       );
@@ -111,16 +95,8 @@ const MscToggle = ({ variant = "Default" }) => {
               id="toggleAddress"
               className="peer sr-only"
             />
-            <div
-              before="Decimal Inch"
-              after="MM"
-              className="msc-toggle-container-text-lg after:right-10"
-            ></div>
-            <div
-              before="Decimal Inch"
-              after="MM"
-              className="msc-toggle-dot-text-lg after:right-6"
-            ></div>
+            <div className="msc-toggle-container-text-lg after:right-10 before:content-['Decimal Inch'] after:content-['MM']"></div>
+            <div className="msc-toggle-dot-text-lg after:right-6 before:content-['Decimal Inch'] after:content-['MM']"></div>
           </div>
         </label>
       );
