@@ -2,8 +2,19 @@ import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import SkeletonTable from "../layout/SkeletonTable";
 
-const ComponentStatus = () => {
-  const { data, isLoading } = useQuery({
+interface Component {
+  name: string;
+  statuses: { status: string }[];
+  comment: string;
+}
+
+interface CategoryData {
+  category: string;
+  components: Component[];
+}
+
+const ComponentStatus: React.FC = () => {
+  const { data, isLoading } = useQuery<CategoryData[]>({
     queryKey: ["components"],
     queryFn: async () => {
       const response = await fetch(
@@ -12,7 +23,6 @@ const ComponentStatus = () => {
       return await response.json();
     },
   });
-  console.log(data);
 
   return (
     <div className="">
@@ -44,16 +54,16 @@ const ComponentStatus = () => {
       {isLoading ? (
         <SkeletonTable />
       ) : (
-        data.map((data: any) => (
+        data?.map((data) => (
           <React.Fragment key={data.category}>
             <h2 className="font-bold text-2xl mt-5">{data.category}</h2>
 
-            <div className=" overflow-x-auto mt-3">
+            <div className="overflow-x-auto mt-3">
               <table className="w-full text-sm text-left rtl:text-right text-gray-500">
                 <thead className="text-xs text-gray-700 bg-gray-50 text-center">
                   <tr>
                     <th scope="col" className="px-6 py-3 w-[20%]">
-                      &nbsp;
+                       
                     </th>
                     <th scope="col" className="px-6 py-3 w-[15%]">
                       Guidelines
@@ -73,11 +83,11 @@ const ComponentStatus = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {data.components?.map((component: any, idx: number) => (
+                  {data.components?.map((component, idx) => (
                     <tr
-                      key={idx + component}
+                      key={idx + component.name}
                       className={`${
-                        idx % 2 == 0 ? "bg-white" : "bg-slate-100"
+                        idx % 2 === 0 ? "bg-white" : "bg-slate-100"
                       }`}
                     >
                       <th
@@ -86,8 +96,8 @@ const ComponentStatus = () => {
                       >
                         {component.name}
                       </th>
-                      {component.statuses.map(({ status }: string) => (
-                        <td key={idx} className="px-6 py-4 text-center">
+                      {component.statuses.map(({ status }, statusIdx) => (
+                        <td key={statusIdx} className="px-6 py-4 text-center">
                           {status}
                         </td>
                       ))}
