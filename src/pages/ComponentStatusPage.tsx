@@ -1,7 +1,19 @@
 import React from "react";
-import componentStatusData from "../constants/components";
+import { useQuery } from "@tanstack/react-query";
+import SkeletonTable from "../layout/SkeletonTable";
 
 const ComponentStatus = () => {
+  const { data, isLoading } = useQuery({
+    queryKey: ["components"],
+    queryFn: async () => {
+      const response = await fetch(
+        "https://component-status-0d7c33406c73.herokuapp.com/components"
+      );
+      return await response.json();
+    },
+  });
+  console.log(data);
+
   return (
     <div className="">
       <h1 className="font-bold text-3xl">
@@ -11,7 +23,7 @@ const ComponentStatus = () => {
       </h1>
 
       <small>
-        Last Update:<strong>10-05-24</strong>
+        Last Update: <strong>10-05-24</strong>
       </small>
       <br />
       <small className="text-sm">
@@ -29,59 +41,67 @@ const ComponentStatus = () => {
         </li>
       </ul>
 
-      {componentStatusData.map((section) => (
-        <React.Fragment key={section.category}>
-          <h2 className="font-bold text-2xl mt-5">{section.category}</h2>
+      {isLoading ? (
+        <SkeletonTable />
+      ) : (
+        data.map((data: any) => (
+          <React.Fragment key={data.category}>
+            <h2 className="font-bold text-2xl mt-5">{data.category}</h2>
 
-          <div className=" overflow-x-auto mt-3">
-            <table className="w-full text-sm text-left rtl:text-right text-gray-500">
-              <thead className="text-xs text-gray-700 bg-gray-50">
-                <tr>
-                  <th scope="col" className="px-6 py-3 w-[20%]">
-                    &nbsp;
-                  </th>
-                  <th scope="col" className="px-6 py-3 w-[15%]">
-                    Guidelines
-                  </th>
-                  <th scope="col" className="px-6 py-3 w-[15%]">
-                    Figma
-                  </th>
-                  <th scope="col" className="px-6 py-3 w-[15%]">
-                    Storybook
-                  </th>
-                  <th scope="col" className="px-6 py-3 w-[15%]">
-                    CDN
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    Comments
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {section.components?.map((component, idx) => (
-                  <tr
-                    key={idx}
-                    className={`${idx % 2 == 0 ? "bg-white" : "bg-slate-100"}`}
-                  >
-                    <th
-                      scope="row"
-                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
-                    >
-                      {component.name}
+            <div className=" overflow-x-auto mt-3">
+              <table className="w-full text-sm text-left rtl:text-right text-gray-500">
+                <thead className="text-xs text-gray-700 bg-gray-50 text-center">
+                  <tr>
+                    <th scope="col" className="px-6 py-3 w-[20%]">
+                      &nbsp;
                     </th>
-                    {component.statuses.map(({ status }, idx) => (
-                      <td key={idx} className="px-6 py-4">
-                        {status}
-                      </td>
-                    ))}
-                    <td className="px-6 py-4">{component.comment}</td>
+                    <th scope="col" className="px-6 py-3 w-[15%]">
+                      Guidelines
+                    </th>
+                    <th scope="col" className="px-6 py-3 w-[15%]">
+                      Figma
+                    </th>
+                    <th scope="col" className="px-6 py-3 w-[15%]">
+                      Storybook
+                    </th>
+                    <th scope="col" className="px-6 py-3 w-[15%]">
+                      CDN
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      Comments
+                    </th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </React.Fragment>
-      ))}
+                </thead>
+                <tbody>
+                  {data.components?.map((component: any, idx: number) => (
+                    <tr
+                      key={idx + component}
+                      className={`${
+                        idx % 2 == 0 ? "bg-white" : "bg-slate-100"
+                      }`}
+                    >
+                      <th
+                        scope="row"
+                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap text-center"
+                      >
+                        {component.name}
+                      </th>
+                      {component.statuses.map(({ status }: string) => (
+                        <td key={idx} className="px-6 py-4 text-center">
+                          {status}
+                        </td>
+                      ))}
+                      <td className="px-6 py-4 text-center">
+                        {component.comment}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </React.Fragment>
+        ))
+      )}
     </div>
   );
 };
