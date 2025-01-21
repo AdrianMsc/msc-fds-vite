@@ -5,6 +5,7 @@ import { Auth0Provider } from "@auth0/auth0-react";
 import { authConfig } from "./auth-config";
 import router from "./router";
 import "./index.css";
+import { SidebarProvider } from "./context/SidebarCtx";
 
 const queryClient = new QueryClient();
 

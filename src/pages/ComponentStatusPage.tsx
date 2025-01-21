@@ -43,11 +43,11 @@ const ComponentStatus: React.FC = () => {
       </h1>
 
       <small>
-        Last Update: <strong>10-05-24</strong>
+        Last Update: <strong>01-21-25</strong>
       </small>
       <br />
       <small className="text-sm">
-        Components count: <strong>30</strong>
+        Components count: <strong>23</strong>
       </small>
 
       <ul className="flex mt-5">
@@ -61,8 +61,9 @@ const ComponentStatus: React.FC = () => {
         </li>
       </ul>
 
+      <p className="mt-5 italic">Modal and forms WIP 🔨</p>
       <button
-        className="msc-btn msc-btn-blue-solid msc-btn-icon mt-5 ml-0"
+        className="msc-btn msc-btn-blue-solid msc-btn-icon ml-0"
         onClick={toggleModal}
       >
         Add component
@@ -77,9 +78,6 @@ const ComponentStatus: React.FC = () => {
         buttonOne="Add"
         buttonTwo="Cancel"
       />
-      <div>
-        <h2>Status Page</h2>
-      </div>
 
       {isLoading ? (
         <SkeletonTable />

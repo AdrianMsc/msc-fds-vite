@@ -678,6 +678,13 @@ video {
   background-color: #1C58EE;
 }
 
+.msc-btn-icon {
+  margin-left: 0.5rem;
+  display: flex;
+  min-width: 8rem;
+  align-items: center;
+}
+
 .msc-btn-dots-container {
   margin: auto;
   display: flex;
@@ -2624,6 +2631,10 @@ h6 {
   position: fixed;
 }
 
+.absolute {
+  position: absolute;
+}
+
 .relative {
   position: relative;
 }
@@ -2694,16 +2705,16 @@ h6 {
   margin-bottom: 2px;
 }
 
+.ml-0 {
+  margin-left: 0px;
+}
+
 .ml-2 {
   margin-left: 0.5rem;
 }
 
 .ml-5 {
   margin-left: 1.25rem;
-}
-
-.ml-auto {
-  margin-left: auto;
 }
 
 .mr-2 {
@@ -2788,6 +2799,10 @@ h6 {
   height: 100%;
 }
 
+.h-lvh {
+  height: 100lvh;
+}
+
 .h-screen {
   height: 100vh;
 }
@@ -2816,6 +2831,10 @@ h6 {
   width: 8rem;
 }
 
+.w-4 {
+  width: 1rem;
+}
+
 .w-8 {
   width: 2rem;
 }
@@ -2832,6 +2851,10 @@ h6 {
   width: 45%;
 }
 
+.w-\[500px\] {
+  width: 500px;
+}
+
 .w-fit {
   width: -moz-fit-content;
   width: fit-content;
@@ -2843,10 +2866,6 @@ h6 {
 
 .w-screen {
   width: 100vw;
-}
-
-.w-4 {
-  width: 1rem;
 }
 
 .min-w-\[200px\] {
@@ -2918,6 +2937,10 @@ h6 {
 
 .gap-2 {
   gap: 0.5rem;
+}
+
+.gap-5 {
+  gap: 1.25rem;
 }
 
 .space-y-4 > :not([hidden]) ~ :not([hidden]) {
@@ -3013,6 +3036,10 @@ h6 {
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
 
+.\!p-2 {
+  padding: 0.5rem !important;
+}
+
 .p-1 {
   padding: 0.25rem;
 }
@@ -3068,6 +3095,10 @@ h6 {
   padding-bottom: 2.5rem;
 }
 
+.pb-4 {
+  padding-bottom: 1rem;
+}
+
 .pl-10 {
   padding-left: 2.5rem;
 }
@@ -3110,6 +3141,11 @@ h6 {
   font-size: 3rem;
 }
 
+.text-lg {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+
 .text-sm {
   font-size: 0.875rem;
   line-height: 1.25rem;
@@ -3123,16 +3159,6 @@ h6 {
 .text-xs {
   font-size: 0.75rem;
   line-height: 1rem;
-}
-
-.text-base {
-  font-size: 1rem;
-  line-height: 1.5rem;
-}
-
-.text-lg {
-  font-size: 1.125rem;
-  line-height: 1.75rem;
 }
 
 .font-bold {
@@ -3149,6 +3175,10 @@ h6 {
 
 .font-normal {
   font-weight: 400;
+}
+
+.italic {
+  font-style: italic;
 }
 
 .leading-none {
