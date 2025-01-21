@@ -1,14 +1,27 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import componentStatusData, {
   Category,
   Component,
-} from "../constants/components.ts";
-import formatComponentName from "../utils/formatComponentName.ts";
+} from "../constants/components";
+import formatComponentName from "../utils/formatComponentName";
+import SidebarContext from "../context/SidebarCtx";
 
-const Sidebar = () => {
+const Sidebar: React.FC = () => {
+  const context = useContext(SidebarContext);
+
+  if (!context) {
+    throw new Error("Sidebar must be used within a SidebarProvider");
+  }
+
+  const { isSidebarOpen } = context;
+
   return (
-    <aside className="p-5 bg-white sm:max-w-[200px] sm:min-w-[200px] sm:flex flex-col gap-1 overflow-auto hidden">
+    <aside
+      className={`p-5 bg-white sm:max-w-[200px] sm:min-w-[200px] sm:flex flex-col gap-1 overflow-auto ${
+        isSidebarOpen ? "flex absolute h-lvh" : "hidden"
+      }`}
+    >
       <strong>Start Here</strong>
       <Link to="/docs" className="ml-5">
         Getting Started

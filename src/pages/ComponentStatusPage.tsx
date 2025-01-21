@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import SkeletonTable from "../layout/SkeletonTable";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { FormAdd, Modal } from "../components";
 
 interface Component {
   name: string;
@@ -14,6 +17,8 @@ interface CategoryData {
 }
 
 const ComponentStatus: React.FC = () => {
+  const [triggerModal, setTriggerModal] = useState("hidden");
+
   const { data, isLoading } = useQuery<CategoryData[]>({
     queryKey: ["components"],
     queryFn: async () => {
@@ -24,6 +29,11 @@ const ComponentStatus: React.FC = () => {
     },
   });
 
+  const toggleModal = () => {
+    setTriggerModal((prev) => (prev === "hidden" ? "" : "hidden"));
+    console.log(triggerModal);
+  };
+
   return (
     <div className="">
       <h1 className="font-bold text-3xl">
@@ -33,11 +43,11 @@ const ComponentStatus: React.FC = () => {
       </h1>
 
       <small>
-        Last Update: <strong>10-05-24</strong>
+        Last Update: <strong>01-21-25</strong>
       </small>
       <br />
       <small className="text-sm">
-        Components count: <strong>30</strong>
+        Components count: <strong>23</strong>
       </small>
 
       <ul className="flex mt-5">
@@ -51,9 +61,23 @@ const ComponentStatus: React.FC = () => {
         </li>
       </ul>
 
-      <div>
-        <h2>Status Page</h2>
-      </div>
+      <p className="mt-5 italic">Modal and forms WIP 🔨</p>
+      <button
+        className="msc-btn msc-btn-blue-solid msc-btn-icon ml-0"
+        onClick={toggleModal}
+      >
+        Add component
+        <FontAwesomeIcon icon={faPlus} className="ml-2 items-center" />
+      </button>
+
+      <Modal
+        triggerModal={triggerModal}
+        toggleModal={toggleModal}
+        title="Add new component"
+        body={<FormAdd />}
+        buttonOne="Add"
+        buttonTwo="Cancel"
+      />
 
       {isLoading ? (
         <SkeletonTable />
