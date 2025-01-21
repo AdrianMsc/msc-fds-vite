@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import SkeletonTable from "../layout/SkeletonTable";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { FormAdd, Modal } from "../components";
 
 interface Component {
   name: string;
@@ -14,15 +17,22 @@ interface CategoryData {
 }
 
 const ComponentStatus: React.FC = () => {
+  const [triggerModal, setTriggerModal] = useState("hidden");
+
   const { data, isLoading } = useQuery<CategoryData[]>({
     queryKey: ["components"],
     queryFn: async () => {
       const response = await fetch(
-        "https://component-status-0d7c33406c73.herokuapp.com/components"
+        "https://msc-component-status-ws.onrender.com/components"
       );
       return await response.json();
     },
   });
+
+  const toggleModal = () => {
+    setTriggerModal((prev) => (prev === "hidden" ? "" : "hidden"));
+    console.log(triggerModal);
+  };
 
   return (
     <div className="">
@@ -50,6 +60,23 @@ const ComponentStatus: React.FC = () => {
           <b className="font-bold">N/A</b> Not Applicable
         </li>
       </ul>
+
+      <button
+        className="msc-btn msc-btn-blue-solid msc-btn-icon mt-5 ml-0"
+        onClick={toggleModal}
+      >
+        Add component
+        <FontAwesomeIcon icon={faPlus} className="ml-2 items-center" />
+      </button>
+
+      <Modal
+        triggerModal={triggerModal}
+        toggleModal={toggleModal}
+        title="Add new component"
+        body={<FormAdd />}
+        buttonOne="Add"
+        buttonTwo="Cancel"
+      />
 
       {isLoading ? (
         <SkeletonTable />
