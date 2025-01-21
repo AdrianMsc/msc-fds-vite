@@ -18,7 +18,7 @@ const ComponentStatus: React.FC = () => {
     queryKey: ["components"],
     queryFn: async () => {
       const response = await fetch(
-        "https://component-status-0d7c33406c73.herokuapp.com/components"
+        "https://msc-component-status-ws.onrender.com/components/"
       );
       return await response.json();
     },
@@ -50,6 +50,10 @@ const ComponentStatus: React.FC = () => {
           <b className="font-bold">N/A</b> Not Applicable
         </li>
       </ul>
+
+      <div>
+        <h2>Status Page</h2>
+      </div>
 
       {isLoading ? (
         <SkeletonTable />
