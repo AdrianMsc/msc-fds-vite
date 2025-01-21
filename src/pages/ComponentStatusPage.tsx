@@ -51,6 +51,10 @@ const ComponentStatus: React.FC = () => {
         </li>
       </ul>
 
+      <div>
+        <h2>Status Page</h2>
+      </div>
+
       {isLoading ? (
         <SkeletonTable />
       ) : (
