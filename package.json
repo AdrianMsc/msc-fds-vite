@@ -12,6 +12,7 @@
     "tw-build:cdn": "npx tailwindcss -i ./src/index.css -o ./styles/output-cdn.css --watch"
   },
   "dependencies": {
+    "@auth0/auth0-react": "^2.2.4",
     "@fortawesome/fontawesome-svg-core": "^6.6.0",
     "@fortawesome/free-solid-svg-icons": "^6.6.0",
     "@fortawesome/react-fontawesome": "^0.2.2",

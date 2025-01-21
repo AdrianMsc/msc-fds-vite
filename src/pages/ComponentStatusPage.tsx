@@ -23,7 +23,7 @@ const ComponentStatus: React.FC = () => {
     queryKey: ["components"],
     queryFn: async () => {
       const response = await fetch(
-        "https://msc-component-status-ws.onrender.com/components"
+        "https://msc-component-status-ws.onrender.com/components/"
       );
       return await response.json();
     },
@@ -77,6 +77,9 @@ const ComponentStatus: React.FC = () => {
         buttonOne="Add"
         buttonTwo="Cancel"
       />
+      <div>
+        <h2>Status Page</h2>
+      </div>
 
       {isLoading ? (
         <SkeletonTable />

@@ -7,6 +7,7 @@ import {
   faArrowUpRightFromSquare,
   faBook,
 } from "@fortawesome/free-solid-svg-icons";
+import { useAuth0 } from "@auth0/auth0-react";
 
 export default function Home() {
   const defaultOptions = {
@@ -18,10 +19,18 @@ export default function Home() {
     },
   };
 
+  const { user, isAuthenticated, isLoading } = useAuth0();
+
   return (
     <main className="flex justify-center items-center h-screen m-auto">
       <div className="flex flex-col justify-center px-10 w-[45%] items-center h-screen">
         <h1 className="font-normal text-[3rem] xl:text-[4rem] leading-none text-balance mb-3">
+          {isAuthenticated && (
+            <small className="text-lg text-primary-blue font-bold">
+              {isLoading ? "Loading" : "Hello " + user?.name}
+            </small>
+          )}
+          <br />
           Welcome to MSC <br />
           Design System
         </h1>

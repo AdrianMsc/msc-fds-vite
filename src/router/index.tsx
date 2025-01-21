@@ -27,6 +27,7 @@ import GettingStarted from "../pages/GettingStartedPage";
 import Home from "../pages/HomePage";
 import DocsLayout from "../layout/DocsLayout";
 import ComponentStatus from "../pages/ComponentStatusPage";
+import LoginPage from "../pages/LoginPage/LoginPage";
 
 const router = createBrowserRouter([
   {
@@ -39,6 +40,10 @@ const router = createBrowserRouter([
     element: <DocsLayout />,
     errorElement: "error",
     children: [
+      {
+        path: "login-page",
+        element: <LoginPage />,
+      },
       {
         index: true,
         element: <GettingStarted />,
