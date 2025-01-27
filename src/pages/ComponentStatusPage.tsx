@@ -31,7 +31,6 @@ const ComponentStatus: React.FC = () => {
 
   const toggleModal = () => {
     setTriggerModal((prev) => (prev === "hidden" ? "" : "hidden"));
-    console.log(triggerModal);
   };
 
   return (
@@ -61,14 +60,14 @@ const ComponentStatus: React.FC = () => {
         </li>
       </ul>
 
-      <p className="mt-5 italic">Modal and forms WIP 🔨</p>
       <button
-        className="msc-btn msc-btn-blue-solid msc-btn-icon ml-0"
+        className="msc-btn msc-btn-blue-solid msc-btn-icon ml-0 mt-5"
         onClick={toggleModal}
       >
         Add component
         <FontAwesomeIcon icon={faPlus} className="ml-2 items-center" />
       </button>
+      <p className="italic">(Modal and forms WIP 🔨)</p>
 
       <Modal
         triggerModal={triggerModal}
