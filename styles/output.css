@@ -1214,8 +1214,14 @@ video {
 }
 
 .msc-modal {
-  max-height: 560px;
-  max-width: 560px;
+  display: flex;
+  height: -moz-fit-content;
+  height: fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  flex-direction: column;
+  place-content: stretch;
+  overflow: hidden;
   border-radius: 0.5rem;
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
@@ -1224,10 +1230,29 @@ video {
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
+@media (min-width: 768px) {
+  .msc-modal {
+    max-height: 90%;
+    min-width: -moz-fit-content;
+    min-width: fit-content;
+    max-width: 90%;
+  }
+}
+
+@media (min-width: 1536px) {
+  .msc-modal {
+    height: -moz-fit-content;
+    height: fit-content;
+    max-width: -moz-fit-content;
+    max-width: fit-content;
+  }
+}
+
 .msc-modal-header {
   display: flex;
   width: 100%;
   place-content: space-between;
+  border-bottom-width: 1px;
   padding: 1rem;
 }
 
@@ -1243,10 +1268,9 @@ video {
 }
 
 .msc-modal-body {
+  height: 90%;
   flex-direction: row;
-  overflow: hidden;
-  border-top-width: 1px;
-  border-bottom-width: 1px;
+  overflow: auto;
   padding-left: 1rem;
   padding-right: 1rem;
   padding-top: 1rem;
@@ -1254,16 +1278,26 @@ video {
   line-height: 1.25rem;
 }
 
-.msc-modal-p {
-  margin-bottom: 1rem;
-  text-wrap: pretty;
+@media (min-width: 1024px) {
+  .msc-modal-body {
+    height: -moz-fit-content;
+    height: fit-content;
+  }
 }
 
 .msc-modal-footer {
   display: flex;
-  place-content: space-between;
+  height: auto;
+  max-height: -moz-fit-content;
+  max-height: fit-content;
+  align-items: center;
+  justify-content: flex-end;
   gap: 1rem;
-  padding: 1rem;
+  border-top-width: 1px;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 
 .msc-radio-container {
@@ -2811,6 +2845,19 @@ h6 {
   width: 400px !important;
 }
 
+.\!w-\[50\%\] {
+  width: 50% !important;
+}
+
+.\!w-fit {
+  width: -moz-fit-content !important;
+  width: fit-content !important;
+}
+
+.\!w-full {
+  width: 100% !important;
+}
+
 .\!w-screen {
   width: 100vw !important;
 }
@@ -2851,8 +2898,8 @@ h6 {
   width: 45%;
 }
 
-.w-\[500px\] {
-  width: 500px;
+.w-\[600px\] {
+  width: 600px;
 }
 
 .w-fit {
