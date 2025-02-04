@@ -1,0 +1,1 @@
+export const baseUrl='https://msc-component-status-ws-1.onrender.com'

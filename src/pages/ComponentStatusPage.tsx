@@ -4,14 +4,23 @@ import SkeletonTable from "../layout/SkeletonTable";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FormAdd, Modal } from "../components";
+import { baseUrl } from "../api";
 
-interface Component {
-  name: string;
-  statuses: { status: string }[];
-  comment: string;
+interface Status {
+  cdn: string;
+  figma: string;
+  guidelines: string;
+  storybook: string;
 }
 
-interface CategoryData {
+interface Component {
+  id: number;
+  name: string;
+  comment: string;
+  statuses: Status[];
+}
+
+interface ICategory {
   category: string;
   components: Component[];
 }
@@ -19,15 +28,15 @@ interface CategoryData {
 const ComponentStatus: React.FC = () => {
   const [triggerModal, setTriggerModal] = useState("hidden");
 
-  const { data, isLoading } = useQuery<CategoryData[]>({
+  const { data, isLoading } = useQuery<ICategory[]>({
     queryKey: ["components"],
     queryFn: async () => {
-      const response = await fetch(
-        "https://msc-component-status-ws.onrender.com/components/"
-      );
+      const response = await fetch(`${baseUrl}/components`);
       return await response.json();
     },
   });
+
+  console.log(data);
 
   const toggleModal = () => {
     setTriggerModal((prev) => (prev === "hidden" ? "" : "hidden"));
@@ -123,11 +132,18 @@ const ComponentStatus: React.FC = () => {
                       >
                         {component.name}
                       </th>
-                      {component.statuses.map(({ status }, statusIdx) => (
-                        <td key={statusIdx} className="px-6 py-4 text-center">
-                          {status}
-                        </td>
-                      ))}
+                      <td className="px-6 py-4 text-center">
+                        {component.statuses[0].guidelines}
+                      </td>
+                      <td className="px-6 py-4 text-center">
+                        {component.statuses[0].figma}
+                      </td>
+                      <td className="px-6 py-4 text-center">
+                        {component.statuses[0].storybook}
+                      </td>
+                      <td className="px-6 py-4 text-center">
+                        {component.statuses[0].cdn}
+                      </td>
                       <td className="px-6 py-4 text-center">
                         {component.comment}
                       </td>
