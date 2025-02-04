@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import SkeletonTable from "../layout/SkeletonTable";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faPencil, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FormAdd, Modal } from "../components";
 import { baseUrl } from "../api";
+import axios from "axios";
+import { useAuth0 } from "@auth0/auth0-react";
 
 interface Status {
   cdn: string;
@@ -27,6 +29,7 @@ interface ICategory {
 
 const ComponentStatus: React.FC = () => {
   const [triggerModal, setTriggerModal] = useState("hidden");
+  const { isAuthenticated } = useAuth0();
 
   const { data, isLoading } = useQuery<ICategory[]>({
     queryKey: ["components"],
@@ -35,6 +38,14 @@ const ComponentStatus: React.FC = () => {
       return await response.json();
     },
   });
+
+  const handleDelete = async (component: Component) => {
+    const response = await axios
+      .delete(`${baseUrl}/components/${component.id}`)
+      .then((response) => response);
+    console.log(response);
+    window.location.reload();
+  };
 
   const toggleModal = () => {
     setTriggerModal((prev) => (prev === "hidden" ? "" : "hidden"));
@@ -67,14 +78,18 @@ const ComponentStatus: React.FC = () => {
         </li>
       </ul>
 
-      <button
-        className="msc-btn msc-btn-blue-solid msc-btn-icon ml-0 mt-5"
-        onClick={toggleModal}
-      >
-        Add component
-        <FontAwesomeIcon icon={faPlus} className="ml-2 items-center" />
-      </button>
-      <p className="italic">(Modal and forms WIP 🔨)</p>
+      {isAuthenticated && (
+        <>
+          <button
+            className="msc-btn msc-btn-blue-solid msc-btn-icon ml-0 mt-5"
+            onClick={toggleModal}
+          >
+            Add component
+            <FontAwesomeIcon icon={faPlus} className="ml-2 items-center" />
+          </button>
+          <p className="italic">(Modal and forms WIP 🔨)</p>
+        </>
+      )}
 
       <Modal
         triggerModal={triggerModal}
@@ -114,6 +129,11 @@ const ComponentStatus: React.FC = () => {
                     <th scope="col" className="px-6 py-3">
                       Comments
                     </th>
+                    {isAuthenticated && (
+                      <th scope="col" className="px-6 py-3">
+                        Actions
+                      </th>
+                    )}
                   </tr>
                 </thead>
                 <tbody>
@@ -145,6 +165,18 @@ const ComponentStatus: React.FC = () => {
                       <td className="px-6 py-4 text-center">
                         {component.comment}
                       </td>
+                      {isAuthenticated && (
+                        <td>
+                          <div className="flex place-content-around items-center align-middle">
+                            <button>
+                              <FontAwesomeIcon icon={faPencil} />
+                            </button>
+                            <button onClick={() => handleDelete(component)}>
+                              <FontAwesomeIcon icon={faTrash} />
+                            </button>
+                          </div>
+                        </td>
+                      )}
                     </tr>
                   ))}
                 </tbody>

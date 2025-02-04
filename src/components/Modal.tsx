@@ -31,6 +31,7 @@ const Modal = ({
       const response = await createComponent(data);
       console.log(response);
       methods.reset();
+      window.location.reload();
     } else {
       console.log("Form has errors:", errors);
     }
