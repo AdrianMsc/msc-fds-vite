@@ -36,8 +36,6 @@ const ComponentStatus: React.FC = () => {
     },
   });
 
-  console.log(data);
-
   const toggleModal = () => {
     setTriggerModal((prev) => (prev === "hidden" ? "" : "hidden"));
   };

@@ -2,20 +2,19 @@ import axios from "axios";
 import { baseUrl } from ".";
 
 interface IComponentData {
-  cdnStage: string;
-  componentCategory: string;
-  componentComments?: string;
-  componentName: string;
-  figmaStage: string;
-  guidelinesStage: string;
-  storybookStage: string;
+  cdn: string;
+  category: string;
+  comment?: string;
+  name: string;
+  figma: string;
+  guidelines: string;
+  storybook: string;
 }
 
 export const createComponent = (data: IComponentData) => {
-
   const response = axios
     .post(
-      `${baseUrl}/categories/${data.componentCategory}/components`,
+      `${baseUrl}/categories/${data.category}/components`,
       data
     )
     .then(function (response) {
