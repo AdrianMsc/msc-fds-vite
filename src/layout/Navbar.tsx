@@ -48,7 +48,6 @@ const Navbar: React.FC = () => {
       <Link to="/">
         <MscLogo />
       </Link>
-      <button className="sm:hidden" onClick={toggleSidebar} />
 
       <div className="flex items-center gap-2">
         {isAuthenticated && (
@@ -77,7 +76,7 @@ const Navbar: React.FC = () => {
         )}
       </div>
 
-      <button className="sm:hidden">
+      <button className="sm:hidden" onClick={toggleSidebar}>
         <FontAwesomeIcon icon={faBars} />
       </button>
     </header>
