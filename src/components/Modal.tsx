@@ -3,6 +3,7 @@ import { useForm, FormProvider, useFormState } from "react-hook-form";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { createComponent } from "../api/componentCreate";
+import { IComponentForm } from "../interfaces/component.interface";
 
 interface Props {
   triggerModal: string;
@@ -58,8 +59,7 @@ const Modal = ({
               </button>
               <button
                 id="modalClsBtn"
-                onClick={(event) => {
-                  event.preventDefault();
+                onClick={() => {
                   toggleModal();
                   methods.reset();
                 }}

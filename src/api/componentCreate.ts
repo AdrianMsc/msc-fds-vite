@@ -1,17 +1,8 @@
 import axios from "axios";
 import { baseUrl } from ".";
+import { IComponentForm } from "../interfaces/component.interface";
 
-interface IComponentData {
-  cdn: string;
-  category: string;
-  comment?: string;
-  name: string;
-  figma: string;
-  guidelines: string;
-  storybook: string;
-}
-
-export const createComponent = (data: IComponentData) => {
+export const createComponent = (data: IComponentForm) => {
   const response = axios
     .post(
       `${baseUrl}/categories/${data.category}/components`,

@@ -1,20 +1,6 @@
-export interface Status {
-  platform: string;
-  status: string;
-}
+import { ICategoryApi } from "../interfaces/component.interface";
 
-export interface Component {
-  name: string;
-  statuses: Status[];
-  comment: string;
-}
-
-export interface Category {
-  category: string;
-  components: Component[];
-}
-
-const componentStatusData: Category[] = [
+const componentStatusData: ICategoryApi[] = [
   {
     category: "Foundations",
     components: [

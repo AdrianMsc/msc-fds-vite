@@ -7,31 +7,13 @@ import { FormAdd, Modal } from "../components";
 import { baseUrl } from "../api";
 import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
-
-interface Status {
-  cdn: string;
-  figma: string;
-  guidelines: string;
-  storybook: string;
-}
-
-interface Component {
-  id: number;
-  name: string;
-  comment: string;
-  statuses: Status[];
-}
-
-interface ICategory {
-  category: string;
-  components: Component[];
-}
+import { ICategoryApi, IComponentApi } from "../interfaces/component.interface";
 
 const ComponentStatus: React.FC = () => {
   const [triggerModal, setTriggerModal] = useState("hidden");
   const { isAuthenticated } = useAuth0();
 
-  const { data, isLoading } = useQuery<ICategory[]>({
+  const { data, isLoading } = useQuery<ICategoryApi[]>({
     queryKey: ["components"],
     queryFn: async () => {
       const response = await fetch(`${baseUrl}/components`);
@@ -39,7 +21,7 @@ const ComponentStatus: React.FC = () => {
     },
   });
 
-  const handleDelete = async (component: Component) => {
+  const handleDelete = async (component: IComponentApi) => {
     const response = await axios
       .delete(`${baseUrl}/components/${component.id}`)
       .then((response) => response);
