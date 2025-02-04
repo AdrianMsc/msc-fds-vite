@@ -10,29 +10,29 @@ const FormAdd = () => {
     <div className="flex flex-col gap-5">
       <div className="flex gap-2 w-[600px]">
         <div className="flex flex-col gap-1 !w-[50%]">
-          <label htmlFor="componentName" className="font-bold">
+          <label htmlFor="name" className="font-bold">
             Component Name
           </label>
           <input
-            {...register("componentName", { required: true, minLength: 3 })}
+            {...register("name", { required: true, minLength: 3 })}
             type="text"
             className="msc-input !w-full"
           />
-          {errors.componentName?.type === "required" && (
+          {errors.name?.type === "required" && (
             <span className="text-red-600">This field is required</span>
           )}
-          {errors.componentName?.type === "minLength" && (
+          {errors.name?.type === "minLength" && (
             <span className="text-red-600">Value not valid</span>
           )}
         </div>
         <div className="flex flex-col gap-1 !w-[50%]">
-          <label htmlFor="componentCategory" className="font-bold">
+          <label htmlFor="category" className="font-bold">
             Category
           </label>
           <select
             id="options"
             className="msc-input !p-2"
-            {...register("componentCategory", { required: true })}
+            {...register("category", { required: true })}
           >
             <option value="">-- Select an option --</option>
             <option value="Foundations">Foundations</option>
@@ -43,20 +43,20 @@ const FormAdd = () => {
             <option value="Navigation">Navigation</option>
             <option value="Overlay">Overlay</option>
           </select>
-          {errors.componentCategory?.type === "required" && (
+          {errors.category?.type === "required" && (
             <span className="text-red-600">Please select an option</span>
           )}
         </div>
       </div>
       <div className="flex gap-2 w-[600px]">
         <div className="flex flex-col gap-1 !w-[50%]">
-          <label htmlFor="guidelinesStage" className="font-bold">
+          <label htmlFor="guidelines" className="font-bold">
             Guidelines
           </label>
           <select
             id="options"
             className="msc-input !p-2"
-            {...register("guidelinesStage")}
+            {...register("guidelines")}
           >
             <option value="Todo">🧱 Todo</option>
             <option value="WIP">🔨 WIP</option>
@@ -67,12 +67,12 @@ const FormAdd = () => {
           </select>
         </div>
         <div className="flex flex-col gap-1 !w-[50%]">
-          <label htmlFor="figmaStage" className="font-bold">
+          <label htmlFor="figma" className="font-bold">
             Figma
           </label>
           <select
             id="options"
-            {...register("figmaStage")}
+            {...register("figma")}
             className="msc-input !p-2"
           >
             <option value="Todo">🧱 Todo</option>
@@ -86,12 +86,12 @@ const FormAdd = () => {
       </div>
       <div className="flex gap-2 w-[600px]">
         <div className="flex flex-col gap-1 !w-[50%]">
-          <label htmlFor="storybookStage" className="font-bold">
+          <label htmlFor="storybook" className="font-bold">
             Storybook
           </label>
           <select
             id="options"
-            {...register("storybookStage")}
+            {...register("storybook")}
             className="msc-input !p-2"
           >
             <option value="Todo">🧱 Todo</option>
@@ -103,14 +103,10 @@ const FormAdd = () => {
           </select>
         </div>
         <div className="flex flex-col gap-1 !w-[50%]">
-          <label htmlFor="cdnStage" className="font-bold">
+          <label htmlFor="cdn" className="font-bold">
             CDN
           </label>
-          <select
-            id="options"
-            {...register("cdnStage")}
-            className="msc-input !p-2"
-          >
+          <select id="options" {...register("cdn")} className="msc-input !p-2">
             <option value="Todo">🧱 Todo</option>
             <option value="WIP">🔨 WIP</option>
             <option value="Alpha">🔭 Alpha</option>
@@ -121,13 +117,10 @@ const FormAdd = () => {
         </div>
       </div>
       <div className="flex flex-col gap-1">
-        <label htmlFor="componentComments" className="font-bold">
+        <label htmlFor="comment" className="font-bold">
           Comments
         </label>
-        <textarea
-          className="msc-input"
-          {...register("componentComments")}
-        ></textarea>
+        <textarea className="msc-input" {...register("comment")}></textarea>
       </div>
     </div>
   );

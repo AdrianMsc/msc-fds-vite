@@ -36,8 +36,6 @@ const Modal = ({
     }
   };
 
-  console.log("Form has errors:", errors);
-
   return (
     <FormProvider {...methods}>
       <div className={`msc-modal-bg ${triggerModal}`}>
