@@ -10,6 +10,7 @@ export interface IComponentApi {
   name: string;
   statuses: IStatusApi[];
   comment: string;
+  category: string;
 }
 
 export interface ICategoryApi {

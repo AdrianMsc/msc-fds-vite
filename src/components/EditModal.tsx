@@ -1,34 +1,44 @@
-import { ReactElement } from "react";
+import { ReactElement, useEffect } from "react";
 import { useForm, FormProvider, useFormState } from "react-hook-form";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { createComponent } from "../api/createComponent";
+import { updateComponent } from "../api/updateComponent";
 
 interface Props {
-  triggerModal: string;
-  toggleModal: () => void;
+  triggerEditModal: string;
+  toggleEditModal: () => void;
+  handleEdit: () => void;
   title: string;
   body: ReactElement;
   buttonOne: string;
   buttonTwo: string;
+  defaultValues: any;
 }
 
 const Modal = ({
-  triggerModal,
-  toggleModal,
+  triggerEditModal,
+  toggleEditModal,
+  handleEdit,
   title,
   body,
   buttonOne,
   buttonTwo,
+  defaultValues,
 }: Props) => {
   const methods = useForm();
   const { errors } = useFormState({ control: methods.control });
 
+  useEffect(() => {
+    if (defaultValues) {
+      methods.reset(defaultValues);
+    }
+  }, [defaultValues, methods]);
+
   const onSubmit = async (data: any) => {
     if (Object.keys(errors).length === 0) {
-      toggleModal();
+      handleEdit();
       console.log(data);
-      const response = await createComponent(data);
+      const response = await updateComponent(data);
       console.log(response);
       methods.reset();
       window.location.reload();
@@ -39,11 +49,11 @@ const Modal = ({
 
   return (
     <FormProvider {...methods}>
-      <div className={`msc-modal-bg ${triggerModal}`}>
+      <div className={`msc-modal-bg ${triggerEditModal}`}>
         <div className="msc-modal">
           <div className="msc-modal-header">
             <h4 className="msc-modal-title">{title}</h4>
-            <button id="modalClsBtn" onClick={toggleModal}>
+            <button id="modalClsBtn" onClick={() => toggleEditModal()}>
               <FontAwesomeIcon icon={faClose} />
             </button>
           </div>
@@ -59,7 +69,7 @@ const Modal = ({
               <button
                 id="modalClsBtn"
                 onClick={() => {
-                  toggleModal();
+                  handleEdit();
                   methods.reset();
                 }}
                 className="msc-btn msc-btn-blue-outline w-full"

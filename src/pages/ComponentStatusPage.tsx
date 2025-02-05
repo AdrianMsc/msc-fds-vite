@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import SkeletonTable from "../layout/SkeletonTable";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencil, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
-import { FormAdd, Modal } from "../components";
+import { EditModal, FormAdd, Modal } from "../components";
 import { baseUrl } from "../api";
 import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -11,7 +11,9 @@ import { ICategoryApi, IComponentApi } from "../interfaces/component.interface";
 
 const ComponentStatus: React.FC = () => {
   const [triggerModal, setTriggerModal] = useState("hidden");
+  const [triggerEditModal, setTriggerEditModal] = useState("hidden");
   const { isAuthenticated } = useAuth0();
+  const [selectedRecord, setSelectedRecord] = useState<IComponentApi>();
 
   const { data, isLoading } = useQuery<ICategoryApi[]>({
     queryKey: ["components"],
@@ -31,6 +33,15 @@ const ComponentStatus: React.FC = () => {
 
   const toggleModal = () => {
     setTriggerModal((prev) => (prev === "hidden" ? "" : "hidden"));
+  };
+
+  const toggleEditModal = () => {
+    setTriggerEditModal((prev) => (prev === "hidden" ? "" : "hidden"));
+  };
+
+  const handleEdit = (component: IComponentApi) => {
+    setSelectedRecord(component);
+    toggleEditModal();
   };
 
   return (
@@ -82,6 +93,17 @@ const ComponentStatus: React.FC = () => {
         buttonTwo="Cancel"
       />
 
+      <EditModal
+        triggerEditModal={triggerEditModal}
+        toggleEditModal={toggleEditModal}
+        handleEdit={() => handleEdit}
+        defaultValues={selectedRecord}
+        title="Edit component"
+        body={<FormAdd />}
+        buttonOne="Edit"
+        buttonTwo="Cancel"
+      />
+
       {isLoading ? (
         <SkeletonTable />
       ) : (
@@ -94,7 +116,7 @@ const ComponentStatus: React.FC = () => {
                 <thead className="text-xs text-gray-700 bg-gray-50 text-center">
                   <tr>
                     <th scope="col" className="px-6 py-3 w-[20%]">
-                       
+                      Component
                     </th>
                     <th scope="col" className="px-6 py-3 w-[15%]">
                       Guidelines
@@ -151,7 +173,12 @@ const ComponentStatus: React.FC = () => {
                         <td>
                           <div className="flex place-content-around items-center align-middle">
                             <button>
-                              <FontAwesomeIcon icon={faPencil} />
+                              <FontAwesomeIcon
+                                icon={faPencil}
+                                onClick={() => {
+                                  handleEdit(component);
+                                }}
+                              />
                             </button>
                             <button onClick={() => handleDelete(component)}>
                               <FontAwesomeIcon icon={faTrash} />

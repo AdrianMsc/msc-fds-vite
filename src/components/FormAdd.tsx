@@ -13,6 +13,7 @@ const FormAdd = () => {
           <label htmlFor="name" className="font-bold">
             Component Name
           </label>
+          <input {...register("id")} type="text" className="hidden" />
           <input
             {...register("name", { required: true, minLength: 3 })}
             type="text"
@@ -58,12 +59,12 @@ const FormAdd = () => {
             className="msc-input !p-2"
             {...register("guidelines")}
           >
-            <option value="Todo">🧱 Todo</option>
-            <option value="WIP">🔨 WIP</option>
-            <option value="Alpha">🔭 Alpha</option>
-            <option value="Beta">🧪 Beta</option>
-            <option value="Live">✅ Live</option>
-            <option value="Not Applicable">🚫 Not Applicable</option>
+            <option value="🧱">🧱 Todo</option>
+            <option value="🔨">🔨 WIP</option>
+            <option value="🔭">🔭 Alpha</option>
+            <option value="🧪">🧪 Beta</option>
+            <option value="✅">✅ Live</option>
+            <option value="🚫">🚫 Not Applicable</option>
           </select>
         </div>
         <div className="flex flex-col gap-1 !w-[50%]">
@@ -75,12 +76,12 @@ const FormAdd = () => {
             {...register("figma")}
             className="msc-input !p-2"
           >
-            <option value="Todo">🧱 Todo</option>
-            <option value="WIP">🔨 WIP</option>
-            <option value="Alpha">🔭 Alpha</option>
-            <option value="Beta">🧪 Beta</option>
-            <option value="Live">✅ Live</option>
-            <option value="Not Applicable">🚫 Not Applicable</option>
+            <option value="🧱">🧱 Todo</option>
+            <option value="🔨">🔨 WIP</option>
+            <option value="🔭">🔭 Alpha</option>
+            <option value="🧪">🧪 Beta</option>
+            <option value="✅">✅ Live</option>
+            <option value="🚫">🚫 Not Applicable</option>
           </select>
         </div>
       </div>
@@ -94,12 +95,12 @@ const FormAdd = () => {
             {...register("storybook")}
             className="msc-input !p-2"
           >
-            <option value="Todo">🧱 Todo</option>
-            <option value="WIP">🔨 WIP</option>
-            <option value="Alpha">🔭 Alpha</option>
-            <option value="Beta">🧪 Beta</option>
-            <option value="Live">✅ Live</option>
-            <option value="Not Applicable">🚫 Not Applicable</option>
+            <option value="🧱">🧱 Todo</option>
+            <option value="🔨">🔨 WIP</option>
+            <option value="🔭">🔭 Alpha</option>
+            <option value="🧪">🧪 Beta</option>
+            <option value="✅">✅ Live</option>
+            <option value="🚫">🚫 Not Applicable</option>
           </select>
         </div>
         <div className="flex flex-col gap-1 !w-[50%]">
@@ -107,12 +108,12 @@ const FormAdd = () => {
             CDN
           </label>
           <select id="options" {...register("cdn")} className="msc-input !p-2">
-            <option value="Todo">🧱 Todo</option>
-            <option value="WIP">🔨 WIP</option>
-            <option value="Alpha">🔭 Alpha</option>
-            <option value="Beta">🧪 Beta</option>
-            <option value="Live">✅ Live</option>
-            <option value="Not Applicable">🚫 Not Applicable</option>
+            <option value="🧱">🧱 Todo</option>
+            <option value="🔨">🔨 WIP</option>
+            <option value="🔭">🔭 Alpha</option>
+            <option value="🧪">🧪 Beta</option>
+            <option value="✅">✅ Live</option>
+            <option value="🚫">🚫 Not Applicable</option>
           </select>
         </div>
       </div>
@@ -120,7 +121,10 @@ const FormAdd = () => {
         <label htmlFor="comment" className="font-bold">
           Comments
         </label>
-        <textarea className="msc-input" {...register("comment")}></textarea>
+        <textarea
+          className="msc-input !p-2"
+          {...register("comment")}
+        ></textarea>
       </div>
     </div>
   );
