@@ -1,6 +1,6 @@
 import { useFormContext } from "react-hook-form";
 
-const FormAdd = () => {
+const FormComponent = () => {
   const {
     register,
     formState: { errors },
@@ -130,4 +130,4 @@ const FormAdd = () => {
   );
 };
 
-export default FormAdd;
+export default FormComponent;

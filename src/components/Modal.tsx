@@ -1,8 +1,9 @@
-import { ReactElement } from "react";
+import { ReactElement, useEffect } from "react";
 import { useForm, FormProvider, useFormState } from "react-hook-form";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { createComponent } from "../api/createComponent";
+import { updateComponent } from "../api/updateComponent";
 
 interface Props {
   triggerModal: string;
@@ -11,6 +12,7 @@ interface Props {
   body: ReactElement;
   buttonOne: string;
   buttonTwo: string;
+  defaultValues?: any;
 }
 
 const Modal = ({
@@ -20,16 +22,28 @@ const Modal = ({
   body,
   buttonOne,
   buttonTwo,
+  defaultValues,
 }: Props) => {
   const methods = useForm();
   const { errors } = useFormState({ control: methods.control });
+
+  useEffect(() => {
+    if (defaultValues) {
+      methods.reset(defaultValues);
+    }
+  }, [defaultValues, methods]);
 
   const onSubmit = async (data: any) => {
     if (Object.keys(errors).length === 0) {
       toggleModal();
       console.log(data);
-      const response = await createComponent(data);
-      console.log(response);
+      if (defaultValues) {
+        const response = await updateComponent(data);
+        console.log(response);
+      } else {
+        const response = await createComponent(data);
+        console.log(response);
+      }
       methods.reset();
       window.location.reload();
     } else {
@@ -59,8 +73,8 @@ const Modal = ({
               <button
                 id="modalClsBtn"
                 onClick={() => {
-                  toggleModal();
                   methods.reset();
+                  toggleModal();
                 }}
                 className="msc-btn msc-btn-blue-outline w-full"
               >

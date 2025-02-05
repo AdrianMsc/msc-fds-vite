@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import SkeletonTable from "../layout/SkeletonTable";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencil, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
-import { EditModal, FormAdd, Modal } from "../components";
+import { FormComponent, Modal } from "../components";
 import { baseUrl } from "../api";
 import { useAuth0 } from "@auth0/auth0-react";
 import { ICategoryApi, IComponentApi } from "../interfaces/component.interface";
@@ -11,9 +11,10 @@ import { deleteComponent } from "../api/deleteComponent";
 
 const ComponentStatus: React.FC = () => {
   const [triggerModal, setTriggerModal] = useState("hidden");
-  const [triggerEditModal, setTriggerEditModal] = useState("hidden");
+  // const [triggerEditModal, setTriggerEditModal] = useState("hidden");
   const { isAuthenticated } = useAuth0();
   const [selectedRecord, setSelectedRecord] = useState<IComponentApi>();
+  const [modalText, setModalText] = useState({ buttonOne: "", title: "" });
 
   const { data, isLoading } = useQuery<ICategoryApi[]>({
     queryKey: ["components"],
@@ -33,13 +34,9 @@ const ComponentStatus: React.FC = () => {
     setTriggerModal((prev) => (prev === "hidden" ? "" : "hidden"));
   };
 
-  const toggleEditModal = () => {
-    setTriggerEditModal((prev) => (prev === "hidden" ? "" : "hidden"));
-  };
-
   const handleEdit = (component: IComponentApi) => {
     setSelectedRecord(component);
-    toggleEditModal();
+    toggleModal();
   };
 
   return (
@@ -73,7 +70,10 @@ const ComponentStatus: React.FC = () => {
         <>
           <button
             className="msc-btn msc-btn-blue-solid msc-btn-icon ml-0 mt-5"
-            onClick={toggleModal}
+            onClick={() => {
+              setModalText({ buttonOne: "Add", title: "Add new component" });
+              toggleModal();
+            }}
           >
             Add component
             <FontAwesomeIcon icon={faPlus} className="ml-2 items-center" />
@@ -85,20 +85,10 @@ const ComponentStatus: React.FC = () => {
       <Modal
         triggerModal={triggerModal}
         toggleModal={toggleModal}
-        title="Add new component"
-        body={<FormAdd />}
-        buttonOne="Add"
-        buttonTwo="Cancel"
-      />
-
-      <EditModal
-        triggerEditModal={triggerEditModal}
-        toggleEditModal={toggleEditModal}
-        handleEdit={() => handleEdit}
         defaultValues={selectedRecord}
-        title="Edit component"
-        body={<FormAdd />}
-        buttonOne="Edit"
+        title={modalText.title}
+        body={<FormComponent />}
+        buttonOne={modalText.buttonOne}
         buttonTwo="Cancel"
       />
 
@@ -174,6 +164,10 @@ const ComponentStatus: React.FC = () => {
                               <FontAwesomeIcon
                                 icon={faPencil}
                                 onClick={() => {
+                                  setModalText({
+                                    buttonOne: "Update",
+                                    title: "Update component",
+                                  });
                                   handleEdit(component);
                                 }}
                               />
