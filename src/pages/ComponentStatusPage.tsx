@@ -11,7 +11,6 @@ import { deleteComponent } from "../api/deleteComponent";
 
 const ComponentStatus: React.FC = () => {
   const [triggerModal, setTriggerModal] = useState("hidden");
-  // const [triggerEditModal, setTriggerEditModal] = useState("hidden");
   const { isAuthenticated } = useAuth0();
   const [selectedRecord, setSelectedRecord] = useState<IComponentApi>();
   const [modalText, setModalText] = useState({ buttonOne: "", title: "" });

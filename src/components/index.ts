@@ -12,7 +12,6 @@ export { default as MscInput } from "./MscInput";
 export { default as MscLink } from "./MscLink";
 export { default as MscModal } from "./MscModal";
 export { default as Modal } from "./Modal";
-export { default as EditModal } from "./EditModal";
 export { default as MscPagination } from "./MscPagination";
 export { default as MscRadio } from "./MscRadio";
 export { default as MscShadows } from "./MscShadows";
