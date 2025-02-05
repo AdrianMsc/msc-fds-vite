@@ -5,9 +5,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencil, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { EditModal, FormAdd, Modal } from "../components";
 import { baseUrl } from "../api";
-import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
 import { ICategoryApi, IComponentApi } from "../interfaces/component.interface";
+import { deleteComponent } from "../api/deleteComponent";
 
 const ComponentStatus: React.FC = () => {
   const [triggerModal, setTriggerModal] = useState("hidden");
@@ -24,9 +24,7 @@ const ComponentStatus: React.FC = () => {
   });
 
   const handleDelete = async (component: IComponentApi) => {
-    const response = await axios
-      .delete(`${baseUrl}/components/${component.id}`)
-      .then((response) => response);
+    const response = await deleteComponent(component);
     console.log(response);
     window.location.reload();
   };
