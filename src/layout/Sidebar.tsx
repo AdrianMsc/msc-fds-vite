@@ -1,11 +1,10 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import componentStatusData, {
-  Category,
-  Component,
-} from "../constants/components";
 import formatComponentName from "../utils/formatComponentName";
 import SidebarContext from "../context/SidebarCtx";
+import { useQuery } from "@tanstack/react-query";
+import { ICategoryApi } from "../interfaces/component.interface";
+import { baseUrl } from "../api";
 
 const Sidebar: React.FC = () => {
   const context = useContext(SidebarContext);
@@ -15,6 +14,14 @@ const Sidebar: React.FC = () => {
   }
 
   const { isSidebarOpen } = context;
+
+  const { data, isLoading } = useQuery<ICategoryApi[]>({
+    queryKey: ["components"],
+    queryFn: async () => {
+      const response = await fetch(`${baseUrl}/components`);
+      return await response.json();
+    },
+  });
 
   return (
     <aside
@@ -30,10 +37,10 @@ const Sidebar: React.FC = () => {
         Component Status
       </Link>
       <strong className="text-primary-blue">Components</strong>
-      {componentStatusData.map((item: Category, idx: number) => (
+      {data?.map((item: any, idx: number) => (
         <React.Fragment key={idx}>
           <strong>{item.category}</strong>
-          {item.components.map((comp: Component, idx: number) => (
+          {item.components.map((comp: any, idx: number) => (
             <Link key={idx} className="ml-5" to={`/docs/${comp.name}`}>
               {formatComponentName(comp.name)}
             </Link>
