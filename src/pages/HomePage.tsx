@@ -22,23 +22,22 @@ export default function Home() {
   const { user, isAuthenticated, isLoading } = useAuth0();
 
   return (
-    <main className="flex justify-center items-center h-screen m-auto">
-      <div className="flex flex-col justify-center px-10 w-[45%] items-center h-screen">
-        <h1 className="font-normal text-[3rem] xl:text-[4rem] leading-none text-balance mb-3">
+    <main className="flex flex-col justify-center items-center h-screen m-auto md:flex-row">
+      <div className="flex flex-col justify-center px-8 md:pl-16 w-full md:w-[45%] items-center h-screen">
+        <h1 className="font-normal text-[3rem] xl:text-[4rem] leading-none mb-3">
           {isAuthenticated && (
             <small className="text-lg text-primary-blue font-bold">
               {isLoading ? "Loading" : "Hello " + user?.name}
             </small>
           )}
           <br />
-          Welcome to MSC <br />
-          Design System
+          Welcome to MSC Design System
         </h1>
-        <h3 className="font-light text-left">
+        <h3 className="font-light text-left text-pretty">
           Empowering Innovation Through Unified Design.
         </h3>
 
-        <div className="py-5 flex flex-wrap place-content-around w-fit items-center">
+        <div className="py-5 flex flex-wrap place-content-between md:w-full items-center justify-center md:justify-normal">
           <Link className="msc-btn msc-btn-blue-solid mr-5" to="/docs">
             Go to Docs
             <FontAwesomeIcon
@@ -76,7 +75,9 @@ export default function Home() {
           </Link>
         </div>
       </div>
-      <Lottie options={defaultOptions} height={600} width={600} />
+      <div className="hidden md:block">
+        <Lottie options={defaultOptions} height={600} width={600} />
+      </div>
     </main>
   );
 }
