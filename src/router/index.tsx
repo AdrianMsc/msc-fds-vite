@@ -6,7 +6,6 @@ import {
   MscButton,
   MscCartActionBar,
   MscCheckbox,
-  MscColors,
   MscDialog,
   MscDivider,
   MscDropdown,
@@ -28,6 +27,7 @@ import Home from "../pages/HomePage";
 import DocsLayout from "../layout/DocsLayout";
 import ComponentStatus from "../pages/ComponentStatusPage";
 import LoginPage from "../pages/LoginPage/LoginPage";
+import MscColorsPage from "../pages/Colors/MscColorsPage";
 
 const router = createBrowserRouter([
   {
@@ -78,7 +78,7 @@ const router = createBrowserRouter([
       },
       {
         path: "Colors",
-        element: <MscColors palette="primary" />,
+        element: <MscColorsPage />,
       },
       {
         path: "Dialog",

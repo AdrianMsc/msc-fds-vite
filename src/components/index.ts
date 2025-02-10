@@ -4,7 +4,7 @@ export { default as MscBreadcrumb } from "./MscBreadcrumb";
 export { default as MscButton } from "./MscButton";
 export { default as MscCartActionBar } from "./MscCartActionBar";
 export { default as MscCheckbox } from "./MscCheckbox";
-export { default as MscColors } from "./MscColors";
+
 export { default as MscDialog } from "./MscDialog";
 export { default as MscDivider } from "./MscDivider";
 export { default as MscDropdown } from "./MscDropdown";
