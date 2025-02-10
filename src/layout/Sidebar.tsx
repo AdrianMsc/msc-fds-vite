@@ -15,7 +15,7 @@ const Sidebar: React.FC = () => {
 
   const { isSidebarOpen } = context;
 
-  const { data, isLoading } = useQuery<ICategoryApi[]>({
+  const { data } = useQuery<ICategoryApi[]>({
     queryKey: ["components"],
     queryFn: async () => {
       const response = await fetch(`${baseUrl}/components`);
