@@ -3,19 +3,13 @@ import {
   MscAlphabeticPager,
   MscAlert,
   MscBreadcrumb,
-  MscButton,
-  MscCartActionBar,
   MscCheckbox,
   MscDialog,
   MscDivider,
-  MscDropdown,
-  MscTopFilter,
   MscInput,
-  MscLink,
   MscModal,
   MscRadio,
   MscSpinner,
-  MscTabs,
   MscToggle,
   MscPagination,
 } from "../components";
@@ -28,6 +22,12 @@ import MscColorsPage from "../pages/ColorsPage/MscColorsPage";
 import MscShadowsPage from "../pages/ShadowsPage/MscShadowsPage";
 import MscSpacingPage from "../pages/SpacingPage/MscSpacingPage";
 import MscTypographyPage from "../pages/TypographyPage/MscTypographyPage";
+import MscButtonsPage from "../pages/Buttons/MscButtonsPage";
+import MscCartActionBarPage from "../pages/CartActionBar/MscCartActionBarPage";
+import MscDropdownPage from "../pages/Dropdown/MscDropdownPage";
+import MscLinkPage from "../pages/Link/MscLinkPage";
+import MscTabsPage from "../pages/Tabs/MscTabsPage";
+import MscFilterPage from "../pages/Filter/MscFilterPage";
 
 const router = createBrowserRouter([
   {
@@ -66,11 +66,11 @@ const router = createBrowserRouter([
       },
       {
         path: "Buttons",
-        element: <MscButton />,
+        element: <MscButtonsPage />,
       },
       {
         path: "CartActionBar",
-        element: <MscCartActionBar />,
+        element: <MscCartActionBarPage />,
       },
       {
         path: "Checkbox",
@@ -90,7 +90,7 @@ const router = createBrowserRouter([
       },
       {
         path: "Dropdown",
-        element: <MscDropdown />,
+        element: <MscDropdownPage />,
       },
 
       {
@@ -99,7 +99,7 @@ const router = createBrowserRouter([
       },
       {
         path: "Link",
-        element: <MscLink />,
+        element: <MscLinkPage />,
       },
       {
         path: "Modal",
@@ -127,7 +127,7 @@ const router = createBrowserRouter([
       },
       {
         path: "Tabs",
-        element: <MscTabs />,
+        element: <MscTabsPage />,
       },
       {
         path: "Toggle",
@@ -135,7 +135,7 @@ const router = createBrowserRouter([
       },
       {
         path: "Filter",
-        element: <MscTopFilter />,
+        element: <MscFilterPage />,
       },
       {
         path: "Typography",

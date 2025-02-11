@@ -15,7 +15,7 @@ const ComponentLayout: React.FC<ComponentLayoutProps> = ({
 }) => {
   return (
     <>
-      <section className="msc-layout-container">
+      <section>
         <h1 className="font-bold text-3xl mb-3">
           <small className="text-sm text-primary-blue">{category}</small> <br />
           {title}
