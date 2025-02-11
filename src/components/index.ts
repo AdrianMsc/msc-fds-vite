@@ -14,7 +14,7 @@ export { default as MscModal } from "./MscModal";
 export { default as Modal } from "./Modal";
 export { default as MscPagination } from "./MscPagination";
 export { default as MscRadio } from "./MscRadio";
-export { default as MscShadows } from "./MscShadows";
+export { default as MscShadows } from "./MscShadows/MscShadows";
 export { default as MscSpacing } from "./MscSpacing";
 export { default as MscSpinner } from "./MscSpinner";
 export { default as MscTabs } from "./MscTabs";

@@ -27,7 +27,9 @@ import Home from "../pages/HomePage";
 import DocsLayout from "../layout/DocsLayout";
 import ComponentStatus from "../pages/ComponentStatusPage";
 import LoginPage from "../pages/LoginPage/LoginPage";
-import MscColorsPage from "../pages/Colors/MscColorsPage";
+import MscColorsPage from "../pages/ColorsPage/MscColorsPage";
+import MscShadowsPage from "../pages/ShadowsPage/MscShadowsPage";
+import MscSpacingPage from "../pages/SpacingPage/MscSpacingPage";
 
 const router = createBrowserRouter([
   {
@@ -115,11 +117,11 @@ const router = createBrowserRouter([
       },
       {
         path: "Shadows",
-        element: <MscShadows size="small" />,
+        element: <MscShadowsPage />,
       },
       {
         path: "Spacing",
-        element: <MscSpacing size={4} />,
+        element: <MscSpacingPage />,
       },
       {
         path: "Spinner",
