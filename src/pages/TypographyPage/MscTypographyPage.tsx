@@ -6,7 +6,7 @@ import { typography } from "./constants";
 const MscTypographyPage = () => {
   const [inputValue, setInputValue] = useState("");
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: any) => {
     setInputValue(e.target.value);
   };
 
@@ -36,12 +36,14 @@ const MscTypographyPage = () => {
         <span className="hidden lg:inline"> Desktop</span>
       </span>
 
-      <h1>{inputValue || "Heading 1"}</h1>
-      <h2>{inputValue || "Heading 2"}</h2>
-      <h3>{inputValue || "Heading 3"}</h3>
-      <h4>{inputValue || "Heading 4"}</h4>
-      <h5>{inputValue || "Heading 5"}</h5>
-      <h6>{inputValue || "Heading 6"}</h6>
+      <section className="overflow-hidden">
+        <h1>{inputValue || "Heading 1"}</h1>
+        <h2>{inputValue || "Heading 2"}</h2>
+        <h3>{inputValue || "Heading 3"}</h3>
+        <h4>{inputValue || "Heading 4"}</h4>
+        <h5>{inputValue || "Heading 5"}</h5>
+        <h6>{inputValue || "Heading 6"}</h6>
+      </section>
 
       <Codeblock>
         {`

@@ -17,7 +17,6 @@ import {
   MscSpinner,
   MscTabs,
   MscToggle,
-  MscTypography,
   MscPagination,
 } from "../components";
 import GettingStarted from "../pages/GettingStartedPage";
