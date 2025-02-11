@@ -5,6 +5,7 @@ import SidebarContext from "../context/SidebarCtx";
 import { useQuery } from "@tanstack/react-query";
 import { ICategoryApi } from "../interfaces/component.interface";
 import { baseUrl } from "../api";
+import MscMiniLoading from "../components/MscMiniLoading/MscMiniLoading";
 
 const Sidebar: React.FC = () => {
   const context = useContext(SidebarContext);
@@ -15,7 +16,7 @@ const Sidebar: React.FC = () => {
 
   const { isSidebarOpen } = context;
 
-  const { data } = useQuery<ICategoryApi[]>({
+  const { data, isLoading } = useQuery<ICategoryApi[]>({
     queryKey: ["components"],
     queryFn: async () => {
       const response = await fetch(`${baseUrl}/components`);
@@ -25,7 +26,7 @@ const Sidebar: React.FC = () => {
 
   return (
     <aside
-      className={`p-5 bg-white sm:max-w-[200px] sm:min-w-[200px] sm:flex flex-col gap-1 overflow-auto ${
+      className={`p-5 bg-white sm:max-w-[230px] sm:min-w-[230px] sm:flex flex-col gap-1 overflow-auto ${
         isSidebarOpen ? "flex absolute h-lvh" : "hidden"
       }`}
     >
@@ -36,7 +37,10 @@ const Sidebar: React.FC = () => {
       <Link to="/docs/ComponentStatus" className="ml-5">
         Component Status
       </Link>
-      <strong className="text-primary-blue">Components</strong>
+      <strong className="text-primary-blue flex items-center">
+        Components
+        {isLoading ? <MscMiniLoading /> : ""}
+      </strong>
       {data?.map((item: any, idx: number) => (
         <React.Fragment key={idx}>
           <strong>{item.category}</strong>
