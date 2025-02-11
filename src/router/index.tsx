@@ -14,8 +14,6 @@ import {
   MscLink,
   MscModal,
   MscRadio,
-  MscShadows,
-  MscSpacing,
   MscSpinner,
   MscTabs,
   MscToggle,
@@ -30,6 +28,7 @@ import LoginPage from "../pages/LoginPage/LoginPage";
 import MscColorsPage from "../pages/ColorsPage/MscColorsPage";
 import MscShadowsPage from "../pages/ShadowsPage/MscShadowsPage";
 import MscSpacingPage from "../pages/SpacingPage/MscSpacingPage";
+import MscTypographyPage from "../pages/TypographyPage/MscTypographyPage";
 
 const router = createBrowserRouter([
   {
@@ -141,7 +140,7 @@ const router = createBrowserRouter([
       },
       {
         path: "Typography",
-        element: <MscTypography text="test" />,
+        element: <MscTypographyPage />,
       },
     ],
   },
