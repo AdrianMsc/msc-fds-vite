@@ -33,7 +33,7 @@ export default function Home() {
           <br />
           Welcome to MSC Design System
         </h1>
-        <h3 className="font-light text-left text-pretty">
+        <h3 className="font-light text-pretty self-start">
           Empowering Innovation Through Unified Design.
         </h3>
 
