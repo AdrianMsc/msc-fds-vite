@@ -1,34 +1,57 @@
 import { useState } from "react";
 
-export const MscTabs = ({ labels = ["Tab 1", "Tab 2", "Tab 3"] }) => {
+interface MscTabsProps {
+  labels?: string[];
+  background: string;
+  onTabClick?: (label: string, index: number) => void;
+}
+
+export const MscTabs: React.FC<MscTabsProps> = ({
+  labels = ["Tab 1", "Tab 2", "Tab 3"],
+  onTabClick,
+}) => {
   const [activeIndex, setActiveIndex] = useState(0);
 
-  if (labels.length > 3) {
+  // Limitar a 5 tabs
+  if (labels.length > 5) {
     console.error(
-      "The MscTabs component only supports 3 tabs. Only the first 3 tabs will be displayed."
+      "El componente MscTabs solo soporta hasta 5 tabs. Solo se mostrarán las primeras 5 tabs."
     );
-    labels = labels.slice(0, 3);
+    labels = labels.slice(0, 5);
   }
 
   const handleTabClick = (index: number) => {
     setActiveIndex(index);
+    if (onTabClick) {
+      onTabClick(labels[index].toLowerCase(), index);
+    }
   };
+
+  const tabClasses = [
+    "md:col-span-12",
+    "md:col-span-6",
+    "md:col-span-4",
+    "md:col-span-3",
+    "md:col-span-2.4",
+  ];
 
   return (
     <>
-      <ul className="msc-tabs grid-cols-6">
-        {labels.map((label, index) => (
-          <li
-            key={index}
-            className={`col-span-6 md:col-span-2 ${
-              activeIndex === index ? "active" : ""
-            }`}
-            onClick={() => handleTabClick(index)}
-          >
-            <a>{label}</a>
-          </li>
-        ))}
-      </ul>
+      <div className={`bg-white sticky top-0`}>
+        <ul className="msc-tabs grid-cols-12">
+          {labels.map((label, index) => (
+            <li
+              key={index}
+              className={`col-span-12 ${tabClasses[labels.length - 1]} ${
+                activeIndex === index ? "active" : ""
+              }`}
+              onClick={() => handleTabClick(index)}
+            >
+              <a>{label}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
     </>
   );
 };
