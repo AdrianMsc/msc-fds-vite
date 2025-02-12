@@ -6,6 +6,7 @@ import { authConfig } from "./auth-config";
 import router from "./router";
 import "./index.css";
 import { SidebarProvider } from "./context/SidebarCtx";
+import { ApiProvider } from "./context/ApiContext";
 
 const queryClient = new QueryClient();
 
@@ -19,7 +20,11 @@ createRoot(document.getElementById("root")!).render(
   >
     <SidebarProvider>
       <QueryClientProvider client={queryClient}>
-        <RouterProvider router={router} />
+        <ApiProvider>
+          {" "}
+          {/* Envuelve la app con ApiProvider */}
+          <RouterProvider router={router} />
+        </ApiProvider>
       </QueryClientProvider>
     </SidebarProvider>
   </Auth0Provider>

@@ -8,8 +8,14 @@ import {
   faBook,
 } from "@fortawesome/free-solid-svg-icons";
 import { useAuth0 } from "@auth0/auth0-react";
+import { useApiData } from "../context/ApiContext";
+import { useEffect, useState } from "react";
+import MscMiniLoading from "../components/MscMiniLoading/MscMiniLoading";
 
 export default function Home() {
+  const [hsFlag, setHsFlag] = useState();
+  const { data } = useApiData();
+
   const defaultOptions = {
     loop: true,
     autoplay: true,
@@ -19,10 +25,21 @@ export default function Home() {
     },
   };
 
+  const handShakeShack = async () => {
+    await setHsFlag(data);
+  };
+
+  useEffect(() => {
+    handShakeShack();
+  }, []);
+
   const { user, isAuthenticated, isLoading } = useAuth0();
 
   return (
     <main className="flex flex-col justify-center items-center h-screen m-auto md:flex-row">
+      <span className={`fixed top-3 right-3`}>
+        {hsFlag ? hsFlag : <MscMiniLoading />}
+      </span>
       <div className="flex flex-col justify-center px-8 md:pl-16 w-full md:w-[45%] items-center h-screen">
         <h1 className="font-normal text-[3rem] xl:text-[4rem] leading-none mb-3">
           {isAuthenticated && (
