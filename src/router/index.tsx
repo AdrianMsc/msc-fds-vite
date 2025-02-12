@@ -1,7 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import {
   MscAlphabeticPager,
-  MscAlert,
   MscBreadcrumb,
   MscCheckbox,
   MscDialog,
@@ -28,6 +27,7 @@ import MscDropdownPage from "../pages/Dropdown/MscDropdownPage";
 import MscLinkPage from "../pages/Link/MscLinkPage";
 import MscTabsPage from "../pages/Tabs/MscTabsPage";
 import MscFilterPage from "../pages/Filter/MscFilterPage";
+import MscAlertPage from "../pages/Alert/MscAlertPage";
 
 const router = createBrowserRouter([
   {
@@ -58,7 +58,7 @@ const router = createBrowserRouter([
       },
       {
         path: "Alert",
-        element: <MscAlert />,
+        element: <MscAlertPage />,
       },
       {
         path: "Breadcrumb",
