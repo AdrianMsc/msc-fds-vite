@@ -2,14 +2,8 @@ import { createBrowserRouter } from "react-router-dom";
 import {
   MscAlphabeticPager,
   MscBreadcrumb,
-  MscCheckbox,
-  MscDialog,
   MscDivider,
-  MscInput,
-  MscModal,
-  MscRadio,
   MscSpinner,
-  MscToggle,
   MscPagination,
 } from "../components";
 import GettingStarted from "../pages/GettingStartedPage";
@@ -28,6 +22,16 @@ import MscLinkPage from "../pages/Link/MscLinkPage";
 import MscTabsPage from "../pages/Tabs/MscTabsPage";
 import MscFilterPage from "../pages/Filter/MscFilterPage";
 import MscAlertPage from "../pages/Alert/MscAlertPage";
+import MscCheckboxPage from "../pages/Checkbox/MscCheckboxPage";
+import MscRadioPage from "../pages/Radio/MscRadioPage";
+import MscInputPage from "../pages/Input/MscInputPage";
+import MscTableModalPage from "../pages/TableModal/MscTableModalPage";
+import MscTogglePage from "../pages/Toggle/MscTogglePage";
+import MscModalPage from "../pages/Modal/MscModalPage";
+import MscDialogPage from "../pages/Dialog/MscDialogPage";
+import MscModalListPage from "../pages/ModalList/MscModalListPage";
+import MscErrorPage from "../pages/ErrorPage/MscErrorPage";
+import MscPagedown from "../pages/Pagedown/MscPagedown";
 
 const router = createBrowserRouter([
   {
@@ -74,7 +78,7 @@ const router = createBrowserRouter([
       },
       {
         path: "Checkbox",
-        element: <MscCheckbox />,
+        element: <MscCheckboxPage />,
       },
       {
         path: "Colors",
@@ -82,7 +86,7 @@ const router = createBrowserRouter([
       },
       {
         path: "Dialog",
-        element: <MscDialog />,
+        element: <MscDialogPage />,
       },
       {
         path: "Divider",
@@ -95,7 +99,7 @@ const router = createBrowserRouter([
 
       {
         path: "Input",
-        element: <MscInput />,
+        element: <MscInputPage />,
       },
       {
         path: "Link",
@@ -103,7 +107,7 @@ const router = createBrowserRouter([
       },
       {
         path: "Modal",
-        element: <MscModal />,
+        element: <MscModalPage />,
       },
       {
         path: "Pagination",
@@ -111,7 +115,7 @@ const router = createBrowserRouter([
       },
       {
         path: "Radio",
-        element: <MscRadio />,
+        element: <MscRadioPage />,
       },
       {
         path: "Shadows",
@@ -131,7 +135,7 @@ const router = createBrowserRouter([
       },
       {
         path: "Toggle",
-        element: <MscToggle />,
+        element: <MscTogglePage />,
       },
       {
         path: "Filter",
@@ -140,6 +144,22 @@ const router = createBrowserRouter([
       {
         path: "Typography",
         element: <MscTypographyPage />,
+      },
+      {
+        path: "TableModal",
+        element: <MscTableModalPage />,
+      },
+      {
+        path: "Error404",
+        element: <MscErrorPage />,
+      },
+      {
+        path: "PageDown",
+        element: <MscPagedown />,
+      },
+      {
+        path: "MailListModals",
+        element: <MscModalListPage />,
       },
     ],
   },
