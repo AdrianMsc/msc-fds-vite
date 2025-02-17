@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { faClose } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 interface Props {
   title?: string;
@@ -30,7 +32,7 @@ const MscModal = ({
           <div className="msc-modal-header">
             <h4 className="msc-modal-title">{title}</h4>
             <button id="modalClsBtn" onClick={toggleModal}>
-              <img className="msc-modal-close" />
+              <FontAwesomeIcon icon={faClose} className="msc-modal-close" />
             </button>
           </div>
           <div className="msc-modal-body">

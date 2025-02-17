@@ -6,6 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import { ICategoryApi } from "../interfaces/component.interface";
 import { baseUrl } from "../api";
 import MscMiniLoading from "../components/MscMiniLoading/MscMiniLoading";
+import { createLinkPage } from "../utils/createLinkPage";
 
 const Sidebar: React.FC = () => {
   const context = useContext(SidebarContext);
@@ -45,7 +46,11 @@ const Sidebar: React.FC = () => {
         <React.Fragment key={idx}>
           <strong>{item.category}</strong>
           {item.components.map((comp: any, idx: number) => (
-            <Link key={idx} className="ml-5" to={`/docs/${comp.name}`}>
+            <Link
+              key={idx}
+              className="ml-5"
+              to={`/docs/${createLinkPage(comp.name)}`}
+            >
               {formatComponentName(comp.name)}
             </Link>
           ))}

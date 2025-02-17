@@ -1,4 +1,4 @@
-module.exports = function ({ addComponents }) {
+module.exports = function ({ addComponents, theme }) {
   const input = {
     ".msc-input": {
       "@apply bg-white w-full h-10 px-4 py-3.5 text-sm rounded border !border-monochromes-grey_light placeholder-transparent disabled:bg-off_white disabled:!border-[#e5e7eb] disabled:cursor-not-allowed disabled:text-monochromes-grey_light hover:disabled:!border-[#e5e7eb] hover:enabled:!border-monochromes-main focus:border-monochromes-grey_light focus:outline-dashed focus:outline-1 focus:outline-offset-4 focus:outline-black invalid:!border-error-red invalid:!text-error-red hover:invalid:!border-error-red focus:invalid:!border-error-red":
@@ -23,7 +23,7 @@ module.exports = function ({ addComponents }) {
       "@apply relative flex flex-col max-w-[68px] w-[68px]": {},
     },
     ".msc-error-message": {
-      "@apply  text-error-red font-semibold mt-1 hidden peer-invalid:block !important":
+      "@apply  text-error-red font-semibold mt-1  peer-invalid:block !important":
         {},
     },
   };
