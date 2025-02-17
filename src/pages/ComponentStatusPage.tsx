@@ -61,7 +61,7 @@ const ComponentStatus: React.FC = () => {
         <li className="mr-3">🧪 Beta</li>
         <li className="mr-3">✅ Live</li>
         <li className="mr-3">
-          <b className="font-bold">N/A</b> Not Applicable
+          <b className="font-bold">🚫</b> Not Applicable
         </li>
       </ul>
 
@@ -77,7 +77,16 @@ const ComponentStatus: React.FC = () => {
             Add component
             <FontAwesomeIcon icon={faPlus} className="ml-2 items-center" />
           </button>
-          <p className="italic">(Modal and forms WIP 🔨)</p>
+
+          <button
+            className="msc-btn msc-btn-blue-solid msc-btn-icon w-fit min-w-fit p-3 fixed bottom-5 right-5"
+            onClick={() => {
+              setModalText({ buttonOne: "Add", title: "Add new component" });
+              toggleModal();
+            }}
+          >
+            <FontAwesomeIcon icon={faPlus} className="items-center" />
+          </button>
         </>
       )}
 
@@ -117,7 +126,7 @@ const ComponentStatus: React.FC = () => {
                     <th scope="col" className="px-6 py-3 w-[15%]">
                       CDN
                     </th>
-                    <th scope="col" className="px-6 py-3">
+                    <th scope="col" className="px-6 py-3 min-w-[250px]">
                       Comments
                     </th>
                     {isAuthenticated && (
