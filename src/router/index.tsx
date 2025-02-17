@@ -3,7 +3,6 @@ import {
   MscAlphabeticPager,
   MscBreadcrumb,
   MscDivider,
-  MscSpinner,
   MscPagination,
 } from "../components";
 import GettingStarted from "../pages/GettingStartedPage";
@@ -32,6 +31,7 @@ import MscDialogPage from "../pages/Dialog/MscDialogPage";
 import MscModalListPage from "../pages/ModalList/MscModalListPage";
 import MscErrorPage from "../pages/ErrorPage/MscErrorPage";
 import MscPagedown from "../pages/Pagedown/MscPagedown";
+import MscSpinnerPage from "../pages/Spinner/MscSpinnerPage";
 
 const router = createBrowserRouter([
   {
@@ -127,7 +127,7 @@ const router = createBrowserRouter([
       },
       {
         path: "Spinner",
-        element: <MscSpinner />,
+        element: <MscSpinnerPage />,
       },
       {
         path: "Tabs",
