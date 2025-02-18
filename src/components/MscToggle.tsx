@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faQuestionCircle } from "@fortawesome/free-solid-svg-icons";
 
 const MscToggle = ({ variant = "Default" }) => {
   const [selectedTolerance, setSelectedTolerance] = useState("allTolerance");
+  const [selectedClass, setSelectedClass] = useState("allClass");
 
   useEffect(() => {
-    const updateSliderPosition = () => {
-      const slider = document.querySelector(".msc-triple-toggle-dot");
+    const updateToleranceSliderPosition = () => {
+      const slider = document.querySelector("#toleranceToggle");
       if (slider) {
         const positions = ["left-[4px]", "left-1/3", "left-[130px]"];
         const radioIndex = ["allTolerance", "plus", "minus"].indexOf(
@@ -14,8 +17,19 @@ const MscToggle = ({ variant = "Default" }) => {
         slider.className = `msc-triple-toggle-dot ${positions[radioIndex]}`;
       }
     };
-    updateSliderPosition();
-  }, [selectedTolerance]);
+
+    const updateClassSliderPosition = () => {
+      const slider = document.querySelector("#classToggle");
+      if (slider) {
+        const positions = ["left-[4px]", "left-1/3", "left-[130px]"];
+        const radioIndex = ["allClass", "X", "ZZ"].indexOf(selectedClass);
+        slider.className = `msc-triple-toggle-dot ${positions[radioIndex]}`;
+      }
+    };
+
+    updateToleranceSliderPosition();
+    updateClassSliderPosition();
+  }, [selectedTolerance, selectedClass]);
 
   switch (variant) {
     case "Default":
@@ -25,7 +39,7 @@ const MscToggle = ({ variant = "Default" }) => {
             <input
               type="checkbox"
               id="toggleOne"
-              defaultChecked={true}
+              defaultChecked
               className="peer sr-only"
             />
             <div className="msc-toggle-container"></div>
@@ -42,11 +56,11 @@ const MscToggle = ({ variant = "Default" }) => {
             <input
               type="checkbox"
               id="toggleDisabled"
-              defaultChecked={true}
+              defaultChecked
               disabled
               className="peer sr-only"
             />
-            <div className="msc-toggle-container-disabled before:content-['Yes'] after:content-['No']"></div>
+            <div className="msc-toggle-container-disabled disabled-before disabled-after"></div>
             <div className="msc-toggle-dot-disabled"></div>
           </div>
         </label>
@@ -60,17 +74,17 @@ const MscToggle = ({ variant = "Default" }) => {
             <input
               type="checkbox"
               id="toggleTwo"
-              defaultChecked={true}
+              defaultChecked
               className="peer sr-only"
             />
-            <div className="msc-toggle-container-text before:content-['Yes'] after:content-['No']"></div>
+            <div className="msc-toggle-container-text text-before text-after"></div>
             <div className="msc-toggle-dot-text"></div>
           </div>
         </label>
       );
       break;
 
-    case "Address Type":
+    case "Address":
       return (
         <label htmlFor="toggleAddress" className="msc-toggle">
           <div className="relative">
@@ -78,9 +92,10 @@ const MscToggle = ({ variant = "Default" }) => {
               type="checkbox"
               id="toggleAddress"
               className="peer sr-only"
+              defaultChecked
             />
-            <div className="msc-toggle-container-text-lg before:content-['Residential'] after:content-['Commercial']"></div>
-            <div className="msc-toggle-dot-text-lg before:content-['Residential'] after:content-['Commercial']"></div>
+            <div className="msc-toggle-container-text-lg address-before address-after"></div>
+            <div className="msc-toggle-dot-text-lg address-dot-before address-dot-after"></div>
           </div>
         </label>
       );
@@ -88,15 +103,11 @@ const MscToggle = ({ variant = "Default" }) => {
 
     case "Units":
       return (
-        <label htmlFor="toggleAddress" className="msc-toggle">
+        <label htmlFor="toggleUnits" className="msc-toggle">
           <div className="relative">
-            <input
-              type="checkbox"
-              id="toggleAddress"
-              className="peer sr-only"
-            />
-            <div className="msc-toggle-container-text-lg after:right-10 before:content-['Decimal Inch'] after:content-['MM']"></div>
-            <div className="msc-toggle-dot-text-lg after:right-6 before:content-['Decimal Inch'] after:content-['MM']"></div>
+            <input type="checkbox" id="toggleUnits" className="peer sr-only" />
+            <div className="msc-toggle-container-text-lg after:right-10 units-before units-after"></div>
+            <div className="msc-toggle-dot-text-lg after:right-6 units-dot-before units-dot-after"></div>
           </div>
         </label>
       );
@@ -107,9 +118,15 @@ const MscToggle = ({ variant = "Default" }) => {
         <fieldset>
           <div className="msc-label-toggle-container">
             <p className="msc-label-triple-toggle">Tolerance</p>
-            <i className="fa-solid fa-circle-question msc-toggle-icon"></i>
+            <FontAwesomeIcon
+              icon={faQuestionCircle}
+              className="msc-toggle-icon text-monochromes-grey_light"
+            />
             <div className="msc-triple-toggle-container">
-              <span className="msc-triple-toggle-dot"></span>
+              <span
+                id="toleranceToggle"
+                className="msc-triple-toggle-dot"
+              ></span>
               <label className="msc-triple-toggle-input-label">
                 <input
                   type="radio"
@@ -154,17 +171,20 @@ const MscToggle = ({ variant = "Default" }) => {
         <fieldset>
           <div className="msc-label-toggle-container">
             <p className="msc-label-triple-toggle">Class</p>
-            <i className="fa-solid fa-circle-question msc-toggle-icon"></i>
+            <FontAwesomeIcon
+              icon={faQuestionCircle}
+              className="msc-toggle-icon text-monochromes-grey_light"
+            />
             <div className="msc-triple-toggle-container">
-              <span className="msc-triple-toggle-dot"></span>
+              <span id="classToggle" className="msc-triple-toggle-dot"></span>
               <label className="msc-triple-toggle-input-label">
                 <input
                   type="radio"
                   name="class"
-                  value="allTolerance"
+                  value="allClass"
                   className="peer sr-only"
-                  checked={selectedTolerance === "allTolerance"}
-                  onChange={() => setSelectedTolerance("allTolerance")}
+                  checked={selectedClass === "allClass"}
+                  onChange={() => setSelectedClass("allClass")}
                 />
                 <span className="msc-triple-toggle-text">All</span>
               </label>
@@ -172,23 +192,23 @@ const MscToggle = ({ variant = "Default" }) => {
                 <input
                   type="radio"
                   name="class"
-                  value="plus"
+                  value="X"
                   className="peer sr-only"
-                  checked={selectedTolerance === "plus"}
-                  onChange={() => setSelectedTolerance("plus")}
+                  checked={selectedClass === "X"}
+                  onChange={() => setSelectedClass("X")}
                 />
-                <span className="msc-triple-toggle-text">Super</span>
+                <span className="msc-triple-toggle-text">X</span>
               </label>
               <label className="msc-triple-toggle-input-label">
                 <input
                   type="radio"
                   name="class"
-                  value="minus"
+                  value="ZZ"
                   className="peer sr-only"
-                  checked={selectedTolerance === "minus"}
-                  onChange={() => setSelectedTolerance("minus")}
+                  checked={selectedClass === "ZZ"}
+                  onChange={() => setSelectedClass("ZZ")}
                 />
-                <span className="msc-triple-toggle-text">Minus</span>
+                <span className="msc-triple-toggle-text">ZZ</span>
               </label>
             </div>
           </div>

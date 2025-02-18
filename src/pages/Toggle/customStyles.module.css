@@ -1,0 +1,15 @@
+.msc-toggle-container-disabled-before::before {
+  content: "Yes";
+}
+
+.msc-toggle-container-disabled-after::after {
+  content: "No";
+}
+
+.msc-toggle-container-text-before::before {
+  content: "Yes";
+}
+
+.msc-toggle-container-text-after::after {
+  content: "No";
+}

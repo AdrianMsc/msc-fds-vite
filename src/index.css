@@ -1,3 +1,100 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.disabled-before::before {
+  content: "Yes" !important;
+}
+
+.disabled-after::after {
+  content: "No" !important;
+}
+
+.text-before::before {
+  content: "Yes" !important;
+}
+
+.text-after::after {
+  content: "No" !important;
+}
+
+.peer:checked ~ .text-after::after {
+  display: none;
+}
+
+.peer:not(:checked) ~ .text-before::before {
+  display: none;
+}
+
+.address-before::before {
+  content: "Residential" !important;
+}
+
+.address-after::after {
+  content: "Commercial" !important;
+}
+
+.peer:checked ~ .address-after::after {
+  display: none;
+}
+
+.peer:not(:checked) ~ .address-before::before {
+  display: none;
+}
+
+.address-dot-before::before {
+  content: "Commercial" !important;
+}
+
+.address-dot-after::after {
+  content: "Residential" !important;
+}
+
+.peer:checked ~ .address-dot-after::after {
+  display: none;
+}
+
+.peer:not(:checked) ~ .address-dot-before::before {
+  display: none;
+}
+.peer:checked ~ .address-dot-before::before {
+  display: block;
+}
+
+.units-before::before {
+  content: "Decimal Inch" !important;
+}
+
+.units-after::after {
+  content: "MM" !important;
+}
+
+.peer:checked ~ .units-after::after {
+  display: none;
+}
+
+.peer:not(:checked) ~ .units-before::before {
+  display: none;
+}
+
+.units-dot-before::before {
+  content: "MM" !important;
+}
+
+.units-dot-after::after {
+  content: "Decimal Inch" !important;
+  width: 100% !important;
+  right: 0px !important;
+  padding-left: 11px !important;
+}
+
+.peer:checked ~ .units-dot-after::after {
+  display: none;
+}
+
+.peer:not(:checked) ~ .units-dot-before::before {
+  display: none;
+}
+.peer:checked ~ .units-dot-before::before {
+  display: block;
+}
