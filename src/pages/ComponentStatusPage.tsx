@@ -34,7 +34,17 @@ const ComponentStatus: React.FC = () => {
   };
 
   const handleEdit = (component: IComponentApi) => {
-    setSelectedRecord(component);
+    const formFormat: any = {
+      id: component.id,
+      name: component.name,
+      category: component.category,
+      comment: component.comment,
+      cdn: component.statuses[0].cdn,
+      figma: component.statuses[0].figma,
+      guidelines: component.statuses[0].guidelines,
+      storybook: component.statuses[0].storybook,
+    };
+    setSelectedRecord(formFormat);
     toggleModal();
   };
 
