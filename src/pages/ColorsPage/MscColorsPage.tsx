@@ -1,8 +1,13 @@
+import { useEffect } from "react";
 import MscColors from "../../components/MscColors/MscColors";
 import ComponentLayout from "../../layout/ComponentLayout/ComponentLayout";
 import { colors, palettes } from "./constants";
 
 const MscColorsPage = () => {
+  useEffect(() => {
+    document.title = "Colors Page";
+  }, []);
+
   return (
     <ComponentLayout
       title={colors.title}

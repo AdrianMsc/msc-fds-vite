@@ -38,7 +38,7 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <header className="bg-white overflow-hidden shadow py-2 px-5 flex w-screen fixed justify-between items-center">
+    <header className="bg-white overflow-hidden shadow py-2 px-5 flex w-screen fixed justify-between items-center ">
       <Link to="/" className="flex">
         <MscLogo />
         <p className="pl-2 font-medium text-sm self-end">Fuel Design System</p>
