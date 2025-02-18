@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- <link href="../src/output.css" rel="stylesheet" /> -->
+    <title>Page Down</title>
+    <link
+      rel="shortcut icon"
+      href="https://www.mscdirect.com/favicon.ico"
+      type="image/x-icon"
+    />
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif !important;
+        font-size: 14px;
+        font-weight: 400;
+        margin: 0;
+      }
+
+      .flex {
+        display: flex;
+      }
+
+      .text-primary-blue_dark {
+        color: #0d3aa9;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        margin: 0;
+      }
+
+      h1 {
+        font-size: 24px;
+        line-height: 2rem;
+
+        @media (min-width: 640px) {
+          font-size: 32px;
+          line-height: 2.5rem;
+        }
+      }
+
+      h4 {
+        font-size: 18px;
+        line-height: 1.25rem;
+
+        @media (min-width: 640px) {
+          font-size: 20px;
+          line-height: 1.75rem;
+        }
+      }
+
+      h6 {
+        font-size: 10px;
+        line-height: 1.25rem;
+
+        @media (min-width: 640px) {
+          font-size: 14px;
+          line-height: 1.25rem;
+        }
+      }
+
+      .msc-pd-header {
+        background-color: white;
+        overflow: hidden;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        padding: 14px 40px;
+        display: flex;
+        width: 100%;
+        position: fixed;
+        border-bottom: 1px solid #e5e7eb; /* border-monochromes-grey_xlight */
+        height: 68px;
+        align-items: center;
+        justify-content: space-between;
+        box-sizing: border-box;
+      }
+
+      .msc-pd-container {
+        display: flex;
+        flex-direction: column;
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+        justify-content: center;
+      }
+
+      .msc-pd-text-container {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        width: 100%;
+        gap: 2rem;
+        padding: 1rem;
+        padding-bottom: 2rem;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+      }
+
+      .msc-pd-text-container-bottom {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        width: 100%;
+        gap: 2rem;
+        padding-bottom: 2rem;
+        align-items: center;
+        justify-content: center;
+        margin-top: 2rem;
+      }
+
+      .msc-pd-text-container-bottom h4 {
+        font-weight: lighter;
+      }
+
+      .msc-pd-img-container {
+        display: flex;
+        position: relative;
+      }
+
+      .msc-plug-container-left {
+        width: 50%;
+        position: relative;
+        height: 80px;
+        display: flex;
+        align-items: center;
+      }
+
+      .msc-left-wire {
+        height: 22px;
+        width: 100%;
+        right: 90px;
+        position: relative;
+        background: transparent
+          url("https://cdn.mscdirect.com/global/media/images/fragment.svg")
+          scroll repeat-x;
+      }
+
+      .msc-plug-container-right {
+        width: 50%;
+        position: relative;
+        height: 80px;
+        display: flex;
+        align-items: center;
+      }
+
+      .msc-right-wire {
+        height: 22px;
+        width: 100%;
+        left: 90px;
+        position: relative;
+        background: transparent
+          url("https://cdn.mscdirect.com/global/media/images/fragment.svg")
+          scroll repeat-x;
+      }
+
+      .msc-pd-left-plug {
+        position: absolute;
+        right: -2.2rem;
+        top: 0;
+        height: 100%;
+        animation: unplugLeft 2s forwards;
+        animation-delay: 2s;
+      }
+
+      .msc-pd-right-plug {
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        animation: unplugRight 2s forwards;
+        animation-delay: 2s;
+      }
+
+      @keyframes unplugLeft {
+        from {
+          right: -2.2rem;
+        }
+        to {
+          right: 0;
+        }
+      }
+
+      @keyframes unplugRight {
+        from {
+          left: 0;
+        }
+        to {
+          left: 2rem;
+        }
+      }
+
+      .msc-pd-timestamp {
+        color: #6b7280;
+        text-align: center;
+        padding-top: 0rem;
+
+        @media (min-width: 640px) {
+          padding-top: 2rem;
+        }
+      }
+
+      .msc-pd-bg-container {
+        position: absolute;
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .msc-pd-bg {
+        position: absolute;
+        z-index: -50;
+        background-color: #f1f5fe;
+        border-radius: 50%;
+        width: 400px;
+        height: 400px;
+
+        @media (min-width: 640px) {
+          width: 500px;
+          height: 500px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <header class="msc-pd-header">
+      <img
+        src="https://cdn.mscdirect.com/global/media/images/msc-logo.svg"
+        class="h-[20px]"
+        alt=""
+      />
+    </header>
+
+    <main class="flex">
+      <div class="msc-pd-container">
+        <div class="msc-pd-text-container">
+          <h1 class="text-primary-blue_dark">
+            We're upgrading our systems to serve you better
+          </h1>
+          <h4 class="text-primary-blue_dark">Thanks you for your patience!</h4>
+        </div>
+
+        <div class="msc-pd-img-container">
+          <div class="msc-plug-container-left">
+            <div class="msc-left-wire"></div>
+            <img
+              src="https://cdn.mscdirect.com/global/media/images/plug-left.svg"
+              alt="plug left side image"
+              class="msc-pd-left-plug"
+            />
+          </div>
+
+          <div class="msc-plug-container-right">
+            <div class="msc-right-wire"></div>
+            <img
+              src="https://cdn.mscdirect.com/global/media/images/plug-right.svg"
+              alt="plug left side image"
+              class="msc-pd-right-plug"
+            />
+          </div>
+        </div>
+
+        <div class="msc-pd-text-container-bottom">
+          <h4 class="text-primary-blue_dark">
+            If you need immediate assistance <br />
+            please contact us <b>1-800-645-7270</b>
+          </h4>
+        </div>
+
+        <h6 class="msc-pd-timestamp" id="date">Timestamp</h6>
+      </div>
+
+      <div class="msc-pd-bg-container">
+        <div class="msc-pd-bg"></div>
+      </div>
+    </main>
+
+    <script>
+      const formatDate = () => {
+        const options = {
+          month: "long",
+          day: "numeric",
+          year: "numeric",
+          hour: "numeric",
+          minute: "numeric",
+          second: "numeric",
+          hour12: true,
+        };
+
+        const date = new Date();
+        const formattedDate = date.toLocaleString("en-US", options);
+
+        const day = date.getDate();
+        const getDaySuffix = (day) => {
+          if (day % 10 === 1 && day !== 11) return "st";
+          if (day % 10 === 2 && day !== 12) return "nd";
+          if (day % 10 === 3 && day !== 13) return "rd";
+          return "th";
+        };
+        const dayWithSuffix = `${day}${getDaySuffix(day)}`;
+
+        return formattedDate.replace(day, dayWithSuffix);
+      };
+
+      const displayDate = () => {
+        const dateElement = document.getElementById("date");
+        if (dateElement) {
+          dateElement.innerText = formatDate();
+        }
+      };
+
+      window.addEventListener("DOMContentLoaded", () => {
+        displayDate();
+        setInterval(displayDate, 1000);
+      });
+    </script>
+  </body>
+</html>

@@ -1,10 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
-import {
-  MscAlphabeticPager,
-  MscBreadcrumb,
-  MscDivider,
-  MscPagination,
-} from "../components";
+import { MscDivider } from "../components";
 import GettingStarted from "../pages/GettingStartedPage";
 import Home from "../pages/HomePage";
 import DocsLayout from "../layout/DocsLayout";
@@ -32,6 +27,9 @@ import MscModalListPage from "../pages/ModalList/MscModalListPage";
 import MscErrorPage from "../pages/ErrorPage/MscErrorPage";
 import MscPagedown from "../pages/Pagedown/MscPagedown";
 import MscSpinnerPage from "../pages/Spinner/MscSpinnerPage";
+import MscAlphabeticPagerPage from "../pages/AlphabeticPager/MscAlphabeticPagerPage";
+import MscBreadcumbPage from "../pages/Breadcumb/MscBreadcumbPage";
+import MscPaginationPage from "../pages/Pagination/MscPaginationPage";
 
 const router = createBrowserRouter([
   {
@@ -58,7 +56,7 @@ const router = createBrowserRouter([
       },
       {
         path: "AlphabeticPager",
-        element: <MscAlphabeticPager />,
+        element: <MscAlphabeticPagerPage />,
       },
       {
         path: "Alert",
@@ -66,7 +64,7 @@ const router = createBrowserRouter([
       },
       {
         path: "Breadcrumb",
-        element: <MscBreadcrumb />,
+        element: <MscBreadcumbPage />,
       },
       {
         path: "Buttons",
@@ -111,7 +109,7 @@ const router = createBrowserRouter([
       },
       {
         path: "Pagination",
-        element: <MscPagination />,
+        element: <MscPaginationPage />,
       },
       {
         path: "Radio",
