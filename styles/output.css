@@ -2940,6 +2940,10 @@ h6 {
   left: 33.333333%;
 }
 
+.left-2\/4 {
+  left: 50%;
+}
+
 .left-3\.5 {
   left: 0.875rem;
 }
@@ -2948,8 +2952,16 @@ h6 {
   left: 130px;
 }
 
+.left-\[212px\] {
+  left: 212px;
+}
+
 .left-\[4px\] {
   left: 4px;
+}
+
+.left-\[74px\] {
+  left: 74px;
 }
 
 .right-0 {
@@ -2990,18 +3002,6 @@ h6 {
 
 .top-3 {
   top: 0.75rem;
-}
-
-.left-2\/4 {
-  left: 50%;
-}
-
-.left-\[212px\] {
-  left: 212px;
-}
-
-.left-\[74px\] {
-  left: 74px;
 }
 
 .z-10 {
@@ -4122,6 +4122,11 @@ h6 {
   color: rgb(113 113 113 / var(--tw-text-opacity));
 }
 
+.text-monochromes-grey_light {
+  --tw-text-opacity: 1;
+  color: rgb(166 166 166 / var(--tw-text-opacity));
+}
+
 .text-monochromes-main {
   --tw-text-opacity: 1;
   color: rgb(33 33 33 / var(--tw-text-opacity));
@@ -4159,11 +4164,6 @@ h6 {
 .text-white {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
-}
-
-.text-monochromes-grey_light {
-  --tw-text-opacity: 1;
-  color: rgb(166 166 166 / var(--tw-text-opacity));
 }
 
 .underline {
@@ -4280,6 +4280,105 @@ h6 {
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+.disabled-before::before {
+  content: "Yes" !important;
+}
+
+.disabled-after::after {
+  content: "No" !important;
+}
+
+.text-before::before {
+  content: "Yes" !important;
+}
+
+.text-after::after {
+  content: "No" !important;
+}
+
+.peer:checked ~ .text-after::after {
+  display: none;
+}
+
+.peer:not(:checked) ~ .text-before::before {
+  display: none;
+}
+
+.address-before::before {
+  content: "Residential" !important;
+}
+
+.address-after::after {
+  content: "Commercial" !important;
+}
+
+.peer:checked ~ .address-after::after {
+  display: none;
+}
+
+.peer:not(:checked) ~ .address-before::before {
+  display: none;
+}
+
+.address-dot-before::before {
+  content: "Commercial" !important;
+}
+
+.address-dot-after::after {
+  content: "Residential" !important;
+}
+
+.peer:checked ~ .address-dot-after::after {
+  display: none;
+}
+
+.peer:not(:checked) ~ .address-dot-before::before {
+  display: none;
+}
+
+.peer:checked ~ .address-dot-before::before {
+  display: block;
+}
+
+.units-before::before {
+  content: "Decimal Inch" !important;
+}
+
+.units-after::after {
+  content: "MM" !important;
+}
+
+.peer:checked ~ .units-after::after {
+  display: none;
+}
+
+.peer:not(:checked) ~ .units-before::before {
+  display: none;
+}
+
+.units-dot-before::before {
+  content: "MM" !important;
+}
+
+.units-dot-after::after {
+  content: "Decimal Inch" !important;
+  width: 100% !important;
+  right: 0px !important;
+  padding-left: 11px !important;
+}
+
+.peer:checked ~ .units-dot-after::after {
+  display: none;
+}
+
+.peer:not(:checked) ~ .units-dot-before::before {
+  display: none;
+}
+
+.peer:checked ~ .units-dot-before::before {
+  display: block;
+}
+
 .disabled\:msc-btn-blue-solid:disabled {
   cursor: pointer;
   --tw-text-opacity: 1;
@@ -4307,16 +4406,6 @@ h6 {
   outline-width: 1px;
   outline-offset: 4px;
   outline-color: #424242;
-}
-
-.before\:content-\[\'Residential\'\]::before {
-  --tw-content: 'Residential';
-  content: var(--tw-content);
-}
-
-.before\:content-\[\'Yes\'\]::before {
-  --tw-content: 'Yes';
-  content: var(--tw-content);
 }
 
 .after\:pointer-events-none::after {
@@ -4373,21 +4462,6 @@ h6 {
 
 .after\:content-\[\'\'\]::after {
   --tw-content: '';
-  content: var(--tw-content);
-}
-
-.after\:content-\[\'Commercial\'\]::after {
-  --tw-content: 'Commercial';
-  content: var(--tw-content);
-}
-
-.after\:content-\[\'MM\'\]::after {
-  --tw-content: 'MM';
-  content: var(--tw-content);
-}
-
-.after\:content-\[\'No\'\]::after {
-  --tw-content: 'No';
   content: var(--tw-content);
 }
 
