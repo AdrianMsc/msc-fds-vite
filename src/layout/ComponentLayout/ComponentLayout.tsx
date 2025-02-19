@@ -1,20 +1,25 @@
 import React, { ReactNode } from "react";
+import MscStatusComponentBar from "../../components/MscStatusComponentBar/MscStatusComponentBar";
+import { useLocation } from "react-router-dom";
 
 interface ComponentLayoutProps {
   title: string;
   category: string;
-  description: string;
-  children: ReactNode;
+  description?: string;
+  children?: ReactNode;
   className?: string;
+  statusBar?: boolean;
 }
 
 const ComponentLayout: React.FC<ComponentLayoutProps> = ({
-  title,
-  category,
-  description,
   children,
   className,
+  statusBar = true,
 }) => {
+  const location = useLocation();
+
+  const { title, category, description, statuses } = location.state || {};
+
   return (
     <>
       <section className={`${className ? className : ""}`}>
@@ -23,6 +28,7 @@ const ComponentLayout: React.FC<ComponentLayoutProps> = ({
           {title}
         </h1>
         <p className="mb-4">{description}</p>
+        {statusBar ? <MscStatusComponentBar stats={statuses} /> : ""}
         {children}
       </section>
     </>
