@@ -1,5 +1,4 @@
 import { createBrowserRouter } from "react-router-dom";
-import { MscDivider } from "../components";
 import GettingStarted from "../pages/GettingStartedPage";
 import Home from "../pages/HomePage";
 import DocsLayout from "../layout/DocsLayout";
@@ -30,6 +29,7 @@ import MscSpinnerPage from "../pages/Spinner/MscSpinnerPage";
 import MscAlphabeticPagerPage from "../pages/AlphabeticPager/MscAlphabeticPagerPage";
 import MscBreadcumbPage from "../pages/Breadcumb/MscBreadcumbPage";
 import MscPaginationPage from "../pages/Pagination/MscPaginationPage";
+import MscDividersPage from "../pages/Dividers/MscDividersPage";
 
 const router = createBrowserRouter([
   {
@@ -48,6 +48,7 @@ const router = createBrowserRouter([
       },
       {
         index: true,
+        path: "GettingStarted",
         element: <GettingStarted />,
       },
       {
@@ -87,8 +88,8 @@ const router = createBrowserRouter([
         element: <MscDialogPage />,
       },
       {
-        path: "Divider",
-        element: <MscDivider />,
+        path: "Dividers",
+        element: <MscDividersPage />,
       },
       {
         path: "Dropdown",
