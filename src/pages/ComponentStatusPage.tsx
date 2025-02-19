@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import SkeletonTable from "../layout/SkeletonTable";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -14,6 +14,8 @@ const ComponentStatus: React.FC = () => {
   const { isAuthenticated } = useAuth0();
   const [selectedRecord, setSelectedRecord] = useState<IComponentApi>();
   const [modalText, setModalText] = useState({ buttonOne: "", title: "" });
+  const [showSecondButton, setShowSecondButton] = useState(false);
+  const firstButtonRef = useRef(null);
 
   const { data, isLoading } = useQuery<ICategoryApi[]>({
     queryKey: ["components"],
@@ -22,6 +24,25 @@ const ComponentStatus: React.FC = () => {
       return await response.json();
     },
   });
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setShowSecondButton(!entry.isIntersecting);
+      },
+      { threshold: 0 }
+    );
+
+    if (firstButtonRef.current) {
+      observer.observe(firstButtonRef.current);
+    }
+
+    return () => {
+      if (firstButtonRef.current) {
+        observer.unobserve(firstButtonRef.current);
+      }
+    };
+  }, []);
 
   const handleDelete = async (component: IComponentApi) => {
     const response = await deleteComponent(component);
@@ -78,6 +99,7 @@ const ComponentStatus: React.FC = () => {
       {isAuthenticated && (
         <>
           <button
+            ref={firstButtonRef}
             className="msc-btn msc-btn-blue-solid msc-btn-icon ml-0 mt-5"
             onClick={() => {
               setModalText({ buttonOne: "Add", title: "Add new component" });
@@ -88,15 +110,17 @@ const ComponentStatus: React.FC = () => {
             <FontAwesomeIcon icon={faPlus} className="ml-2 items-center" />
           </button>
 
-          <button
-            className="msc-btn msc-btn-blue-solid msc-btn-icon w-fit min-w-fit p-3 fixed bottom-5 right-5"
-            onClick={() => {
-              setModalText({ buttonOne: "Add", title: "Add new component" });
-              toggleModal();
-            }}
-          >
-            <FontAwesomeIcon icon={faPlus} className="items-center" />
-          </button>
+          {showSecondButton && (
+            <button
+              className="msc-btn msc-btn-blue-solid msc-btn-icon w-fit min-w-fit p-3 fixed bottom-5 right-5"
+              onClick={() => {
+                setModalText({ buttonOne: "Add", title: "Add new component" });
+                toggleModal();
+              }}
+            >
+              <FontAwesomeIcon icon={faPlus} className="items-center" />
+            </button>
+          )}
         </>
       )}
 
