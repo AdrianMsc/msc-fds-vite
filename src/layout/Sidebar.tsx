@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import formatComponentName from "../utils/formatComponentName";
 import SidebarContext from "../context/SidebarCtx";
@@ -7,8 +7,10 @@ import { ICategoryApi } from "../interfaces/component.interface";
 import { baseUrl } from "../api";
 import MscMiniLoading from "../components/MscMiniLoading/MscMiniLoading";
 import { createLinkPage } from "../utils/createLinkPage";
+import chevron from "../assets/chevron-down.svg";
 
 const Sidebar: React.FC = () => {
+  const [openCategories, setOpenCategories] = useState<string[]>([]);
   const context = useContext(SidebarContext);
 
   if (!context) {
@@ -25,6 +27,14 @@ const Sidebar: React.FC = () => {
     },
   });
 
+  const toggleCategory = (category: string) => {
+    setOpenCategories((prev) =>
+      prev.includes(category)
+        ? prev.filter((cat) => cat !== category)
+        : [...prev, category]
+    );
+  };
+
   return (
     <aside
       className={`p-5 bg-white sm:max-w-[230px] sm:min-w-[230px] sm:flex flex-col gap-1 overflow-auto ${
@@ -39,21 +49,39 @@ const Sidebar: React.FC = () => {
         Component Status
       </Link>
       <strong className="text-primary-blue flex items-center">
-        Components
+        Categories
         {isLoading ? <MscMiniLoading /> : ""}
       </strong>
       {data?.map((item: any, idx: number) => (
         <React.Fragment key={idx}>
-          <strong>{item.category}</strong>
-          {item.components.map((comp: any, idx: number) => (
-            <Link
-              key={idx}
-              className="ml-5"
-              to={`/docs/${createLinkPage(comp.name)}`}
-            >
-              {formatComponentName(comp.name)}
-            </Link>
-          ))}
+          <strong
+            className="flex"
+            onClick={() => toggleCategory(item.category)}
+          >
+            {item.category}
+            <img
+              src={chevron}
+              alt="Chevron"
+              className={`w-3 ml-auto transition-all ${
+                openCategories.includes(item.category) ? "-rotate-90" : ""
+              }`}
+            />
+          </strong>
+          <div
+            className={`flex flex-col space-y-1 ${
+              openCategories.includes(item.category) ? "hidden" : ""
+            }`}
+          >
+            {item.components.map((comp: any, idx: number) => (
+              <Link
+                key={idx}
+                className="ml-5"
+                to={`/docs/${createLinkPage(comp.name)}`}
+              >
+                {formatComponentName(comp.name)}
+              </Link>
+            ))}
+          </div>
         </React.Fragment>
       ))}
     </aside>
