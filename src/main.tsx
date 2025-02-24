@@ -1,15 +1,16 @@
-import { createRoot } from "react-dom/client";
-import { RouterProvider } from "react-router-dom";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import "./index.css";
+import { ApiProvider } from "./context/ApiContext";
 import { Auth0Provider } from "@auth0/auth0-react";
 import { authConfig } from "./auth-config";
-import router from "./router";
-import "./index.css";
-import { SidebarProvider } from "./context/SidebarCtx";
-import { ApiProvider } from "./context/ApiContext";
-import { Provider } from "react-redux";
-import { store, persistor } from "./redux/store";
+import { createRoot } from "react-dom/client";
 import { PersistGate } from "redux-persist/integration/react";
+import { Provider } from "react-redux";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { RouterProvider } from "react-router-dom";
+import { SidebarProvider } from "./context/SidebarCtx";
+import { store, persistor } from "./redux/store";
+import router from "./router";
 
 const queryClient = new QueryClient();
 
@@ -29,6 +30,8 @@ createRoot(document.getElementById("root")!).render(
               {" "}
               {/* Envuelve la app con ApiProvider */}
               <RouterProvider router={router} />
+              {/* ReactQueryDevtools */}
+              <ReactQueryDevtools />
             </ApiProvider>
           </SidebarProvider>
         </QueryClientProvider>

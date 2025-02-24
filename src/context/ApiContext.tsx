@@ -1,27 +1,31 @@
-import { createContext, useContext, useEffect, useState } from "react";
-import { useQueryClient } from "@tanstack/react-query";
+import { createContext, useContext, useEffect } from "react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useDispatch } from "react-redux";
+import { getComponents } from "../redux/slices/componentsSlice";
+import { ICategoryApi } from "../interfaces/component.interface";
+import { baseUrl } from "../api";
 
 const ApiContext = createContext<{ data: any | null }>({ data: null });
 
 export const ApiProvider = ({ children }: { children: React.ReactNode }) => {
-  const [data, setData] = useState(null);
   const queryClient = useQueryClient();
+  const dispatch = useDispatch();
+
+  const { data, error } = useQuery<ICategoryApi[]>({
+    queryKey: ["components"],
+    queryFn: async () => {
+      const response = await fetch(`${baseUrl}/components`);
+      return await response.json();
+    },
+  });
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          "https://msc-component-status-ws-1.onrender.com/components"
-        );
-        const result = await response.json();
-        setData(result);
-        queryClient.setQueryData(["handshakeData"], result); // Guarda en react-query
-      } catch (error) {
-        console.error("Error al obtener los datos:", error);
-      }
-    };
-
-    fetchData();
+    if (data) {
+      queryClient.setQueryData(["components"], data); // Guarda en react-query
+      dispatch(getComponents(data));
+    } else if (error) {
+      console.log(error);
+    }
   }, [queryClient]);
 
   return <ApiContext.Provider value={{ data }}>{children}</ApiContext.Provider>;
