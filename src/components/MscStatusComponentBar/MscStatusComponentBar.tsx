@@ -17,7 +17,7 @@ const MscStatusComponentBar: React.FC<MscStatusComponentBarProps> = ({
   const currentStats = stats[0];
 
   return (
-    <ul className="bg-white w-fit p-3 rounded flex space-x-3 mb-4">
+    <ul className=" w-fit  rounded flex space-x-3 mb-4">
       <li>
         <b>Guidelines:</b> {currentStats.guidelines}
       </li>

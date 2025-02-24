@@ -27,8 +27,8 @@ const ComponentLayout: React.FC<ComponentLayoutProps> = ({
           <small className="text-sm text-primary-blue">{category}</small> <br />
           {title}
         </h1>
-        <p className="mb-4">{description}</p>
         {statusBar ? <MscStatusComponentBar stats={statuses} /> : ""}
+        <p className="mb-4">{description}</p>
         {children}
       </section>
     </>
