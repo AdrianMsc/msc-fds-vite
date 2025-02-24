@@ -7,14 +7,11 @@ export const componentSlice = createSlice({
   name: "componentsReducer",
   initialState,
   reducers: {
-    getComponents: (state, action) => {
+    getComponents: (_, action) => {
       return action.payload;
-    },
-    addComponent: (state, action) => {
-      console.log("Component Created", action.payload);
     },
   },
 });
 
-export const { addComponent, getComponents } = componentSlice.actions;
+export const { getComponents } = componentSlice.actions;
 export default componentSlice.reducer;
