@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import formatComponentName from "../utils/formatComponentName";
 import SidebarContext from "../context/SidebarCtx";
 import { useQuery } from "@tanstack/react-query";
@@ -12,6 +12,7 @@ import chevron from "../assets/chevron-down.svg";
 const Sidebar: React.FC = () => {
   const [openCategories, setOpenCategories] = useState<string[]>([]);
   const context = useContext(SidebarContext);
+  const navigate = useNavigate();
 
   if (!context) {
     throw new Error("Sidebar must be used within a SidebarProvider");
@@ -19,11 +20,17 @@ const Sidebar: React.FC = () => {
 
   const { isSidebarOpen } = context;
 
-  const { data, isLoading } = useQuery<ICategoryApi[]>({
+  const { data: categories, isLoading } = useQuery<ICategoryApi[]>({
     queryKey: ["components"],
     queryFn: async () => {
+      const storedData = sessionStorage.getItem("components");
+      if (storedData) {
+        return JSON.parse(storedData);
+      }
       const response = await fetch(`${baseUrl}/components`);
-      return await response.json();
+      const result = await response.json();
+      sessionStorage.setItem("components", JSON.stringify(result));
+      return result;
     },
   });
 
@@ -35,6 +42,27 @@ const Sidebar: React.FC = () => {
     );
   };
 
+  const handleDataSend = (path: string, componentName: string) => {
+    const storedData = sessionStorage.getItem("components");
+    if (storedData) {
+      const components = JSON.parse(storedData);
+      const component = components
+        .flatMap((category: ICategoryApi) => category.components)
+        .find((comp: any) => comp.name === componentName);
+
+      if (component) {
+        navigate(path, {
+          state: {
+            title: component.name,
+            category: component.category,
+            description: component.description,
+            statuses: component.statuses,
+          },
+        });
+      }
+    }
+  };
+
   return (
     <aside
       className={`p-5 bg-white sm:max-w-[230px] sm:min-w-[230px] sm:flex flex-col gap-1 overflow-auto ${
@@ -42,20 +70,42 @@ const Sidebar: React.FC = () => {
       }`}
     >
       <strong>Start Here</strong>
-      <Link to="/docs" className="ml-5">
+      <NavLink
+        to={`/docs/${createLinkPage("GettingStarted")}`}
+        className={({ isActive, isPending }) =>
+          `ml-5 ${
+            isActive
+              ? "font-bold text-primary-blue"
+              : isPending
+              ? "pending"
+              : ""
+          }`
+        }
+      >
         Getting Started
-      </Link>
-      <Link to="/docs/ComponentStatus" className="ml-5">
+      </NavLink>
+      <NavLink
+        to={`/docs/${createLinkPage("ComponentStatus")}`}
+        className={({ isActive, isPending }) =>
+          `ml-5 ${
+            isActive
+              ? "font-bold text-primary-blue"
+              : isPending
+              ? "pending"
+              : ""
+          }`
+        }
+      >
         Component Status
-      </Link>
+      </NavLink>
       <strong className="text-primary-blue flex items-center">
         Categories
         {isLoading ? <MscMiniLoading /> : ""}
       </strong>
-      {data?.map((item: any, idx: number) => (
+      {categories?.map((item, idx) => (
         <React.Fragment key={idx}>
           <strong
-            className="flex"
+            className="flex cursor-pointer"
             onClick={() => toggleCategory(item.category)}
           >
             {item.category}
@@ -72,14 +122,29 @@ const Sidebar: React.FC = () => {
               openCategories.includes(item.category) ? "hidden" : ""
             }`}
           >
-            {item.components.map((comp: any, idx: number) => (
-              <Link
+            {item.components.map((comp, idx) => (
+              <NavLink
                 key={idx}
-                className="ml-5"
+                className={({ isActive, isPending }) =>
+                  `pl-5 hover:rounded hover:font-semibold transition-all ${
+                    isActive
+                      ? "font-bold text-primary-blue"
+                      : isPending
+                      ? "pending"
+                      : ""
+                  }`
+                }
                 to={`/docs/${createLinkPage(comp.name)}`}
+                onClick={(event) => {
+                  event.preventDefault();
+                  handleDataSend(
+                    `/docs/${createLinkPage(comp.name)}`,
+                    comp.name
+                  );
+                }}
               >
                 {formatComponentName(comp.name)}
-              </Link>
+              </NavLink>
             ))}
           </div>
         </React.Fragment>
