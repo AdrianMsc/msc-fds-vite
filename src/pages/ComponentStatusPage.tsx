@@ -38,7 +38,7 @@ const ComponentStatus: React.FC = () => {
   }, []);
 
   const handleDelete = async (component: IComponentApi) => {
-    const response = await deleteComponent(component);
+    await deleteComponent(component);
     window.location.reload();
   };
 
