@@ -7,25 +7,29 @@ import router from "./router";
 import "./index.css";
 import { SidebarProvider } from "./context/SidebarCtx";
 import { ApiProvider } from "./context/ApiContext";
+import { Provider } from "react-redux";
+import { store } from "./redux/store";
 
 const queryClient = new QueryClient();
 
 createRoot(document.getElementById("root")!).render(
-  <Auth0Provider
-    domain={authConfig.domain}
-    clientId={authConfig.clientId}
-    authorizationParams={{
-      redirect_uri: window.location.origin,
-    }}
-  >
-    <SidebarProvider>
+  <Provider store={store}>
+    <Auth0Provider
+      domain={authConfig.domain}
+      clientId={authConfig.clientId}
+      authorizationParams={{
+        redirect_uri: window.location.origin,
+      }}
+    >
       <QueryClientProvider client={queryClient}>
-        <ApiProvider>
-          {" "}
-          {/* Envuelve la app con ApiProvider */}
-          <RouterProvider router={router} />
-        </ApiProvider>
+        <SidebarProvider>
+          <ApiProvider>
+            {" "}
+            {/* Envuelve la app con ApiProvider */}
+            <RouterProvider router={router} />
+          </ApiProvider>
+        </SidebarProvider>
       </QueryClientProvider>
-    </SidebarProvider>
-  </Auth0Provider>
+    </Auth0Provider>
+  </Provider>
 );

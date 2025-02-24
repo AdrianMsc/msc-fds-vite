@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-import { useApiData } from "../context/ApiContext";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { getComponents } from "../redux/slices/componentsSlice";
+import { useQuery } from "@tanstack/react-query";
+import { baseUrl } from "../api";
+import { ICategoryApi } from "../interfaces/component.interface";
 import Lottie from "react-lottie";
 import animation from "../assets/animation.json";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -16,7 +20,16 @@ import MscLoginWidget from "../components/MscLoginWidget/MscLoginWidget";
 export default function Home() {
   const [hsFlag, setHsFlag] = useState("");
   const [isFading, setIsFading] = useState(false);
-  const { data } = useApiData();
+  const dispatch = useDispatch();
+
+  const { data } = useQuery<ICategoryApi[]>({
+    queryKey: ["components"],
+    queryFn: async () => {
+      const response = await fetch(`${baseUrl}/components`);
+      return await response.json();
+    },
+    staleTime: 6000,
+  });
 
   const defaultOptions = {
     loop: true,
@@ -29,6 +42,7 @@ export default function Home() {
 
   useEffect(() => {
     if (data) {
+      dispatch(getComponents(data));
       setHsFlag("👍");
 
       setTimeout(() => {

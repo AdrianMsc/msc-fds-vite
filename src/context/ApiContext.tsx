@@ -11,7 +11,7 @@ export const ApiProvider = ({ children }: { children: React.ReactNode }) => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          "https://msc-component-status-ws-1.onrender.com/handshake"
+          "https://msc-component-status-ws-1.onrender.com/components"
         );
         const result = await response.json();
         setData(result);
