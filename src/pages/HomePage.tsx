@@ -28,7 +28,6 @@ export default function Home() {
       const response = await fetch(`${baseUrl}/components`);
       return await response.json();
     },
-    staleTime: 6000,
   });
 
   const defaultOptions = {

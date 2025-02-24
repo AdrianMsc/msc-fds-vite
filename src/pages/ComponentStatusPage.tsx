@@ -130,6 +130,7 @@ const ComponentStatus: React.FC = () => {
       {componentsApiData.length === 0 ? (
         <SkeletonTable />
       ) : (
+        (console.log(componentsApiData),
         componentsApiData?.map((category) => (
           <React.Fragment key={category.category}>
             <h2 className="font-bold text-2xl mt-5">{category.category}</h2>
@@ -219,7 +220,7 @@ const ComponentStatus: React.FC = () => {
               </table>
             </div>
           </React.Fragment>
-        ))
+        )))
       )}
     </div>
   );
