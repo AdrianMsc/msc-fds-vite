@@ -250,7 +250,6 @@ const MscDropdownPage = () => {
       dropdownThreeOptions.classList.toggle("hidden");
     });
     dropOption.addEventListener("click", function () {
-      console.log("clicked");
       labelTop.classList.toggle("hidden");
       dropPlaceholder.classList.toggle("text-transparent");
     });

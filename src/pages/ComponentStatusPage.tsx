@@ -39,7 +39,6 @@ const ComponentStatus: React.FC = () => {
 
   const handleDelete = async (component: IComponentApi) => {
     const response = await deleteComponent(component);
-    console.log(response);
     window.location.reload();
   };
 
@@ -130,7 +129,6 @@ const ComponentStatus: React.FC = () => {
       {componentsApiData.length === 0 ? (
         <SkeletonTable />
       ) : (
-        (console.log(componentsApiData),
         componentsApiData?.map((category) => (
           <React.Fragment key={category.category}>
             <h2 className="font-bold text-2xl mt-5">{category.category}</h2>
@@ -220,7 +218,7 @@ const ComponentStatus: React.FC = () => {
               </table>
             </div>
           </React.Fragment>
-        )))
+        ))
       )}
     </div>
   );

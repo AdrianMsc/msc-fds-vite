@@ -36,7 +36,6 @@ const Modal = ({
   const onSubmit = async (data: any) => {
     if (Object.keys(errors).length === 0) {
       toggleModal();
-      console.log(data);
       if (defaultValues) {
         const response = await updateComponent(data);
         console.log(response);
