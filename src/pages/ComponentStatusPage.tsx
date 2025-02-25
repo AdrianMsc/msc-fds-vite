@@ -6,8 +6,9 @@ import { FormComponent, Modal } from "../components";
 import { useAuth0 } from "@auth0/auth0-react";
 import { deleteComponent } from "../api/deleteComponent";
 import { IComponentApi } from "../interfaces/component.interface";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
+import { deleteComponentAction } from "../redux/slices/componentsSlice";
 
 const ComponentStatus: React.FC = () => {
   const [triggerModal, setTriggerModal] = useState("hidden");
@@ -17,6 +18,7 @@ const ComponentStatus: React.FC = () => {
   const [showSecondButton, setShowSecondButton] = useState(false);
   const firstButtonRef = useRef(null);
   const componentsApiData = useSelector((state: RootState) => state.components);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -39,7 +41,9 @@ const ComponentStatus: React.FC = () => {
 
   const handleDelete = async (component: IComponentApi) => {
     await deleteComponent(component);
-    window.location.reload();
+    dispatch(deleteComponentAction(component));
+    console.log(componentsApiData);
+    // window.location.reload();
   };
 
   const toggleModal = () => {
@@ -126,7 +130,7 @@ const ComponentStatus: React.FC = () => {
         buttonTwo="Cancel"
       />
 
-      {componentsApiData.length === 0 ? (
+      {!componentsApiData ? (
         <SkeletonTable />
       ) : (
         componentsApiData?.map((category) => (
