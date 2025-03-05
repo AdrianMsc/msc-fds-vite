@@ -8,7 +8,10 @@ import { deleteComponent } from "../api/deleteComponent";
 import { IComponentApi } from "../interfaces/component.interface";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
-import { deleteComponentAction } from "../redux/slices/componentsSlice";
+import {
+  deleteComponentAction,
+  setComponentsState,
+} from "../redux/slices/componentsSlice";
 
 const ComponentStatus: React.FC = () => {
   const [triggerModal, setTriggerModal] = useState("hidden");
@@ -42,6 +45,7 @@ const ComponentStatus: React.FC = () => {
   const handleDelete = async (component: IComponentApi) => {
     await deleteComponent(component);
     dispatch(deleteComponentAction(component));
+    dispatch(setComponentsState(componentsApiData));
     console.log(componentsApiData);
     // window.location.reload();
   };
