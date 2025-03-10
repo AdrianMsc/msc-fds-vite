@@ -1,32 +1,29 @@
-import { createContext, useContext, useEffect } from "react";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { createContext, useContext, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setComponentsState } from "../redux/slices/componentsSlice";
-import { ICategoryApi } from "../interfaces/component.interface";
-import { baseUrl } from "../api";
+import { getComponentsApi } from "../api/getComponents";
 
 const ApiContext = createContext<{ data: any | null }>({ data: null });
 
 export const ApiProvider = ({ children }: { children: React.ReactNode }) => {
-  const queryClient = useQueryClient();
+  const [data, setData] = useState(null);
   const dispatch = useDispatch();
 
-  const { data, error } = useQuery<ICategoryApi[]>({
-    queryKey: ["components"],
-    queryFn: async () => {
-      const response = await fetch(`${baseUrl}/components`);
-      return await response.json();
-    },
-  });
+  useEffect(() => {
+    getComponentsApi()
+      .then((result) => {
+        setData(result);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, []);
 
   useEffect(() => {
     if (data) {
-      queryClient.setQueryData(["components"], data); // Guarda en react-query
       dispatch(setComponentsState(data));
-    } else if (error) {
-      console.log(error);
     }
-  }, [data, queryClient]);
+  }, [data]);
 
   return <ApiContext.Provider value={{ data }}>{children}</ApiContext.Provider>;
 };

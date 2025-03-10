@@ -1,14 +1,17 @@
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { baseUrl } from ".";
 import { IComponentApi } from "../interfaces/component.interface";
 
-export const deleteComponent = (component: IComponentApi) => {
-  const response = axios
-    .delete(`${baseUrl}/components/${component.id}`)
-    .then((response) => response)
-    .catch(function (error) {
-      console.log(error);
-    });
-
-  return response;
+export const deleteComponent = async (
+  component: IComponentApi
+): Promise<AxiosResponse<any>> => {
+  try {
+    const response = await axios.delete(
+      `${baseUrl}/components/${component.id}`
+    );
+    return response;
+  } catch (error) {
+    console.error("Error deleting component:", error);
+    throw error;
+  }
 };

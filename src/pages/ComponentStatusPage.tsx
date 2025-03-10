@@ -7,11 +7,8 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { deleteComponent } from "../api/deleteComponent";
 import { IComponentApi } from "../interfaces/component.interface";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../redux/store";
-import {
-  deleteComponentAction,
-  setComponentsState,
-} from "../redux/slices/componentsSlice";
+import { AppDispatch, RootState } from "../redux/store";
+import { removeComponent } from "../redux/slices/componentsSlice";
 
 const ComponentStatus: React.FC = () => {
   const [triggerModal, setTriggerModal] = useState("hidden");
@@ -21,7 +18,7 @@ const ComponentStatus: React.FC = () => {
   const [showSecondButton, setShowSecondButton] = useState(false);
   const firstButtonRef = useRef(null);
   const componentsApiData = useSelector((state: RootState) => state.components);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -43,11 +40,12 @@ const ComponentStatus: React.FC = () => {
   }, []);
 
   const handleDelete = async (component: IComponentApi) => {
-    await deleteComponent(component);
-    dispatch(deleteComponentAction(component));
-    dispatch(setComponentsState(componentsApiData));
-    console.log(componentsApiData);
-    // window.location.reload();
+    try {
+      const response = await dispatch(removeComponent(component)).unwrap();
+      console.log("Component deleted successfully:", response);
+    } catch (error) {
+      console.error("Failed to delete component:", error);
+    }
   };
 
   const toggleModal = () => {
