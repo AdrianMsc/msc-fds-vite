@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencil, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FormComponent, Modal } from "../components";
 import { useAuth0 } from "@auth0/auth0-react";
-import { deleteComponent } from "../api/deleteComponent";
 import { IComponentApi } from "../interfaces/component.interface";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../redux/store";
@@ -19,6 +18,10 @@ const ComponentStatus: React.FC = () => {
   const firstButtonRef = useRef(null);
   const componentsApiData = useSelector((state: RootState) => state.components);
   const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    console.log("Components state:", componentsApiData);
+  }, [componentsApiData]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(

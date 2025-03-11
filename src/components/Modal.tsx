@@ -2,8 +2,10 @@ import { ReactElement, useEffect } from "react";
 import { useForm, FormProvider, useFormState } from "react-hook-form";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { createComponent } from "../api/createComponent";
 import { updateComponent } from "../api/updateComponent";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../redux/store";
+import { addComponent } from "../redux/slices/componentsSlice";
 
 interface Props {
   triggerModal: string;
@@ -26,6 +28,7 @@ const Modal = ({
 }: Props) => {
   const methods = useForm();
   const { errors } = useFormState({ control: methods.control });
+  const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
     if (defaultValues) {
@@ -40,15 +43,10 @@ const Modal = ({
         const response = await updateComponent(data);
         console.log(response);
       } else {
-        const response = await createComponent(data);
+        const response = await dispatch(addComponent(data)).unwrap();
         console.log(response);
-        if (response.status === 201) {
-        }
+        methods.reset();
       }
-      methods.reset();
-      // window.location.reload();
-    } else {
-      console.log("Form has errors:", errors);
     }
   };
 

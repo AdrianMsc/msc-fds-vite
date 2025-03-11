@@ -6,10 +6,10 @@ import {
 } from "../../interfaces/component.interface";
 import { createComponent } from "../../api/createComponent";
 import { deleteComponent } from "../../api/deleteComponent";
+import { updateComponent } from "../../api/updateComponent";
 
 const initialState: ICategoryApi[] = [];
 
-// Define the async thunk for adding a component
 export const addComponent = createAsyncThunk(
   "components/addComponent",
   async (data: IComponentForm, { rejectWithValue }) => {
@@ -26,7 +26,6 @@ export const addComponent = createAsyncThunk(
   }
 );
 
-// Define the async thunk for deleting a component
 export const removeComponent = createAsyncThunk(
   "components/removeComponent",
   async (component: IComponentApi, { rejectWithValue }) => {
@@ -36,6 +35,22 @@ export const removeComponent = createAsyncThunk(
         return component;
       } else {
         return rejectWithValue("Failed to delete component");
+      }
+    } catch (error: any) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const editComponent = createAsyncThunk(
+  "components/editComponent",
+  async (data: IComponentApi, { rejectWithValue }) => {
+    try {
+      const response = await updateComponent(data);
+      if (response.status === 200) {
+        return response.data;
+      } else {
+        return rejectWithValue("Failed to edit component");
       }
     } catch (error: any) {
       return rejectWithValue(error.response.data);
@@ -60,6 +75,7 @@ export const componentSlice = createSlice({
             (item) => item.category === action.payload.category
           );
           if (category) {
+            console.log(action.payload);
             category.components.push(action.payload);
           }
         }
@@ -85,6 +101,25 @@ export const componentSlice = createSlice({
       )
       .addCase(removeComponent.rejected, (_, action) => {
         console.error("Error deleting component:", action.payload);
+      })
+      .addCase(
+        editComponent.fulfilled,
+        (state, action: PayloadAction<IComponentApi>) => {
+          const category = state.find(
+            (item) => item.category === action.payload.category
+          );
+          if (category) {
+            const index = category.components.findIndex(
+              (comp) => comp.id === action.payload.id
+            );
+            if (index !== -1) {
+              category.components[index] = action.payload;
+            }
+          }
+        }
+      )
+      .addCase(editComponent.rejected, (_, action) => {
+        console.error("Error editing component:", action.payload);
       });
   },
 });
