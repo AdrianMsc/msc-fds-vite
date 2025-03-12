@@ -20,10 +20,6 @@ const ComponentStatus: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
-    console.log("Components state:", componentsApiData);
-  }, [componentsApiData]);
-
-  useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         setShowSecondButton(!entry.isIntersecting);

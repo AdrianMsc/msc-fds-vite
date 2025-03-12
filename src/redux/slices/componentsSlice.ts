@@ -16,7 +16,22 @@ export const addComponent = createAsyncThunk(
     try {
       const response = await createComponent(data);
       if (response.status === 201) {
-        return response.data;
+        const newComponent = {
+          id: response.data.componentId,
+          name: data.name,
+          comment: data.comment,
+          description: "",
+          category: data.category,
+          statuses: [
+            {
+              guidelines: data.guidelines,
+              figma: data.figma,
+              storybook: data.storybook,
+              cdn: data.cdn,
+            },
+          ],
+        };
+        return newComponent;
       } else {
         return rejectWithValue("Failed to create component");
       }
@@ -71,13 +86,15 @@ export const componentSlice = createSlice({
       .addCase(
         addComponent.fulfilled,
         (state, action: PayloadAction<IComponentApi>) => {
-          const category = state.find(
-            (item) => item.category === action.payload.category
-          );
-          if (category) {
-            console.log(action.payload);
-            category.components.push(action.payload);
-          }
+          return state.map((item) => {
+            if (item.category === action.payload.category) {
+              return {
+                ...item,
+                components: [...item.components, action.payload],
+              };
+            }
+            return item;
+          });
         }
       )
       .addCase(addComponent.rejected, (_, action) => {
