@@ -4,7 +4,7 @@ import { useLocation } from "react-router-dom";
 
 interface ComponentLayoutProps {
   id?: number;
-  title: string;
+  name: string;
   category: string;
   description?: string;
   children?: ReactNode;
@@ -19,14 +19,15 @@ const ComponentLayout: React.FC<ComponentLayoutProps> = ({
 }) => {
   const location = useLocation();
 
-  const { id, title, category, description, statuses } = location.state || {};
+  const { id, name, category, description, statuses } = location.state || {};
 
+  console.log(location.state);
   return (
     <>
       <section className={`${className ? className : ""}`}>
         <h1 className="font-bold text-3xl mb-3">
           <small className="text-sm text-primary-blue">{category}</small> <br />
-          {title}
+          {name}
         </h1>
         {statusBar ? <MscStatusComponentBar id={id} stats={statuses} /> : ""}
         <p className="mb-4">{description}</p>
