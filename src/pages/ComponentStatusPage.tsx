@@ -1,13 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
 import SkeletonTable from "../layout/SkeletonTable";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencil, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FormComponent, Modal } from "../components";
-import { baseUrl } from "../api";
 import { useAuth0 } from "@auth0/auth0-react";
-import { ICategoryApi, IComponentApi } from "../interfaces/component.interface";
-import { deleteComponent } from "../api/deleteComponent";
+import { IComponentApi } from "../interfaces/component.interface";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../redux/store";
+import { removeComponent } from "../redux/slices/componentsSlice";
 
 const ComponentStatus: React.FC = () => {
   const [triggerModal, setTriggerModal] = useState("hidden");
@@ -16,14 +16,12 @@ const ComponentStatus: React.FC = () => {
   const [modalText, setModalText] = useState({ buttonOne: "", title: "" });
   const [showSecondButton, setShowSecondButton] = useState(false);
   const firstButtonRef = useRef(null);
+  const componentsApiData = useSelector((state: RootState) => state.components);
+  const dispatch = useDispatch<AppDispatch>();
 
-  const { data, isLoading } = useQuery<ICategoryApi[]>({
-    queryKey: ["components"],
-    queryFn: async () => {
-      const response = await fetch(`${baseUrl}/components`);
-      return await response.json();
-    },
-  });
+  useEffect(() => {
+    console.log("Components state:", componentsApiData);
+  }, [componentsApiData]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -45,9 +43,12 @@ const ComponentStatus: React.FC = () => {
   }, []);
 
   const handleDelete = async (component: IComponentApi) => {
-    const response = await deleteComponent(component);
-    console.log(response);
-    window.location.reload();
+    try {
+      const response = await dispatch(removeComponent(component)).unwrap();
+      console.log("Component deleted successfully:", response);
+    } catch (error) {
+      console.error("Failed to delete component:", error);
+    }
   };
 
   const toggleModal = () => {
@@ -134,12 +135,12 @@ const ComponentStatus: React.FC = () => {
         buttonTwo="Cancel"
       />
 
-      {isLoading ? (
+      {!componentsApiData ? (
         <SkeletonTable />
       ) : (
-        data?.map((data) => (
-          <React.Fragment key={data.category}>
-            <h2 className="font-bold text-2xl mt-5">{data.category}</h2>
+        componentsApiData?.map((category) => (
+          <React.Fragment key={category.category}>
+            <h2 className="font-bold text-2xl mt-5">{category.category}</h2>
 
             <div className="overflow-x-auto mt-3">
               <table className="w-full text-sm text-left rtl:text-right text-gray-500">
@@ -171,7 +172,7 @@ const ComponentStatus: React.FC = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {data.components?.map((component, idx) => (
+                  {category.components?.map((component, idx) => (
                     <tr
                       key={idx + component.name}
                       className={`${

@@ -1,16 +1,17 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import formatComponentName from "../utils/formatComponentName";
 import SidebarContext from "../context/SidebarCtx";
-import { useQuery } from "@tanstack/react-query";
 import { ICategoryApi } from "../interfaces/component.interface";
-import { baseUrl } from "../api";
 import MscMiniLoading from "../components/MscMiniLoading/MscMiniLoading";
 import { createLinkPage } from "../utils/createLinkPage";
 import chevron from "../assets/chevron-down.svg";
+import { getComponentsApi } from "../api/getComponents";
 
 const Sidebar: React.FC = () => {
   const [openCategories, setOpenCategories] = useState<string[]>([]);
+  const [categories, setCategories] = useState<ICategoryApi[] | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const context = useContext(SidebarContext);
   const navigate = useNavigate();
 
@@ -20,19 +21,20 @@ const Sidebar: React.FC = () => {
 
   const { isSidebarOpen } = context;
 
-  const { data: categories, isLoading } = useQuery<ICategoryApi[]>({
-    queryKey: ["components"],
-    queryFn: async () => {
-      const storedData = sessionStorage.getItem("components");
-      if (storedData) {
-        return JSON.parse(storedData);
+  useEffect(() => {
+    const fetchComponents = async () => {
+      try {
+        const data = await getComponentsApi();
+        setCategories(data);
+      } catch (error) {
+        console.error("Error fetching components:", error);
+      } finally {
+        setIsLoading(false);
       }
-      const response = await fetch(`${baseUrl}/components`);
-      const result = await response.json();
-      sessionStorage.setItem("components", JSON.stringify(result));
-      return result;
-    },
-  });
+    };
+
+    fetchComponents();
+  }, []);
 
   const toggleCategory = (category: string) => {
     setOpenCategories((prev) =>

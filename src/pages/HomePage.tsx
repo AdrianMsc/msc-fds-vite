@@ -1,22 +1,23 @@
 import { useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-import { useApiData } from "../context/ApiContext";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 import Lottie from "react-lottie";
 import animation from "../assets/animation.json";
+import MscMiniLoading from "../components/MscMiniLoading/MscMiniLoading";
+import MscLoginWidget from "../components/MscLoginWidget/MscLoginWidget";
+import { RootState } from "../redux/store";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowRight,
   faArrowUpRightFromSquare,
   faBook,
 } from "@fortawesome/free-solid-svg-icons";
-import MscMiniLoading from "../components/MscMiniLoading/MscMiniLoading";
-import MscLoginWidget from "../components/MscLoginWidget/MscLoginWidget";
 
 export default function Home() {
   const [hsFlag, setHsFlag] = useState("");
   const [isFading, setIsFading] = useState(false);
-  const { data } = useApiData();
+  const data = useSelector((state: RootState) => state.components);
 
   const defaultOptions = {
     loop: true,

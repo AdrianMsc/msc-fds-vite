@@ -26,7 +26,7 @@ const Navbar: React.FC = () => {
   };
 
   const toggleModal = () => {
-    setTriggerModal((prev) => (prev === "hidden" ? "" : "hidden"));
+    setTriggerModal((prev) => (prev === "flex" ? "hidden" : "flex"));
   };
 
   const handleLogin = () => {
@@ -61,7 +61,7 @@ const Navbar: React.FC = () => {
       </div>
 
       <div
-        className={`fixed z-50 flex flex-col p-4 rounded-lg shadow-xl right-4 top-14 bg-white ${triggerModal}`}
+        className={`fixed z-50 flex-col p-4 rounded-lg shadow-xl right-4 top-14 bg-white ${triggerModal}`}
       >
         <div className="border-b-[1px] border-monochromes-grey_xlight font-semibold pb-1">
           {user?.name}
