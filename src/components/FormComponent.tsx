@@ -43,6 +43,7 @@ const FormComponent = () => {
             <option value="Layout">Layout</option>
             <option value="Navigation">Navigation</option>
             <option value="Overlay">Overlay</option>
+            <option value="WIP">WIP Components</option>
           </select>
           {errors.category?.type === "required" && (
             <span className="text-red-600">Please select an option</span>

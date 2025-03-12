@@ -3,6 +3,7 @@ import MscStatusComponentBar from "../../components/MscStatusComponentBar/MscSta
 import { useLocation } from "react-router-dom";
 
 interface ComponentLayoutProps {
+  id?: number;
   title: string;
   category: string;
   description?: string;
@@ -18,7 +19,7 @@ const ComponentLayout: React.FC<ComponentLayoutProps> = ({
 }) => {
   const location = useLocation();
 
-  const { title, category, description, statuses } = location.state || {};
+  const { id, title, category, description, statuses } = location.state || {};
 
   return (
     <>
@@ -27,7 +28,7 @@ const ComponentLayout: React.FC<ComponentLayoutProps> = ({
           <small className="text-sm text-primary-blue">{category}</small> <br />
           {title}
         </h1>
-        {statusBar ? <MscStatusComponentBar stats={statuses} /> : ""}
+        {statusBar ? <MscStatusComponentBar id={id} stats={statuses} /> : ""}
         <p className="mb-4">{description}</p>
         {children}
       </section>

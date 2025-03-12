@@ -53,6 +53,7 @@ const Sidebar: React.FC = () => {
       if (component) {
         navigate(path, {
           state: {
+            id: component.id,
             title: component.name,
             category: component.category,
             description: component.description,
