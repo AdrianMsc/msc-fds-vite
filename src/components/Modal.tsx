@@ -43,7 +43,8 @@ const Modal = ({
         const response = await updateComponent(data);
         console.log(response);
       } else {
-        const response = await dispatch(addComponent(data)).unwrap();
+        console.log(data);
+        const response = await dispatch(addComponent(data));
         console.log(response);
         methods.reset();
       }
