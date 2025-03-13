@@ -30,7 +30,7 @@ const MscPagedown = () => {
   return (
     <>
       <ComponentLayout
-        title={pageDown.title}
+        name={pageDown.title}
         category={pageDown.category}
         description={pageDown.description}
       >

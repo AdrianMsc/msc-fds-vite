@@ -125,7 +125,7 @@ const ComponentStatus: React.FC = () => {
         triggerModal={triggerModal}
         toggleModal={toggleModal}
         defaultValues={selectedRecord}
-        title={modalText.title}
+        name={modalText.title}
         body={<FormComponent />}
         buttonOne={modalText.buttonOne}
         buttonTwo="Cancel"

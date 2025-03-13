@@ -63,7 +63,7 @@ const MscStatusComponentBar: React.FC<MscStatusComponentBarProps> = ({
       <Modal
         triggerModal={triggerModal}
         toggleModal={toggleModal}
-        title={"Edit Status"}
+        name={"Edit Status"}
         body={<p>Status edition</p>}
         buttonOne="Accept"
         buttonTwo="Cancel"

@@ -6,7 +6,7 @@ import { shadows, shadowSizes } from "./constants";
 const MscShadowsPage = () => {
   return (
     <ComponentLayout
-      title={shadows.title}
+      name={shadows.title}
       category={shadows.category}
       description={shadows.description}
     >
