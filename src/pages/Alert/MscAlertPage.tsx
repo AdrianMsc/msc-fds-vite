@@ -44,7 +44,7 @@ const MscAlertPage = () => {
 
   return (
     <ComponentLayout
-      title={alerts.title}
+      name={alerts.title}
       category={alerts.category}
       description={alerts.description}
     >

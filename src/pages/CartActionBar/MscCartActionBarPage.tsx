@@ -42,7 +42,7 @@ const MscCartActionBarPage = () => {
   };
 
   return (
-    <ComponentLayout title="Cart Action Bar" description="" category="Action">
+    <ComponentLayout name="Cart Action Bar" description="" category="Action">
       <div className="msc-cart-action-bar">
         <div className="msc-buttons-container">
           {buttons.map((button, index) => (

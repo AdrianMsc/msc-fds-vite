@@ -21,7 +21,7 @@ const MscModalListPage = () => {
 
   return (
     <ComponentLayout
-      title="Modal Discount Newsletter"
+      name="Modal Discount Newsletter"
       category="Overlay"
       description="Design of modals 20% off and join to the newsletter"
     >

@@ -5,7 +5,7 @@ import ComponentLayout from "../../layout/ComponentLayout/ComponentLayout";
 const MscTogglePage = () => {
   return (
     <ComponentLayout
-      title="Toggle"
+      name="Toggle"
       category="Form"
       description="The Toggle component allows users to switch between two states, like on and off. It's customizable for size, color, and labels, and supports states like enabled, disabled, and loading."
     >

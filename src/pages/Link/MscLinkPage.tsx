@@ -4,7 +4,7 @@ import ComponentLayout from "../../layout/ComponentLayout/ComponentLayout";
 const MscLinkPage = () => {
   return (
     <ComponentLayout
-      title="Link"
+      name="Link"
       category="Action"
       description="The Link component is used to navigate users to different pages or external resources. It provides a clear and accessible way to create hyperlinks within an application. This component is designed to be easily recognizable and can be styled to match the overall design system. It supports various states such as hover, active, and visited, ensuring a consistent user experience. Additionally, it can handle different types of links, including internal navigation and external URLs."
     >
