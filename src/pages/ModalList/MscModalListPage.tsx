@@ -5,18 +5,18 @@ import MscThanksModal from "../../components/MscMailListModal/MscThanksModal";
 import MscModalB from "../../components/MscMailListModal/MscModalB";
 
 const MscModalListPage = () => {
-  const [triggerModalB, setTriggerModalB] = useState("hidden");
-  const [triggerModalC, setTriggerModalC] = useState("hidden");
-  const [triggerModal, setTriggerModal] = useState("hidden");
+  const [triggerModalB, setTriggerModalB] = useState("!hidden");
+  const [triggerModalC, setTriggerModalC] = useState("!hidden");
+  const [triggerModal, setTriggerModal] = useState("!hidden");
 
   const toggleModalB = () => {
-    setTriggerModalB((prev) => (prev === "hidden" ? "" : "hidden"));
+    setTriggerModalB((prev) => (prev === "!hidden" ? "" : "!hidden"));
   };
   const toggleModalC = () => {
-    setTriggerModalC((prev) => (prev === "hidden" ? "" : "hidden"));
+    setTriggerModalC((prev) => (prev === "!hidden" ? "" : "!hidden"));
   };
   const toggleModal = () => {
-    setTriggerModal((prev) => (prev === "hidden" ? "" : "hidden"));
+    setTriggerModal((prev) => (prev === "!hidden" ? "" : "!hidden"));
   };
 
   return (

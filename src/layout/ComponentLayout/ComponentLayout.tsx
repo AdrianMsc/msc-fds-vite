@@ -4,8 +4,8 @@ import { useLocation } from "react-router-dom";
 
 interface ComponentLayoutProps {
   id?: number;
-  name: string;
-  category: string;
+  name?: string;
+  category?: string;
   description?: string;
   children?: ReactNode;
   className?: string;
@@ -21,7 +21,6 @@ const ComponentLayout: React.FC<ComponentLayoutProps> = ({
 
   const { id, name, category, description, statuses } = location.state || {};
 
-  console.log(location.state);
   return (
     <>
       <section className={`${className ? className : ""}`}>

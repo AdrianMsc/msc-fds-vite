@@ -3,10 +3,10 @@ import MscTableModal from "../../components/MscTableModal";
 import ComponentLayout from "../../layout/ComponentLayout/ComponentLayout";
 
 const TableModalPage = () => {
-  const [triggerModal, setTriggerModal] = useState("hidden");
+  const [triggerModal, setTriggerModal] = useState("!hidden");
 
   const toggleModal = () => {
-    setTriggerModal((prev) => (prev === "hidden" ? "" : "hidden"));
+    setTriggerModal((prev) => (prev === "!hidden" ? "" : "!hidden"));
   };
 
   return (
