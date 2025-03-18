@@ -12,7 +12,7 @@ const MscPaginationPage = () => {
   return (
     <>
       <ComponentLayout
-        title={pagination.title}
+        name={pagination.title}
         description={pagination.description}
         category={pagination.category}
       >

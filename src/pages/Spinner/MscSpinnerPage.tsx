@@ -27,7 +27,7 @@ const MscSpinnerPage = () => {
 
   return (
     <ComponentLayout
-      title={spinner.title}
+      name={spinner.title}
       category={spinner.category}
       description={spinner.description}
     >

@@ -10,7 +10,7 @@ const MscColorsPage = () => {
 
   return (
     <ComponentLayout
-      title={colors.title}
+      name={colors.title}
       category={colors.category}
       description={colors.description}
     >

@@ -12,7 +12,7 @@ const MscTypographyPage = () => {
 
   return (
     <ComponentLayout
-      title={typography.title}
+      name={typography.title}
       category={typography.category}
       description={typography.description}
     >

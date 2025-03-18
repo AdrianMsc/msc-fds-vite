@@ -4,7 +4,6 @@ import { baseUrl } from ".";
 export const getComponentsApi = async () => {
   try {
     const response = await axios.get(`${baseUrl}/components`);
-    console.log(response.data);
     return response.data;
   } catch (error) {
     console.error("Error fetching components:", error);

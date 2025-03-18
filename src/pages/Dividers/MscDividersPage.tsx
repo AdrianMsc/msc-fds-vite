@@ -6,7 +6,7 @@ const MscDividersPage = () => {
   return (
     <>
       <ComponentLayout
-        title={dividers.title}
+        name={dividers.title}
         category={dividers.category}
         description={dividers.description}
       >

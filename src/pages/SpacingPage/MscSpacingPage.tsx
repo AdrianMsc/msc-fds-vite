@@ -6,7 +6,7 @@ import { spacing } from "./constants";
 const MscSpacingPage = () => {
   return (
     <ComponentLayout
-      title={spacing.title}
+      name={spacing.title}
       category={spacing.category}
       description={spacing.description}
     >

@@ -4,7 +4,7 @@ import ComponentLayout from "../../layout/ComponentLayout/ComponentLayout";
 
 const MscModalPage = () => {
   return (
-    <ComponentLayout title="Modal" category="Overlay" description="">
+    <ComponentLayout name="Modal" category="Overlay" description="">
       <MscModal />
       <div className="py-2">
         <Codeblock>

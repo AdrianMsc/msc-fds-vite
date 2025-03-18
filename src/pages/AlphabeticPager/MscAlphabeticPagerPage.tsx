@@ -12,7 +12,7 @@ const MscAlphabeticPagerPage = () => {
   return (
     <>
       <ComponentLayout
-        title={alphabeticPager.title}
+        name={alphabeticPager.title}
         description={alphabeticPager.description}
         category={alphabeticPager.category}
       >

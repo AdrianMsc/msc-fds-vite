@@ -26,6 +26,7 @@ const Sidebar: React.FC = () => {
       try {
         const data = await getComponentsApi();
         setCategories(data);
+        sessionStorage.setItem("components", JSON.stringify(data));
       } catch (error) {
         console.error("Error fetching components:", error);
       } finally {
@@ -33,7 +34,13 @@ const Sidebar: React.FC = () => {
       }
     };
 
-    fetchComponents();
+    const storedData = sessionStorage.getItem("components");
+    if (storedData) {
+      setCategories(JSON.parse(storedData));
+      setIsLoading(false);
+    } else {
+      fetchComponents();
+    }
   }, []);
 
   const toggleCategory = (category: string) => {
@@ -54,13 +61,7 @@ const Sidebar: React.FC = () => {
 
       if (component) {
         navigate(path, {
-          state: {
-            id: component.id,
-            title: component.name,
-            category: component.category,
-            description: component.description,
-            statuses: component.statuses,
-          },
+          state: component,
         });
       }
     }
@@ -75,35 +76,22 @@ const Sidebar: React.FC = () => {
       <strong>Start Here</strong>
       <NavLink
         to={`/docs/${createLinkPage("GettingStarted")}`}
-        className={({ isActive, isPending }) =>
-          `ml-5 ${
-            isActive
-              ? "font-bold text-primary-blue"
-              : isPending
-              ? "pending"
-              : ""
-          }`
+        className={({ isActive }) =>
+          isActive ? "font-bold text-primary-blue ml-5" : "ml-5"
         }
       >
         Getting Started
       </NavLink>
       <NavLink
         to={`/docs/${createLinkPage("ComponentStatus")}`}
-        className={({ isActive, isPending }) =>
-          `ml-5 ${
-            isActive
-              ? "font-bold text-primary-blue"
-              : isPending
-              ? "pending"
-              : ""
-          }`
+        className={({ isActive }) =>
+          isActive ? "font-bold text-primary-blue ml-5" : "ml-5"
         }
       >
         Component Status
       </NavLink>
       <strong className="text-primary-blue flex items-center">
-        Categories
-        {isLoading ? <MscMiniLoading /> : ""}
+        Categories {isLoading && <MscMiniLoading />}
       </strong>
       {categories?.map((item, idx) => (
         <React.Fragment key={idx}>
@@ -128,14 +116,10 @@ const Sidebar: React.FC = () => {
             {item.components.map((comp, idx) => (
               <NavLink
                 key={idx}
-                className={({ isActive, isPending }) =>
-                  `pl-5 hover:rounded hover:font-semibold transition-all ${
-                    isActive
-                      ? "font-bold text-primary-blue"
-                      : isPending
-                      ? "pending"
-                      : ""
-                  }`
+                className={({ isActive }) =>
+                  isActive
+                    ? "pl-5 font-bold text-primary-blue hover:rounded hover:font-semibold transition-all"
+                    : "pl-5 hover:rounded hover:font-semibold transition-all"
                 }
                 to={`/docs/${createLinkPage(comp.name)}`}
                 onClick={(event) => {

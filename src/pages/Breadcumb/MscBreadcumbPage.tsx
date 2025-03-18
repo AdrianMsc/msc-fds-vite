@@ -12,7 +12,7 @@ const MscBreadcumbPage = () => {
   return (
     <>
       <ComponentLayout
-        title={breadcumb.title}
+        name={breadcumb.title}
         description={breadcumb.description}
         category={breadcumb.category}
       >

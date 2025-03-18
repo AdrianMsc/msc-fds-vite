@@ -11,7 +11,7 @@ const MscErrorPage = () => {
   return (
     <>
       <ComponentLayout
-        title={error.title}
+        name={error.title}
         category={error.category}
         description={error.description}
       >
