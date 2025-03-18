@@ -4276,6 +4276,10 @@ h6 {
   opacity: 1;
 }
 
+.opacity-20 {
+  opacity: 0.2;
+}
+
 .opacity-65 {
   opacity: 0.65;
 }
@@ -4609,6 +4613,10 @@ h6 {
 
 .hover\:underline:hover {
   text-decoration-line: underline;
+}
+
+.hover\:opacity-100:hover {
+  opacity: 1;
 }
 
 .hover\:invalid\:\!border-error-red:invalid:hover {
