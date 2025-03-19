@@ -30,6 +30,7 @@ import MscAlphabeticPagerPage from "../pages/AlphabeticPager/MscAlphabeticPagerP
 import MscBreadcumbPage from "../pages/Breadcumb/MscBreadcumbPage";
 import MscPaginationPage from "../pages/Pagination/MscPaginationPage";
 import MscDividersPage from "../pages/Dividers/MscDividersPage";
+import { SimilarItems } from "../pages/SimilarItems/SimilarItems";
 
 const router = createBrowserRouter([
   {
@@ -159,6 +160,10 @@ const router = createBrowserRouter([
       {
         path: "MailListModals",
         element: <MscModalListPage />,
+      },
+      {
+        path: "SimilarItems",
+        element: <SimilarItems />,
       },
     ],
   },
