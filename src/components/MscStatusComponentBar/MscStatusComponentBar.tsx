@@ -33,7 +33,7 @@ const MscStatusComponentBar: React.FC<MscStatusComponentBarProps> = ({
 
   return (
     <>
-      <ul className=" w-fit  rounded flex space-x-3 mb-4">
+      <ul className="w-fit flex gap-3 mb-4">
         <li className="hidden">{id}</li>
         <li>
           <b>Guidelines:</b> {currentStats.guidelines}

@@ -36,14 +36,14 @@ const FormComponent = () => {
             {...register("category", { required: true })}
           >
             <option value="">-- Select an option --</option>
-            <option value="Foundations">Foundations</option>
             <option value="Action">Action</option>
+            <option value="Collection">Collection</option>
             <option value="Form">Form</option>
+            <option value="Foundations">Foundations</option>
             <option value="Indicator">Indicator</option>
             <option value="Layout">Layout</option>
             <option value="Navigation">Navigation</option>
             <option value="Overlay">Overlay</option>
-            <option value="WIP">WIP Components</option>
           </select>
           {errors.category?.type === "required" && (
             <span className="text-red-600">Please select an option</span>

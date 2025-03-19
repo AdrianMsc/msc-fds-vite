@@ -7,6 +7,7 @@ import MscMiniLoading from "../components/MscMiniLoading/MscMiniLoading";
 import { createLinkPage } from "../utils/createLinkPage";
 import chevron from "../assets/chevron-down.svg";
 import { getComponentsApi } from "../api/getComponents";
+import { routesIndex } from "../router/routeIndex";
 
 const Sidebar: React.FC = () => {
   const [openCategories, setOpenCategories] = useState<string[]>([]);
@@ -124,10 +125,21 @@ const Sidebar: React.FC = () => {
                 to={`/docs/${createLinkPage(comp.name)}`}
                 onClick={(event) => {
                   event.preventDefault();
-                  handleDataSend(
-                    `/docs/${createLinkPage(comp.name)}`,
-                    comp.name
-                  );
+                  if (
+                    routesIndex[1].children?.some(
+                      (route) => route.path === comp.name
+                    )
+                  ) {
+                    handleDataSend(
+                      `/docs/${createLinkPage(comp.name)}`,
+                      comp.name
+                    );
+                  } else {
+                    handleDataSend(
+                      `/docs/${createLinkPage("WipComponent")}`,
+                      comp.name
+                    );
+                  }
                 }}
               >
                 {formatComponentName(comp.name)}
