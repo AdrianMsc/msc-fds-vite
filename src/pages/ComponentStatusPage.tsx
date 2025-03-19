@@ -2,17 +2,31 @@ import React, { useEffect, useRef, useState } from "react";
 import SkeletonTable from "../layout/SkeletonTable";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencil, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
-import { FormComponent, Modal } from "../components";
 import { useAuth0 } from "@auth0/auth0-react";
-import { IComponentApi } from "../interfaces/component.interface";
+import {
+  IComponentApi,
+  IComponentForm,
+} from "../interfaces/component.interface";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../redux/store";
 import { removeComponent } from "../redux/slices/componentsSlice";
+import ModalForm from "../components/ModalForm";
+
+const defaultValuesEmpty = {
+  name: "",
+  category: "",
+  guidelines: "",
+  figma: "",
+  storybook: "",
+  cdn: "",
+  comment: "",
+};
 
 const ComponentStatus: React.FC = () => {
   const [triggerModal, setTriggerModal] = useState("hidden");
   const { isAuthenticated } = useAuth0();
-  const [selectedRecord, setSelectedRecord] = useState<IComponentApi>();
+  const [selectedRecord, setSelectedRecord] =
+    useState<IComponentForm>(defaultValuesEmpty);
   const [modalText, setModalText] = useState({ buttonOne: "", title: "" });
   const [showSecondButton, setShowSecondButton] = useState(false);
   const firstButtonRef = useRef(null);
@@ -125,12 +139,11 @@ const ComponentStatus: React.FC = () => {
         )}
       </div>
 
-      <Modal
+      <ModalForm
         triggerModal={triggerModal}
         toggleModal={toggleModal}
         defaultValues={selectedRecord}
         title={modalText.title}
-        body={<FormComponent />}
         buttonOne={modalText.buttonOne}
         buttonTwo="Cancel"
       />
