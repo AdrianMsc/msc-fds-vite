@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import MscColors from "../../components/MscColors/MscColors";
 import ComponentLayout from "../../layout/ComponentLayout/ComponentLayout";
-import { colors, palettes } from "./constants";
+import { palettes } from "./constants";
 
 const MscColorsPage = () => {
   useEffect(() => {
@@ -9,11 +9,7 @@ const MscColorsPage = () => {
   }, []);
 
   return (
-    <ComponentLayout
-      name={colors.title}
-      category={colors.category}
-      description={colors.description}
-    >
+    <ComponentLayout>
       <div className="flex flex-col md:flex-row space-x-2 flex-wrap">
         {palettes.map((palette) => (
           <article

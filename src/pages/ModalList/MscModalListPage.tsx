@@ -20,11 +20,7 @@ const MscModalListPage = () => {
   };
 
   return (
-    <ComponentLayout
-      name="Modal Discount Newsletter"
-      category="Overlay"
-      description="Design of modals 20% off and join to the newsletter"
-    >
+    <ComponentLayout>
       <button
         className="msc-btn msc-btn-blue-solid mr-4"
         onClick={toggleModalB}

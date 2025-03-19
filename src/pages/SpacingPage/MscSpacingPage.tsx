@@ -1,15 +1,10 @@
 import { MscSpacing } from "../../components";
 import Codeblock from "../../layout/Codeblock";
 import ComponentLayout from "../../layout/ComponentLayout/ComponentLayout";
-import { spacing } from "./constants";
 
 const MscSpacingPage = () => {
   return (
-    <ComponentLayout
-      name={spacing.title}
-      category={spacing.category}
-      description={spacing.description}
-    >
+    <ComponentLayout>
       <h2 className="mb-3">Spacing System</h2>
 
       <table className="border-collapse w-full border border-slate-400 mb-4">

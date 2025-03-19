@@ -1,15 +1,11 @@
 import { MscShadows } from "../../components";
 import Codeblock from "../../layout/Codeblock";
 import ComponentLayout from "../../layout/ComponentLayout/ComponentLayout";
-import { shadows, shadowSizes } from "./constants";
+import { shadowSizes } from "./constants";
 
 const MscShadowsPage = () => {
   return (
-    <ComponentLayout
-      name={shadows.title}
-      category={shadows.category}
-      description={shadows.description}
-    >
+    <ComponentLayout>
       <article className="flex gap-10 items-center bg-white p-5 max-w-[1500px] rounded overflow-hidden h-fit flex-wrap mb-4">
         {Object.keys(shadowSizes).map((size) => (
           <MscShadows key={size} size={size as keyof typeof shadowSizes} />

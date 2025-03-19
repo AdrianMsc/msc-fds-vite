@@ -3,11 +3,7 @@ import ComponentLayout from "../../layout/ComponentLayout/ComponentLayout";
 
 const MscCheckboxPage = () => {
   return (
-    <ComponentLayout
-      name="Checkbox"
-      category="Form"
-      description="The Checkbox component allows users to select one or more options from a set. It provides a simple and intuitive way to make multiple selections, with each checkbox representing a binary choice. This component is designed to be easily recognizable and accessible, supporting various states such as checked, unchecked, and indeterminate. It can be customized to fit the design system, including size, color, and label positioning. Checkboxes are commonly used in forms, settings, and filters to enhance user interaction and data input."
-    >
+    <ComponentLayout>
       <div className="msc-checkbox-container">
         <input
           type="checkbox"

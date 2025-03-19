@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { MscButton, MscSpinner } from "../../components";
 import Codeblock from "../../layout/Codeblock";
 import ComponentLayout from "../../layout/ComponentLayout/ComponentLayout";
-import { spinner } from "./constants";
 
 type Variant = "light" | "dark";
 
@@ -26,11 +25,7 @@ const MscSpinnerPage = () => {
   }, []);
 
   return (
-    <ComponentLayout
-      name={spinner.title}
-      category={spinner.category}
-      description={spinner.description}
-    >
+    <ComponentLayout>
       <section className="flex space-x-5 mb-10">
         <div>
           <div className="msc-spinner-wrapper py-3 cursor-pointer mb-4">

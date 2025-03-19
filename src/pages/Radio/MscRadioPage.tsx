@@ -3,11 +3,7 @@ import ComponentLayout from "../../layout/ComponentLayout/ComponentLayout";
 
 const MscRadioPage = () => {
   return (
-    <ComponentLayout
-      name="Radio"
-      category="Form"
-      description="The Radio Button component allows users to select a single option from a set of mutually exclusive choices. It provides a clear and straightforward way to make a selection, with each radio button representing one option. This component is designed to be easily recognizable and accessible, supporting various states such as selected and unselected. Radio buttons are typically used in forms and settings where only one choice is allowed. They can be customized to fit the design system, including size, color, and label positioning."
-    >
+    <ComponentLayout>
       <h3 className="pb-2">Default</h3>
       <div className="flex gap-2">
         <div className="msc-radio-container">

@@ -3,11 +3,7 @@ import ComponentLayout from "../../layout/ComponentLayout/ComponentLayout";
 
 const MscInputPage = () => {
   return (
-    <ComponentLayout
-      name="Input"
-      category="Form"
-      description="The Input component enables users to enter and edit text. It supports various data types and states, such as focused, disabled, and error. Customizable to fit the design system, it includes options for size, color, placeholder text, and validation messages. Commonly used in forms and search bars, it enhances user interaction and data entry."
-    >
+    <ComponentLayout>
       <h3 className="mb-2">Default</h3>
       <div className="msc-input-wrapper">
         <input

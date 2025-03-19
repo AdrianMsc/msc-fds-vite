@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import ComponentLayout from "../../layout/ComponentLayout/ComponentLayout";
-import { error } from "./constants";
 import errorImg from "./assets/error-image.svg";
 
 const MscErrorPage = () => {
@@ -10,11 +9,7 @@ const MscErrorPage = () => {
 
   return (
     <>
-      <ComponentLayout
-        name={error.title}
-        category={error.category}
-        description={error.description}
-      >
+      <ComponentLayout>
         <section className="flex justify-center bg-white rounded -z-10">
           <article className="flex bg-white p-3 h-fit w-fit md:gap-10 rounded flex-wrap justify-center">
             <div className="w-[300px] mb-4 md:mb-0">

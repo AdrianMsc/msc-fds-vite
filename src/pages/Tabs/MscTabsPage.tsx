@@ -17,11 +17,7 @@ const MscTabsPage = ({ labels = ["Tab 1", "Tab 2", "Tab 3"] }) => {
   };
 
   return (
-    <ComponentLayout
-      name="Tabs"
-      category="Action"
-      description="The Tabs component organizes content into separate views, allowing users to switch between different sections without leaving the current page. It provides a clean and efficient way to manage multiple content areas within a single interface. Each tab can be labeled and styled to match the design system, and the active tab is clearly highlighted to indicate the current view. This component supports various configurations, such as horizontal or vertical tab layouts, and can include icons or badges for additional context."
-    >
+    <ComponentLayout>
       <ul className="msc-tabs grid-cols-6">
         {labels.map((label, index) => (
           <li

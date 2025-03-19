@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import ComponentLayout from "../../layout/ComponentLayout/ComponentLayout";
 import { MscPagination } from "../../components";
 import Codeblock from "../../layout/Codeblock";
-import { pagination } from "./constants";
 
 const MscPaginationPage = () => {
   useEffect(() => {
@@ -11,11 +10,7 @@ const MscPaginationPage = () => {
 
   return (
     <>
-      <ComponentLayout
-        name={pagination.title}
-        description={pagination.description}
-        category={pagination.category}
-      >
+      <ComponentLayout>
         <MscPagination />
         <br />
         <Codeblock>
