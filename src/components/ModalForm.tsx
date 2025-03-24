@@ -5,7 +5,7 @@ import { updateField, resetForm, IFormState, setComponentData } from '../redux/s
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClose } from '@fortawesome/free-solid-svg-icons';
 import { IComponentApi } from '../interfaces/component.interface';
-import { addComponent, editComponent } from '../redux/slices/componentsSlice';
+import { addComponent, updateComponentThunk } from '../redux/slices/componentsSlice';
 
 interface ModalFormProps {
 	triggerModal: string;
@@ -69,29 +69,18 @@ const ModalForm: React.FC<ModalFormProps> = ({
 
 	const handleSubmit = (e: FormEvent) => {
 		e.preventDefault();
-		if (formState.id == '') {
+		if (formState.id === '') {
 			const componentCasted = {
 				...formState,
 				id: Number(formState.id)
 			};
 			dispatch(addComponent(componentCasted));
 		} else {
-			const componentFormatted = {
-				id: Number(formState.id),
-				name: formState.name,
-				category: formState.category,
-				comment: formState.comment,
-				statuses: [
-					{
-						guidelines: formState.guidelines,
-						figma: formState.figma,
-						storybook: formState.storybook,
-						cdn: formState.cdn
-					}
-				]
+			const componentCasted = {
+				...formState,
+				id: Number(formState.id)
 			};
-			console.log('Formatted Component', componentFormatted);
-			dispatch(editComponent(componentFormatted));
+			dispatch(updateComponentThunk(componentCasted));
 		}
 		toggleModal();
 		dispatch(resetForm());
