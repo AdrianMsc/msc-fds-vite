@@ -5,26 +5,22 @@ import MscThanksModal from "../../components/MscMailListModal/MscThanksModal";
 import MscModalB from "../../components/MscMailListModal/MscModalB";
 
 const MscModalListPage = () => {
-  const [triggerModalB, setTriggerModalB] = useState("hidden");
-  const [triggerModalC, setTriggerModalC] = useState("hidden");
-  const [triggerModal, setTriggerModal] = useState("hidden");
+  const [triggerModalB, setTriggerModalB] = useState("!hidden");
+  const [triggerModalC, setTriggerModalC] = useState("!hidden");
+  const [triggerModal, setTriggerModal] = useState("!hidden");
 
   const toggleModalB = () => {
-    setTriggerModalB((prev) => (prev === "hidden" ? "" : "hidden"));
+    setTriggerModalB((prev) => (prev === "!hidden" ? "" : "!hidden"));
   };
   const toggleModalC = () => {
-    setTriggerModalC((prev) => (prev === "hidden" ? "" : "hidden"));
+    setTriggerModalC((prev) => (prev === "!hidden" ? "" : "!hidden"));
   };
   const toggleModal = () => {
-    setTriggerModal((prev) => (prev === "hidden" ? "" : "hidden"));
+    setTriggerModal((prev) => (prev === "!hidden" ? "" : "!hidden"));
   };
 
   return (
-    <ComponentLayout
-      name="Modal Discount Newsletter"
-      category="Overlay"
-      description="Design of modals 20% off and join to the newsletter"
-    >
+    <ComponentLayout>
       <button
         className="msc-btn msc-btn-blue-solid mr-4"
         onClick={toggleModalB}

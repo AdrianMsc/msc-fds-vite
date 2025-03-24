@@ -105,49 +105,45 @@ const ComponentStatus: React.FC = () => {
 			<small className="text-sm">
 				Components count: <strong>23</strong>
 			</small>
-			<div className="flex flex-row justify-between items-center">
-				<ul className="flex">
-					<li className="mr-3">🧱 Todo</li>
-					<li className="mr-3">🛠 WIP</li>
-					<li className="mr-3">🔭 Alpha</li>
-					<li className="mr-3">🧪 Beta</li>
-					<li className="mr-3">✅ Live</li>
-					<li className="mr-3">
-						<b className="font-bold">🚫</b> Not Applicable
-					</li>
-				</ul>
 
-				{isAuthenticated && (
-					<>
+			<ul className="flex mt-5">
+				<li className="mr-3">🧱 Todo</li>
+				<li className="mr-3">🛠 WIP</li>
+				<li className="mr-3">🔭 Alpha</li>
+				<li className="mr-3">🧪 Beta</li>
+				<li className="mr-3">✅ Live</li>
+				<li className="mr-3">
+					<b className="font-bold">🚫</b> Not Applicable
+				</li>
+			</ul>
+
+			{isAuthenticated && (
+				<>
+					<button
+						ref={firstButtonRef}
+						className="msc-btn msc-btn-blue-solid msc-btn-icon ml-0 mt-5"
+						onClick={() => {
+							setModalText({ buttonOne: 'Add', title: 'Add new component' });
+							toggleModal();
+						}}
+					>
+						Add component
+						<FontAwesomeIcon icon={faPlus} className="ml-2 items-center" />
+					</button>
+
+					{showSecondButton && (
 						<button
-							ref={firstButtonRef}
-							className="msc-btn msc-btn-blue-solid msc-btn-icon ml-0"
+							className="msc-btn msc-btn-blue-solid msc-btn-icon w-fit min-w-fit p-3 fixed bottom-5 right-5"
 							onClick={() => {
 								setModalText({ buttonOne: 'Add', title: 'Add new component' });
 								toggleModal();
 							}}
 						>
-							Add component
-							<FontAwesomeIcon icon={faPlus} className="ml-2 items-center" />
+							<FontAwesomeIcon icon={faPlus} className="items-center" />
 						</button>
-
-						{showSecondButton && (
-							<button
-								className="msc-btn msc-btn-blue-solid msc-btn-icon w-fit min-w-fit p-3 fixed bottom-5 right-5"
-								onClick={() => {
-									setModalText({
-										buttonOne: 'Add',
-										title: 'Add new component'
-									});
-									toggleModal();
-								}}
-							>
-								<FontAwesomeIcon icon={faPlus} className="items-center" />
-							</button>
-						)}
-					</>
-				)}
-			</div>
+					)}
+				</>
+			)}
 
 			<ModalForm
 				triggerModal={triggerModal}

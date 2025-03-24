@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { MscAlphabeticPager } from "../../components";
 import Codeblock from "../../layout/Codeblock";
 import ComponentLayout from "../../layout/ComponentLayout/ComponentLayout";
-import { alphabeticPager } from "./constants";
 
 const MscAlphabeticPagerPage = () => {
   useEffect(() => {
@@ -11,11 +10,7 @@ const MscAlphabeticPagerPage = () => {
 
   return (
     <>
-      <ComponentLayout
-        name={alphabeticPager.title}
-        description={alphabeticPager.description}
-        category={alphabeticPager.category}
-      >
+      <ComponentLayout>
         <MscAlphabeticPager />
 
         <Codeblock>

@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import "./page-down.css";
-import { pageDown } from "./constants";
 import ComponentLayout from "../../layout/ComponentLayout/ComponentLayout";
 
 const MscPagedown = () => {
@@ -29,11 +28,7 @@ const MscPagedown = () => {
 
   return (
     <>
-      <ComponentLayout
-        name={pageDown.title}
-        category={pageDown.category}
-        description={pageDown.description}
-      >
+      <ComponentLayout>
         <section className="bg-white min-h-56 relative">
           <header className="msc-pd-header absolute w-full top-0 left-0">
             <img

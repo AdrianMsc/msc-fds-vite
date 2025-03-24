@@ -11,11 +11,7 @@ const MscFilterPage = () => {
   ];
 
   return (
-    <ComponentLayout
-      name="Filter"
-      category="Action"
-      description="The Filter component allows users to refine and narrow down data sets based on specific criteria. It provides a user-friendly interface for selecting and applying filters, ensuring that users can quickly find the information they need. This component typically includes options such as dropdowns, checkboxes, and sliders to accommodate various filtering needs. It is designed to be highly customizable and easily integrated into different parts of the application."
-    >
+    <ComponentLayout>
       <div className="msc-top-filters-section">
         <h4 className="msc-top-filters-title">Refine your search</h4>
         <div className="msc-top-filters-container">

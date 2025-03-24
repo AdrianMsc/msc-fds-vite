@@ -9,7 +9,7 @@ import {
 
 const MscButtonsPage = () => {
   return (
-    <ComponentLayout name="Button" category="Action" description="">
+    <ComponentLayout>
       <div>
         <h2 className="font-bold text-2xl mb-2">Default Buttons</h2>
         <div className="msc-component-container-row">

@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import ComponentLayout from "../../layout/ComponentLayout/ComponentLayout";
-import { alerts } from "./constants";
 import Codeblock from "../../layout/Codeblock";
 import { MscTabs } from "../../components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -43,11 +42,7 @@ const MscAlertPage = () => {
   };
 
   return (
-    <ComponentLayout
-      name={alerts.title}
-      category={alerts.category}
-      description={alerts.description}
-    >
+    <ComponentLayout>
       <MscTabs
         labels={["Info", "Success", "Warning", "Error"]}
         background="#f2f2f2"

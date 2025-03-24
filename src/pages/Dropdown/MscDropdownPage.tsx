@@ -58,11 +58,7 @@ const MscDropdownPage = () => {
   };
 
   return (
-    <ComponentLayout
-      name="Dropdow"
-      category="Action"
-      description="Explore our Dropdown Components section, a key element in our design system. These interactive components allow users to choose one value from a list. Our dropdowns are designed for clarity, ease of use, and consistency across all platforms. They support both single and multi-select options, adapting to the needs of various user scenarios."
-    >
+    <ComponentLayout>
       <div>
         <h3 className="mb-2">Default</h3>
         <div

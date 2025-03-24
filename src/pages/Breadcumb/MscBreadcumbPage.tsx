@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import ComponentLayout from "../../layout/ComponentLayout/ComponentLayout";
 import { MscBreadcrumb } from "../../components";
 import Codeblock from "../../layout/Codeblock";
-import { breadcumb } from "./constants";
 
 const MscBreadcumbPage = () => {
   useEffect(() => {
@@ -11,11 +10,7 @@ const MscBreadcumbPage = () => {
 
   return (
     <>
-      <ComponentLayout
-        name={breadcumb.title}
-        description={breadcumb.description}
-        category={breadcumb.category}
-      >
+      <ComponentLayout>
         <MscBreadcrumb />
 
         <Codeblock>

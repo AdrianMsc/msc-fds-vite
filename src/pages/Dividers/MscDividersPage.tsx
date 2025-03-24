@@ -1,15 +1,10 @@
 import Codeblock from "../../layout/Codeblock";
 import ComponentLayout from "../../layout/ComponentLayout/ComponentLayout";
-import { dividers } from "./constants";
 
 const MscDividersPage = () => {
   return (
     <>
-      <ComponentLayout
-        name={dividers.title}
-        category={dividers.category}
-        description={dividers.description}
-      >
+      <ComponentLayout>
         <article className="flex flex-col gap-2 place-content-evenly w-full h-[100px] bg-white rounded py-3 px-4 mb-4">
           <div className="msc-h-divider-gray"></div>
 

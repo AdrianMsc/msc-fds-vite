@@ -10,7 +10,7 @@ const MscDialogPage = () => {
   };
 
   return (
-    <ComponentLayout name="Dialog" category="Overlay" description="">
+    <ComponentLayout>
       <button
         id="dialogBtn"
         className="msc-btn msc-btn-blue-solid mb-4"
