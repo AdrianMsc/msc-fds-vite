@@ -32,11 +32,9 @@ const ModalForm: React.FC<ModalFormProps> = ({
 	const formState = useSelector((state: RootState) => state.form);
 
 	useEffect(() => {
-		console.log(selectedRecord);
 		if (selectedRecord.name === '') {
 			dispatch(resetForm());
 		} else {
-			console.log(selectedRecord);
 			const formattedData: any = {
 				id: selectedRecord.id,
 				name: selectedRecord.name,
@@ -47,7 +45,6 @@ const ModalForm: React.FC<ModalFormProps> = ({
 				guidelines: selectedRecord.statuses[0].guidelines,
 				storybook: selectedRecord.statuses[0].storybook
 			};
-			console.log(formattedData);
 			dispatch(setComponentData(formattedData));
 		}
 	}, [selectedRecord]);
