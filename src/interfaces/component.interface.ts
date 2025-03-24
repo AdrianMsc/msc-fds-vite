@@ -19,6 +19,7 @@ export interface ICategoryApi {
 }
 
 export interface IComponentForm {
+  id?: number;
   name: string;
   category: string;
   comment: string;

@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencil } from "@fortawesome/free-solid-svg-icons";
 
 import React, { useState } from "react";
-import Modal from "../Modal";
+import Modal from "../ModalForm";
 
 interface Stats {
   guidelines: string;
