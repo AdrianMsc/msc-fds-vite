@@ -32,7 +32,7 @@ const ModalForm: React.FC<ModalFormProps> = ({
 	const formState = useSelector((state: RootState) => state.form);
 
 	useEffect(() => {
-		if (selectedRecord.name === '') {
+		if (!selectedRecord) {
 			dispatch(resetForm());
 		} else {
 			const formattedData: any = {
