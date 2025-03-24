@@ -8,6 +8,7 @@ import { IComponentApi } from "../interfaces/component.interface";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../redux/store";
 import { removeComponent } from "../redux/slices/componentsSlice";
+import { getComponentsCountApi } from "../api/getComponentCount";
 
 const ComponentStatus: React.FC = () => {
   const [triggerModal, setTriggerModal] = useState("hidden");
@@ -15,11 +16,14 @@ const ComponentStatus: React.FC = () => {
   const [selectedRecord, setSelectedRecord] = useState<IComponentApi>();
   const [modalText, setModalText] = useState({ buttonOne: "", title: "" });
   const [showSecondButton, setShowSecondButton] = useState(false);
+  const [componentCount, setComponentCount] = useState(0);
   const firstButtonRef = useRef(null);
   const componentsApiData = useSelector((state: RootState) => state.components);
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
+    getCount();
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         setShowSecondButton(!entry.isIntersecting);
@@ -37,6 +41,17 @@ const ComponentStatus: React.FC = () => {
       }
     };
   }, []);
+
+  const getCount = async () => {
+    try {
+      const data = await getComponentsCountApi();
+      const count = data.count;
+      setComponentCount(count);
+      console.log("Count:", count);
+    } catch (error) {
+      console.error("Error fetching count:", error);
+    }
+  };
 
   const handleDelete = async (component: IComponentApi) => {
     try {
@@ -79,7 +94,7 @@ const ComponentStatus: React.FC = () => {
       </small>
       <br />
       <small className="text-sm">
-        Components count: <strong>23</strong>
+        Components count: <strong>{componentCount}</strong>
       </small>
 
       <ul className="flex mt-5">
