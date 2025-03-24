@@ -100,7 +100,7 @@ const Sidebar: React.FC = () => {
           </strong>
           <div
             className={`flex flex-col space-y-1 ${
-              openCategories.includes(item.category) ? "hidden" : ""
+              openCategories.includes(item.category) ? "!hidden" : ""
             }`}
           >
             {item.components.map((comp, idx) => (
