@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { IComponentForm } from "../../interfaces/component.interface";
 
 export interface IFormState {
   id: string;
@@ -33,18 +34,13 @@ const formSlice = createSlice({
       const { field, value } = action.payload;
       state[field] = value;
     },
-    resetForm: (state) => {
-      state.id = "";
-      state.name = "";
-      state.category = "";
-      state.guidelines = "";
-      state.figma = "";
-      state.storybook = "";
-      state.cdn = "";
-      state.comment = "";
+    setComponentData: (_, action: PayloadAction<IComponentForm>) => {
+      console.log(action.payload);
+      return action.payload;
     },
+    resetForm: (_) => initialState,
   },
 });
 
-export const { updateField, resetForm } = formSlice.actions;
+export const { updateField, resetForm, setComponentData } = formSlice.actions;
 export default formSlice.reducer;

@@ -12,21 +12,35 @@ import { AppDispatch, RootState } from "../redux/store";
 import { removeComponent } from "../redux/slices/componentsSlice";
 import ModalForm from "../components/ModalForm";
 
+// const defaultValuesEmpty = {
+//   name: "",
+//   category: "",
+//   guidelines: "",
+//   figma: "",
+//   storybook: "",
+//   cdn: "",
+//   comment: "",
+// };
 const defaultValuesEmpty = {
+  id: Number(""),
   name: "",
   category: "",
-  guidelines: "",
-  figma: "",
-  storybook: "",
-  cdn: "",
   comment: "",
+  statuses: [
+    {
+      guidelines: "",
+      figma: "",
+      storybook: "",
+      cdn: "",
+    },
+  ],
 };
 
 const ComponentStatus: React.FC = () => {
   const [triggerModal, setTriggerModal] = useState("hidden");
   const { isAuthenticated } = useAuth0();
   const [selectedRecord, setSelectedRecord] =
-    useState<IComponentForm>(defaultValuesEmpty);
+    useState<IComponentApi>(defaultValuesEmpty);
   const [modalText, setModalText] = useState({ buttonOne: "", title: "" });
   const [showSecondButton, setShowSecondButton] = useState(false);
   const firstButtonRef = useRef(null);
@@ -66,17 +80,17 @@ const ComponentStatus: React.FC = () => {
   };
 
   const handleEdit = (component: IComponentApi) => {
-    const formFormat: any = {
-      id: component.id,
-      name: component.name,
-      category: component.category,
-      comment: component.comment,
-      cdn: component.statuses[0].cdn,
-      figma: component.statuses[0].figma,
-      guidelines: component.statuses[0].guidelines,
-      storybook: component.statuses[0].storybook,
-    };
-    setSelectedRecord(formFormat);
+    // const formFormat: any = {
+    //   id: component.id,
+    //   name: component.name,
+    //   category: component.category,
+    //   comment: component.comment,
+    //   cdn: component.statuses[0].cdn,
+    //   figma: component.statuses[0].figma,
+    //   guidelines: component.statuses[0].guidelines,
+    //   storybook: component.statuses[0].storybook,
+    // };
+    setSelectedRecord(component);
     toggleModal();
   };
 
@@ -142,7 +156,7 @@ const ComponentStatus: React.FC = () => {
       <ModalForm
         triggerModal={triggerModal}
         toggleModal={toggleModal}
-        defaultValues={selectedRecord}
+        selectedRecord={selectedRecord}
         title={modalText.title}
         buttonOne={modalText.buttonOne}
         buttonTwo="Cancel"

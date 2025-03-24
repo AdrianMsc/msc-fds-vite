@@ -61,8 +61,10 @@ export const editComponent = createAsyncThunk(
   "components/editComponent",
   async (data: IComponentApi, { rejectWithValue }) => {
     try {
+      console.log(data);
       const response = await updateComponent(data);
       if (response.status === 200) {
+        console.log(response);
         return response.data;
       } else {
         return rejectWithValue("Failed to edit component");

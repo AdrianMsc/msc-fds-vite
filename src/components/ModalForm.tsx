@@ -1,11 +1,19 @@
-import React, { ChangeEvent, FormEvent } from "react";
+import React, { ChangeEvent, FormEvent, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState, AppDispatch } from "../redux/store";
-import { updateField, resetForm, IFormState } from "../redux/slices/formSlice";
+import {
+  updateField,
+  resetForm,
+  IFormState,
+  setComponentData,
+} from "../redux/slices/formSlice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
-import { IComponentForm } from "../interfaces/component.interface";
-import { addComponent } from "../redux/slices/componentsSlice";
+import {
+  IComponentApi,
+  IComponentForm,
+} from "../interfaces/component.interface";
+import { addComponent, editComponent } from "../redux/slices/componentsSlice";
 
 interface ModalFormProps {
   triggerModal: string;
@@ -13,7 +21,7 @@ interface ModalFormProps {
   title: string;
   buttonOne: string;
   buttonTwo: string;
-  defaultValues: IComponentForm;
+  selectedRecord: IComponentApi;
 }
 
 const ModalForm: React.FC<ModalFormProps> = ({
@@ -22,10 +30,30 @@ const ModalForm: React.FC<ModalFormProps> = ({
   title,
   buttonOne,
   buttonTwo = "Cancel",
-  defaultValues,
+  // selectedRecord,
 }) => {
   const dispatch = useDispatch<AppDispatch>();
   const formState = useSelector((state: RootState) => state.form);
+
+  // useEffect(() => {
+  //   if (selectedRecord.name === "") {
+  //     dispatch(resetForm());
+  //   } else {
+  //     console.log(selectedRecord);
+  //     const formattedData: any = {
+  //       id: selectedRecord.id,
+  //       name: selectedRecord.name,
+  //       category: selectedRecord.category,
+  //       comment: selectedRecord.comment,
+  //       cdn: selectedRecord.statuses[0].cdn,
+  //       figma: selectedRecord.statuses[0].figma,
+  //       guidelines: selectedRecord.statuses[0].guidelines,
+  //       storybook: selectedRecord.statuses[0].storybook,
+  //     };
+  //     console.log(formattedData);
+  //     dispatch(setComponentData(formattedData));
+  //   }
+  // }, [selectedRecord]);
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
@@ -40,10 +68,32 @@ const ModalForm: React.FC<ModalFormProps> = ({
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    console.log(formState);
-    dispatch(addComponent(formState));
-    dispatch(resetForm());
+    if (formState.id == "") {
+      const componentCasted = {
+        ...formState,
+        id: Number(formState.id),
+      };
+      dispatch(addComponent(componentCasted));
+    } else {
+      const componentFormatted = {
+        id: Number(formState.id),
+        name: formState.name,
+        category: formState.category,
+        comment: formState.comment,
+        statuses: [
+          {
+            guidelines: formState.guidelines,
+            figma: formState.figma,
+            storybook: formState.storybook,
+            cdn: formState.cdn,
+          },
+        ],
+      };
+      console.log("Formatted Component", componentFormatted);
+      dispatch(editComponent(componentFormatted));
+    }
     toggleModal();
+    dispatch(resetForm());
   };
 
   return (
