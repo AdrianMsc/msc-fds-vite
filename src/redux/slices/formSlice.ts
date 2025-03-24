@@ -31,11 +31,20 @@ const formSlice = createSlice({
 			const { field, value } = action.payload;
 			state[field] = value;
 		},
-		setComponentData: (_, action: PayloadAction<IComponentForm>) => {
-			console.log(action.payload);
-			return action.payload;
+		setComponentData: (state: IFormState, action: PayloadAction<IComponentForm>) => {
+			return {
+				...state,
+				id: action.payload.id?.toString() || '',
+				name: action.payload.name,
+				category: action.payload.category,
+				guidelines: action.payload.guidelines,
+				figma: action.payload.figma,
+				storybook: action.payload.storybook,
+				cdn: action.payload.cdn,
+				comment: action.payload.comment
+			};
 		},
-		resetForm: (_) => initialState
+		resetForm: () => initialState
 	}
 });
 

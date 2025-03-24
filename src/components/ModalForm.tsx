@@ -34,7 +34,7 @@ const ModalForm: React.FC<ModalFormProps> = ({
 	useEffect(() => {
 		console.log(selectedRecord);
 		if (selectedRecord.name === '') {
-			dispatch(resetForm(0));
+			dispatch(resetForm());
 		} else {
 			console.log(selectedRecord);
 			const formattedData: any = {
@@ -53,7 +53,7 @@ const ModalForm: React.FC<ModalFormProps> = ({
 	}, [selectedRecord]);
 
 	const handleCancel = () => {
-		dispatch(resetForm(0));
+		dispatch(resetForm());
 		setSelectedRecord(emptyValues);
 		toggleModal();
 	};
@@ -94,7 +94,7 @@ const ModalForm: React.FC<ModalFormProps> = ({
 			dispatch(editComponent(componentFormatted));
 		}
 		toggleModal();
-		dispatch(resetForm(0));
+		dispatch(resetForm());
 	};
 
 	return (
