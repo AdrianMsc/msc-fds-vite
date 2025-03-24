@@ -48,7 +48,7 @@ export const routesIndex = [
         element: <LoginPage />,
       },
       {
-        path: "WipComponent",
+        path: "WipComponent/:component",
         element: <WipComponent />,
       },
       {

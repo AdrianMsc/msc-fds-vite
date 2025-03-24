@@ -8,6 +8,8 @@ import { createLinkPage } from "../utils/createLinkPage";
 import chevron from "../assets/chevron-down.svg";
 import { getComponentsApi } from "../api/getComponents";
 import { routesIndex } from "../router/routeIndex";
+import handleDataSend from "../utils/handleDataSend"; // Importa la función
+import { IComponent } from "../interfaces/sidebar.interface";
 
 const Sidebar: React.FC = () => {
   const [openCategories, setOpenCategories] = useState<string[]>([]);
@@ -27,7 +29,6 @@ const Sidebar: React.FC = () => {
       try {
         const data = await getComponentsApi();
         setCategories(data);
-        sessionStorage.setItem("components", JSON.stringify(data));
       } catch (error) {
         console.error("Error fetching components:", error);
       } finally {
@@ -35,13 +36,7 @@ const Sidebar: React.FC = () => {
       }
     };
 
-    const storedData = sessionStorage.getItem("components");
-    if (storedData) {
-      setCategories(JSON.parse(storedData));
-      setIsLoading(false);
-    } else {
-      fetchComponents();
-    }
+    fetchComponents();
   }, []);
 
   const toggleCategory = (category: string) => {
@@ -52,22 +47,16 @@ const Sidebar: React.FC = () => {
     );
   };
 
-  const handleDataSend = (path: string, componentName: string) => {
-    const storedData = sessionStorage.getItem("components");
-    if (storedData) {
-      const components = JSON.parse(storedData);
-      const component = components
-        .flatMap((category: ICategoryApi) => category.components)
-        .find((comp: any) => comp.name === componentName);
-
-      if (component) {
-        navigate(path, {
-          state: component,
-        });
-      }
+  const getNavLinkTo = (comp: IComponent) => {
+    const formattedName = createLinkPage(comp.name);
+    if (
+      routesIndex[1].children?.some((route) => route.path === formattedName)
+    ) {
+      return `/docs/${formattedName}`;
+    } else {
+      return `/docs/WipComponent/${formattedName}`;
     }
   };
-
   return (
     <aside
       className={`p-5 bg-white sm:max-w-[230px] sm:min-w-[230px] sm:flex flex-col gap-1 overflow-auto ${
@@ -117,27 +106,30 @@ const Sidebar: React.FC = () => {
             {item.components.map((comp, idx) => (
               <NavLink
                 key={idx}
-                className={({ isActive }) =>
-                  isActive
-                    ? "pl-5 font-bold text-primary-blue hover:rounded hover:font-semibold transition-all"
-                    : "pl-5 hover:rounded hover:font-semibold transition-all"
-                }
-                to={`/docs/${createLinkPage(comp.name)}`}
+                className={({ isActive }) => {
+                  return isActive ? "font-bold text-primary-blue ml-5" : "ml-5";
+                }}
+                to={getNavLinkTo(comp)}
                 onClick={(event) => {
                   event.preventDefault();
+                  const formattedName = createLinkPage(comp.name);
                   if (
                     routesIndex[1].children?.some(
-                      (route) => route.path === comp.name
+                      (route) => route.path === formattedName
                     )
                   ) {
                     handleDataSend(
-                      `/docs/${createLinkPage(comp.name)}`,
-                      comp.name
+                      navigate,
+                      `/docs/${formattedName}`,
+                      comp.name,
+                      categories
                     );
                   } else {
                     handleDataSend(
-                      `/docs/${createLinkPage("WipComponent")}`,
-                      comp.name
+                      navigate,
+                      `/docs/WipComponent/${formattedName}`,
+                      comp.name,
+                      categories
                     );
                   }
                 }}

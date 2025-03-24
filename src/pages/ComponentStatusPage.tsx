@@ -96,6 +96,7 @@ const ComponentStatus: React.FC = () => {
       {isAuthenticated && (
         <>
           <button
+            title="Add component"
             ref={firstButtonRef}
             className="msc-btn msc-btn-blue-solid msc-btn-icon ml-0 mt-5"
             onClick={() => {
@@ -109,6 +110,7 @@ const ComponentStatus: React.FC = () => {
 
           {showSecondButton && (
             <button
+              title="Add component"
               className="msc-btn msc-btn-blue-solid msc-btn-icon w-fit min-w-fit p-3 fixed bottom-5 right-5"
               onClick={() => {
                 setModalText({ buttonOne: "Add", title: "Add new component" });
@@ -136,7 +138,9 @@ const ComponentStatus: React.FC = () => {
       ) : (
         componentsApiData?.map((category) => (
           <React.Fragment key={category.category}>
-            <h2 className="font-bold text-2xl mt-5">{category.category}</h2>
+            <h2 className="font-bold text-2xl mt-5 sticky -top-4 bg-off_white">
+              {category.category}
+            </h2>
 
             <div className="overflow-x-auto mt-3">
               <table className="w-full text-sm text-left rtl:text-right text-gray-500">
@@ -199,7 +203,7 @@ const ComponentStatus: React.FC = () => {
                       {isAuthenticated && (
                         <td>
                           <div className="flex place-content-around items-center align-middle">
-                            <button>
+                            <button title="Edit component">
                               <FontAwesomeIcon
                                 icon={faPencil}
                                 onClick={() => {
@@ -211,7 +215,10 @@ const ComponentStatus: React.FC = () => {
                                 }}
                               />
                             </button>
-                            <button onClick={() => handleDelete(component)}>
+                            <button
+                              onClick={() => handleDelete(component)}
+                              title="Delete component"
+                            >
                               <FontAwesomeIcon icon={faTrash} />
                             </button>
                           </div>
