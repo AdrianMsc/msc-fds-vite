@@ -2,7 +2,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencil } from "@fortawesome/free-solid-svg-icons";
 
-import React, { useState } from "react";
+import React from "react";
 
 interface Stats {
   guidelines: string;
@@ -20,8 +20,6 @@ const MscStatusComponentBar: React.FC<MscStatusComponentBarProps> = ({
   id,
   stats,
 }) => {
-  const [triggerModal, setTriggerModal] = useState("hidden");
-
   const { isAuthenticated } = useAuth0();
 
   const currentStats =
@@ -33,10 +31,6 @@ const MscStatusComponentBar: React.FC<MscStatusComponentBarProps> = ({
           storybook: "N/A",
           cdn: "N/A",
         };
-
-  const toggleModal = () => {
-    setTriggerModal((prev) => (prev === "hidden" ? "" : "hidden"));
-  };
 
   return (
     <>
@@ -59,9 +53,6 @@ const MscStatusComponentBar: React.FC<MscStatusComponentBarProps> = ({
             <FontAwesomeIcon
               icon={faPencil}
               className="opacity-20 hover:opacity-100 transition-all cursor-pointer "
-              onClick={() => {
-                toggleModal();
-              }}
             />
           </li>
         ) : null}
