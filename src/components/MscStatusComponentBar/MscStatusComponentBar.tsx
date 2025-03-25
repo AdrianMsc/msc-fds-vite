@@ -3,7 +3,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencil } from "@fortawesome/free-solid-svg-icons";
 
 import React, { useState } from "react";
-import Modal from "../ModalForm";
 
 interface Stats {
   guidelines: string;
@@ -25,7 +24,15 @@ const MscStatusComponentBar: React.FC<MscStatusComponentBarProps> = ({
 
   const { isAuthenticated } = useAuth0();
 
-  const currentStats = stats[0];
+  const currentStats =
+    stats && stats.length > 0
+      ? stats[0]
+      : {
+          guidelines: "N/A",
+          figma: "N/A",
+          storybook: "N/A",
+          cdn: "N/A",
+        };
 
   const toggleModal = () => {
     setTriggerModal((prev) => (prev === "hidden" ? "" : "hidden"));
@@ -59,15 +66,6 @@ const MscStatusComponentBar: React.FC<MscStatusComponentBarProps> = ({
           </li>
         ) : null}
       </ul>
-
-      <Modal
-        triggerModal={triggerModal}
-        toggleModal={toggleModal}
-        title={"Edit Status"}
-        body={<p>Status edition</p>}
-        buttonOne="Accept"
-        buttonTwo="Cancel"
-      />
     </>
   );
 };
