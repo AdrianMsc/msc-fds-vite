@@ -169,9 +169,7 @@ export const componentSlice = createSlice({
 					if (item.category === updatedComponent.category) {
 						return {
 							...item,
-							components: item.components.map((comp) =>
-								comp.id === updatedComponent.id ? updatedComponent : comp
-							)
+							components: item.components.map((comp) => (comp.id === updatedComponent.id ? updatedComponent : comp))
 						};
 					}
 					return item;

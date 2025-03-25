@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClose } from '@fortawesome/free-solid-svg-icons';
 import { IComponentApi } from '../interfaces/component.interface';
 import { addComponent, updateComponentThunk } from '../redux/slices/componentsSlice';
+import { addToast, removeToast } from '../redux/slices/toastSlice';
 
 interface ModalFormProps {
 	triggerModal: string;
@@ -31,8 +32,24 @@ const ModalForm: React.FC<ModalFormProps> = ({
 	const dispatch = useDispatch<AppDispatch>();
 	const formState = useSelector((state: RootState) => state.form);
 
+	const showToast = (status: string, title: string, description?: string) => {
+		const id = Date.now().toString();
+		dispatch(
+			addToast({
+				id,
+				status,
+				title,
+				description
+			})
+		);
+
+		setTimeout(() => {
+			dispatch(removeToast(id));
+		}, 4000);
+	};
+
 	useEffect(() => {
-		if (!selectedRecord) {
+		if (selectedRecord.id === 0) {
 			dispatch(resetForm());
 		} else {
 			const formattedData: any = {
@@ -64,31 +81,37 @@ const ModalForm: React.FC<ModalFormProps> = ({
 		);
 	};
 
-	const handleSubmit = (e: FormEvent) => {
+	const handleSubmit = async (e: FormEvent) => {
 		e.preventDefault();
 		if (formState.id === '') {
 			const componentCasted = {
 				...formState,
 				id: Number(formState.id)
 			};
-			dispatch(addComponent(componentCasted));
+			const response: any = await dispatch(addComponent(componentCasted));
+			if (response.payload.id != 0) {
+				showToast('success', 'Component created');
+			}
 		} else {
 			const componentCasted = {
 				...formState,
 				id: Number(formState.id)
 			};
-			dispatch(updateComponentThunk(componentCasted));
+			const response: any = await dispatch(updateComponentThunk(componentCasted));
+			if (response.payload.id != 0) {
+				showToast('success', 'Component updated');
+			}
 		}
 		toggleModal();
 		dispatch(resetForm());
 	};
 
 	return (
-		<div className={`msc-modal-bg ${triggerModal}`}>
+		<div className={`msc-modal-bg !fixed ${triggerModal}`}>
 			<div className="msc-modal">
 				<div className="msc-modal-header">
 					<h4 className="msc-modal-title">{title}</h4>
-					<button id="modalClsBtn" onClick={toggleModal}>
+					<button onClick={handleCancel}>
 						<FontAwesomeIcon icon={faClose} />
 					</button>
 				</div>
