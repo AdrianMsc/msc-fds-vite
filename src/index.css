@@ -3,98 +3,125 @@
 @tailwind utilities;
 
 .disabled-before::before {
-  content: "Yes" !important;
+	content: 'Yes' !important;
 }
 
 .disabled-after::after {
-  content: "No" !important;
+	content: 'No' !important;
 }
 
 .text-before::before {
-  content: "Yes" !important;
+	content: 'Yes' !important;
 }
 
 .text-after::after {
-  content: "No" !important;
+	content: 'No' !important;
 }
 
 .peer:checked ~ .text-after::after {
-  display: none;
+	display: none;
 }
 
 .peer:not(:checked) ~ .text-before::before {
-  display: none;
+	display: none;
 }
 
 .address-before::before {
-  content: "Residential" !important;
+	content: 'Residential' !important;
 }
 
 .address-after::after {
-  content: "Commercial" !important;
+	content: 'Commercial' !important;
 }
 
 .peer:checked ~ .address-after::after {
-  display: none;
+	display: none;
 }
 
 .peer:not(:checked) ~ .address-before::before {
-  display: none;
+	display: none;
 }
 
 .address-dot-before::before {
-  content: "Commercial" !important;
+	content: 'Commercial' !important;
 }
 
 .address-dot-after::after {
-  content: "Residential" !important;
+	content: 'Residential' !important;
 }
 
 .peer:checked ~ .address-dot-after::after {
-  display: none;
+	display: none;
 }
 
 .peer:not(:checked) ~ .address-dot-before::before {
-  display: none;
+	display: none;
 }
 .peer:checked ~ .address-dot-before::before {
-  display: block;
+	display: block;
 }
 
 .units-before::before {
-  content: "Decimal Inch" !important;
+	content: 'Decimal Inch' !important;
 }
 
 .units-after::after {
-  content: "MM" !important;
+	content: 'MM' !important;
 }
 
 .peer:checked ~ .units-after::after {
-  display: none;
+	display: none;
 }
 
 .peer:not(:checked) ~ .units-before::before {
-  display: none;
+	display: none;
 }
 
 .units-dot-before::before {
-  content: "MM" !important;
+	content: 'MM' !important;
 }
 
 .units-dot-after::after {
-  content: "Decimal Inch" !important;
-  width: 100% !important;
-  right: 0px !important;
-  padding-left: 11px !important;
+	content: 'Decimal Inch' !important;
+	width: 100% !important;
+	right: 0px !important;
+	padding-left: 11px !important;
 }
 
 .peer:checked ~ .units-dot-after::after {
-  display: none;
+	display: none;
 }
 
 .peer:not(:checked) ~ .units-dot-before::before {
-  display: none;
+	display: none;
 }
 .peer:checked ~ .units-dot-before::before {
-  display: block;
+	display: block;
+}
+
+@keyframes fadeIn {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+@keyframes fadeOut {
+	0% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+	}
+}
+
+/* Optional: You can add these animation classes directly to your Tailwind config if you're using Tailwind CSS */
+.animate-fadeIn {
+	animation: fadeIn 1s ease-in-out forwards;
+}
+
+.animate-fadeOut {
+	animation: fadeOut 1s ease-in-out forwards;
 }

@@ -35,7 +35,6 @@ const ComponentStatus: React.FC = () => {
 	const firstButtonRef = useRef(null);
 	const componentsApiData = useSelector((state: RootState) => state.components);
 	const dispatch = useDispatch<AppDispatch>();
-
 	const showToast = (status: string, title: string, description?: string) => {
 		const id = Date.now().toString();
 		dispatch(

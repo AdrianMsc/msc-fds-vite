@@ -2900,6 +2900,10 @@ h6 {
   border-width: 0;
 }
 
+.visible {
+  visibility: visible;
+}
+
 .\!fixed {
   position: fixed !important;
 }
@@ -3498,6 +3502,10 @@ h6 {
   max-width: 24rem;
 }
 
+.max-w-lg {
+  max-width: 32rem;
+}
+
 .flex-1 {
   flex: 1 1 0%;
 }
@@ -3527,6 +3535,18 @@ h6 {
 
 .rotate-45 {
   --tw-rotate: 45deg;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.scale-100 {
+  --tw-scale-x: 1;
+  --tw-scale-y: 1;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.scale-90 {
+  --tw-scale-x: .9;
+  --tw-scale-y: .9;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
@@ -3946,6 +3966,20 @@ h6 {
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
 
+.bg-black {
+  --tw-bg-opacity: 1;
+  background-color: rgb(0 0 0 / var(--tw-bg-opacity));
+}
+
+.bg-blue-600 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(37 99 235 / var(--tw-bg-opacity));
+}
+
+.\!bg-\[\#00000087\] {
+  background-color: #00000087 !important;
+}
+
 .bg-opacity-50 {
   --tw-bg-opacity: 0.5;
 }
@@ -4123,6 +4157,10 @@ h6 {
 
 .pt-\[60px\] {
   padding-top: 60px;
+}
+
+.pb-3 {
+  padding-bottom: 0.75rem;
 }
 
 .text-left {
@@ -4363,6 +4401,11 @@ h6 {
   color: rgb(234 179 8 / var(--tw-text-opacity));
 }
 
+.text-gray-600 {
+  --tw-text-opacity: 1;
+  color: rgb(75 85 99 / var(--tw-text-opacity));
+}
+
 .underline {
   text-decoration-line: underline;
 }
@@ -4465,6 +4508,12 @@ h6 {
   transition-duration: 150ms;
 }
 
+.transition-transform {
+  transition-property: transform;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
 .delay-150 {
   transition-delay: 150ms;
 }
@@ -4481,6 +4530,10 @@ h6 {
   transition-duration: 500ms;
 }
 
+.duration-300 {
+  transition-duration: 300ms;
+}
+
 .ease-in {
   transition-timing-function: cubic-bezier(0.4, 0, 1, 1);
 }
@@ -4494,19 +4547,19 @@ h6 {
 }
 
 .disabled-before::before {
-  content: "Yes" !important;
+  content: 'Yes' !important;
 }
 
 .disabled-after::after {
-  content: "No" !important;
+  content: 'No' !important;
 }
 
 .text-before::before {
-  content: "Yes" !important;
+  content: 'Yes' !important;
 }
 
 .text-after::after {
-  content: "No" !important;
+  content: 'No' !important;
 }
 
 .peer:checked ~ .text-after::after {
@@ -4518,11 +4571,11 @@ h6 {
 }
 
 .address-before::before {
-  content: "Residential" !important;
+  content: 'Residential' !important;
 }
 
 .address-after::after {
-  content: "Commercial" !important;
+  content: 'Commercial' !important;
 }
 
 .peer:checked ~ .address-after::after {
@@ -4534,11 +4587,11 @@ h6 {
 }
 
 .address-dot-before::before {
-  content: "Commercial" !important;
+  content: 'Commercial' !important;
 }
 
 .address-dot-after::after {
-  content: "Residential" !important;
+  content: 'Residential' !important;
 }
 
 .peer:checked ~ .address-dot-after::after {
@@ -4554,11 +4607,11 @@ h6 {
 }
 
 .units-before::before {
-  content: "Decimal Inch" !important;
+  content: 'Decimal Inch' !important;
 }
 
 .units-after::after {
-  content: "MM" !important;
+  content: 'MM' !important;
 }
 
 .peer:checked ~ .units-after::after {
@@ -4570,11 +4623,11 @@ h6 {
 }
 
 .units-dot-before::before {
-  content: "MM" !important;
+  content: 'MM' !important;
 }
 
 .units-dot-after::after {
-  content: "Decimal Inch" !important;
+  content: 'Decimal Inch' !important;
   width: 100% !important;
   right: 0px !important;
   padding-left: 11px !important;
@@ -4590,6 +4643,36 @@ h6 {
 
 .peer:checked ~ .units-dot-before::before {
   display: block;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Optional: You can add these animation classes directly to your Tailwind config if you're using Tailwind CSS */
+
+.animate-fadeIn {
+  animation: fadeIn 1s ease-in-out forwards;
+}
+
+.animate-fadeOut {
+  animation: fadeOut 1s ease-in-out forwards;
 }
 
 .disabled\:msc-btn-blue-solid:disabled {
@@ -4726,6 +4809,11 @@ h6 {
 .hover\:bg-primary-blue_xlight:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(241 245 254 / var(--tw-bg-opacity));
+}
+
+.hover\:text-gray-700:hover {
+  --tw-text-opacity: 1;
+  color: rgb(55 65 81 / var(--tw-text-opacity));
 }
 
 .hover\:underline:hover {

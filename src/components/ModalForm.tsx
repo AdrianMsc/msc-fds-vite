@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FormEvent, useEffect } from 'react';
+import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, AppDispatch } from '../redux/store';
 import { updateField, resetForm, IFormState, setComponentData } from '../redux/slices/formSlice';
@@ -31,6 +31,15 @@ const ModalForm: React.FC<ModalFormProps> = ({
 }) => {
 	const dispatch = useDispatch<AppDispatch>();
 	const formState = useSelector((state: RootState) => state.form);
+	const [isVisible, setIsVisible] = useState(false);
+	const [fadeIn, setFadeIn] = useState(false);
+
+	useEffect(() => {
+		if (triggerModal !== 'hidden') {
+			setIsVisible(true); // Show modal
+			setTimeout(() => setFadeIn(true), 50); // Apply fade-in
+		}
+	}, [triggerModal]);
 
 	const showToast = (status: string, title: string, description?: string) => {
 		const id = Date.now().toString();
@@ -69,7 +78,11 @@ const ModalForm: React.FC<ModalFormProps> = ({
 	const handleCancel = () => {
 		dispatch(resetForm());
 		setSelectedRecord(emptyValues);
-		toggleModal();
+		setFadeIn(false); // Apply fade-out effect
+		setTimeout(() => {
+			setIsVisible(false); // Hide after fade-out completes
+			toggleModal();
+		}, 300);
 	};
 
 	const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
@@ -106,8 +119,12 @@ const ModalForm: React.FC<ModalFormProps> = ({
 		dispatch(resetForm());
 	};
 
-	return (
-		<div className={`msc-modal-bg !fixed ${triggerModal}`}>
+	return isVisible ? (
+		<div
+			className={`msc-modal-bg !fixed ${triggerModal} !bg-[#00000087] transition-opacity duration-300 ${
+				fadeIn ? 'opacity-100' : 'opacity-0'
+			}`}
+		>
 			<div className="msc-modal">
 				<div className="msc-modal-header">
 					<h4 className="msc-modal-title">{title}</h4>
@@ -238,7 +255,7 @@ const ModalForm: React.FC<ModalFormProps> = ({
 				</form>
 			</div>
 		</div>
-	);
+	) : null;
 };
 
 export default ModalForm;
