@@ -115,7 +115,11 @@ const ModalForm: React.FC<ModalFormProps> = ({
 				showToast('success', 'Component updated');
 			}
 		}
-		toggleModal();
+		setFadeIn(false); // Apply fade-out effect
+		setTimeout(() => {
+			setIsVisible(false); // Hide after fade-out completes
+			toggleModal();
+		}, 300);
 		dispatch(resetForm());
 	};
 
