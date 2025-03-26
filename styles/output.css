@@ -2900,12 +2900,12 @@ h6 {
   border-width: 0;
 }
 
-.fixed {
-  position: fixed;
-}
-
 .\!fixed {
   position: fixed !important;
+}
+
+.fixed {
+  position: fixed;
 }
 
 .absolute {
@@ -3853,6 +3853,10 @@ h6 {
 .border-yellow-500 {
   --tw-border-opacity: 1;
   border-color: rgb(234 179 8 / var(--tw-border-opacity));
+}
+
+.bg-\[\#00000087\] {
+  background-color: #00000087;
 }
 
 .bg-\[\#1C58EE\] {

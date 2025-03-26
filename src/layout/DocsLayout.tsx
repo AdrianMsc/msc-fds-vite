@@ -2,6 +2,7 @@ import Navbar from './Navbar';
 import Sidebar from './Sidebar';
 import { Outlet } from 'react-router-dom';
 import Toast from './Toast';
+import Dialog from './Dialog';
 
 const DocsLayout = () => {
 	return (
@@ -12,6 +13,7 @@ const DocsLayout = () => {
 				<div className="px-8 md:px-15 xl:px-20 overflow-auto w-full h-full pb-10 pt-4">
 					<Outlet />
 					<Toast />
+					<Dialog />
 				</div>
 			</main>
 		</>

@@ -9,6 +9,7 @@ import { AppDispatch, RootState } from '../redux/store';
 import { removeComponent } from '../redux/slices/componentsSlice';
 import ModalForm from '../components/ModalForm';
 import { addToast, removeToast } from '../redux/slices/toastSlice';
+import { openDialog } from '../redux/slices/dialogSlice';
 
 const defaultValuesEmpty = {
 	id: Number(''),
@@ -72,9 +73,18 @@ const ComponentStatus: React.FC = () => {
 
 	const handleDelete = async (component: IComponentApi) => {
 		try {
-			const response = await dispatch(removeComponent(component)).unwrap();
-			console.log('Component deleted successfully:', response);
-			showToast('success', 'Component removed');
+			dispatch(
+				openDialog({
+					title: 'Are you sure?',
+					text: 'Do you really want to delete this component?',
+					onConfirm: () => {
+						dispatch(removeComponent(component)).unwrap(); // Dispatch delete action on confirm
+						setTimeout(() => {
+							showToast('success', 'Component removed');
+						}, 300);
+					}
+				})
+			);
 		} catch (error) {
 			console.error('Failed to delete component:', error);
 		}
@@ -104,45 +114,46 @@ const ComponentStatus: React.FC = () => {
 			<small className="text-sm">
 				Components count: <strong>23</strong>
 			</small>
+			<div className="flex flex-row items-center justify-between">
+				<ul className="flex mt-5">
+					<li className="mr-3">🧱 Todo</li>
+					<li className="mr-3">🛠 WIP</li>
+					<li className="mr-3">🔭 Alpha</li>
+					<li className="mr-3">🧪 Beta</li>
+					<li className="mr-3">✅ Live</li>
+					<li className="mr-3">
+						<b className="font-bold">🚫</b> Not Applicable
+					</li>
+				</ul>
 
-			<ul className="flex mt-5">
-				<li className="mr-3">🧱 Todo</li>
-				<li className="mr-3">🛠 WIP</li>
-				<li className="mr-3">🔭 Alpha</li>
-				<li className="mr-3">🧪 Beta</li>
-				<li className="mr-3">✅ Live</li>
-				<li className="mr-3">
-					<b className="font-bold">🚫</b> Not Applicable
-				</li>
-			</ul>
-
-			{isAuthenticated && (
-				<>
-					<button
-						ref={firstButtonRef}
-						className="msc-btn msc-btn-blue-solid msc-btn-icon ml-0 mt-5"
-						onClick={() => {
-							setModalText({ buttonOne: 'Add', title: 'Add new component' });
-							toggleModal();
-						}}
-					>
-						Add component
-						<FontAwesomeIcon icon={faPlus} className="ml-2 items-center" />
-					</button>
-
-					{showSecondButton && (
+				{isAuthenticated && (
+					<>
 						<button
-							className="msc-btn msc-btn-blue-solid msc-btn-icon w-fit min-w-fit p-3 fixed bottom-5 right-5"
+							ref={firstButtonRef}
+							className="msc-btn msc-btn-blue-solid msc-btn-icon ml-0 mt-5"
 							onClick={() => {
 								setModalText({ buttonOne: 'Add', title: 'Add new component' });
 								toggleModal();
 							}}
 						>
-							<FontAwesomeIcon icon={faPlus} className="items-center" />
+							Add component
+							<FontAwesomeIcon icon={faPlus} className="ml-2 items-center" />
 						</button>
-					)}
-				</>
-			)}
+
+						{showSecondButton && (
+							<button
+								className="msc-btn msc-btn-blue-solid msc-btn-icon w-fit min-w-fit p-3 fixed bottom-5 right-5"
+								onClick={() => {
+									setModalText({ buttonOne: 'Add', title: 'Add new component' });
+									toggleModal();
+								}}
+							>
+								<FontAwesomeIcon icon={faPlus} className="items-center" />
+							</button>
+						)}
+					</>
+				)}
+			</div>
 
 			<ModalForm
 				triggerModal={triggerModal}
