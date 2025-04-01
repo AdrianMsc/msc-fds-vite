@@ -43,13 +43,13 @@ export default function SearchBar() {
         <input
           id="searchComp"
           type="text"
-          placeholder="Buscar un componente..."
+          placeholder="Search for a component..."
           className="w-full msc-input peer"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
         />
         <label htmlFor="searchComp" className="msc-input-label">
-          Buscar un componente...
+          Search for a component...
         </label>
       </div>
 
@@ -95,7 +95,7 @@ export default function SearchBar() {
             ))
           ) : (
             <li className="p-2 text-gray-500 flex flex-col items-center">
-              <span className="text-4xl">🤔</span> No hay resultados
+              <span className="text-4xl">🤔</span> No results found
             </li>
           )}
         </ul>
