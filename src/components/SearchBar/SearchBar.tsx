@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getComponentListApi } from "../../api/getComponentList";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { createLinkPage } from "../../utils/createLinkPage";
 import { routesIndex } from "../../router/routeIndex";
 import handleDataSend from "../../utils/handleDataSend";
@@ -12,6 +12,7 @@ export default function SearchBar() {
   const [query, setQuery] = useState("");
   const [components, setComponents] = useState<string[]>([]);
   const [categories, setCategories] = useState<ICategoryApi[] | null>(null);
+  const [selectedIndex, setSelectedIndex] = useState(0);
   const componentsApiData = useSelector((state: RootState) => state.components);
   const navigate = useNavigate();
 
@@ -28,25 +29,63 @@ export default function SearchBar() {
       }
     };
     setCategories(componentsApiData);
-
     fetchComponents();
   }, [componentsApiData]);
 
-  // Filter components
   const filteredComponents = components.filter((item) =>
     item.toLowerCase().includes(query.toLowerCase())
   );
 
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "ArrowDown") {
+      setSelectedIndex(
+        (prevIndex) => (prevIndex + 1) % filteredComponents.length
+      );
+    } else if (event.key === "ArrowUp") {
+      setSelectedIndex(
+        (prevIndex) =>
+          (prevIndex - 1 + filteredComponents.length) %
+          filteredComponents.length
+      );
+    } else if (event.key === "Enter" && filteredComponents.length > 0) {
+      navigateToComponent(filteredComponents[selectedIndex]);
+    }
+  };
+
+  const navigateToComponent = (componentName: string) => {
+    setQuery("");
+    const formattedName = createLinkPage(componentName);
+    if (
+      routesIndex[1].children?.some((route) => route.path === formattedName)
+    ) {
+      handleDataSend(
+        navigate,
+        `/docs/${formattedName}`,
+        componentName,
+        categories ?? []
+      );
+    } else {
+      handleDataSend(
+        navigate,
+        `/docs/WipComponent/${formattedName}`,
+        componentName,
+        categories ?? []
+      );
+    }
+  };
+
   return (
-    <div className=" ml-10 mr-auto relative w-[300px]">
+    <div className="ml-10 mr-auto relative w-[300px]">
       <div className="msc-input-wrapper">
         <input
           id="searchComp"
           type="text"
           placeholder="Search for a component..."
           className="w-full msc-input peer"
+          autoComplete="off"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
+          onKeyDown={handleKeyDown}
         />
         <label htmlFor="searchComp" className="msc-input-label">
           Search for a component...
@@ -57,41 +96,16 @@ export default function SearchBar() {
         <ul className="absolute w-full bg-white border rounded shadow-md mt-1 !z-50">
           {filteredComponents.length > 0 ? (
             filteredComponents.map((item, index) => (
-              <NavLink
+              <li
                 key={index}
-                to={`/docs/${createLinkPage(item)}`}
-                onClick={(event) => {
-                  event.preventDefault();
-                  setQuery("");
-                  const formattedName = createLinkPage(item);
-                  if (
-                    routesIndex[1].children?.some(
-                      (route) => route.path === formattedName
-                    )
-                  ) {
-                    handleDataSend(
-                      navigate,
-                      `/docs/${formattedName}`,
-                      item,
-                      categories ?? []
-                    );
-                  } else {
-                    handleDataSend(
-                      navigate,
-                      `/docs/WipComponent/${formattedName}`,
-                      item,
-                      categories ?? []
-                    );
-                  }
-                }}
+                className={`p-2 cursor-pointer ${
+                  index === selectedIndex ? "bg-gray-200" : "hover:bg-gray-100"
+                }`}
+                onMouseEnter={() => setSelectedIndex(index)}
+                onClick={() => navigateToComponent(item)}
               >
-                <li
-                  key={index}
-                  className="p-2 hover:bg-gray-100 cursor-pointer"
-                >
-                  {item}
-                </li>
-              </NavLink>
+                {item}
+              </li>
             ))
           ) : (
             <li className="p-2 text-gray-500 flex flex-col items-center">

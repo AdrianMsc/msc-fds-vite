@@ -45,7 +45,9 @@ const Navbar: React.FC = () => {
         <p className="pl-2 font-medium text-sm self-end">Fuel Design System</p>
       </Link>
 
-      <SearchBar />
+      <div className="ml-10 mr-auto">
+        <SearchBar />
+      </div>
 
       <div className="flex items-center gap-2">
         {!isAuthenticated && (
