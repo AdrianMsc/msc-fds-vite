@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import MscLogo from "../assets/MscLogo";
 import UserSVG from "../assets/UserSVG";
+import SearchBar from "../components/SearchBar/SearchBar";
 
 const Navbar: React.FC = () => {
   const context = useContext(SidebarContext);
@@ -38,11 +39,13 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <header className="bg-white overflow-hidden shadow py-2 px-5 flex w-screen fixed justify-between items-center ">
+    <header className="bg-white  shadow py-2 px-5 flex w-screen fixed justify-between items-center z-50">
       <Link to="/" className="flex">
         <MscLogo />
         <p className="pl-2 font-medium text-sm self-end">Fuel Design System</p>
       </Link>
+
+      <SearchBar />
 
       <div className="flex items-center gap-2">
         {!isAuthenticated && (

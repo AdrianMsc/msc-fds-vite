@@ -3,18 +3,18 @@ import { NavLink, useNavigate } from "react-router-dom";
 import formatComponentName from "../utils/formatComponentName";
 import SidebarContext from "../context/SidebarCtx";
 import { ICategoryApi } from "../interfaces/component.interface";
-import MscMiniLoading from "../components/MscMiniLoading/MscMiniLoading";
 import { createLinkPage } from "../utils/createLinkPage";
 import chevron from "../assets/chevron-down.svg";
-import { getComponentsApi } from "../api/getComponents";
 import { routesIndex } from "../router/routeIndex";
 import handleDataSend from "../utils/handleDataSend"; // Importa la función
-import { IComponent } from "../interfaces/sidebar.interface";
+import { getNavLinkTo } from "../utils/getNavLinkTo";
+import { useSelector } from "react-redux";
+import { RootState } from "../redux/store";
 
 const Sidebar: React.FC = () => {
   const [openCategories, setOpenCategories] = useState<string[]>([]);
   const [categories, setCategories] = useState<ICategoryApi[] | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const componentsApiData = useSelector((state: RootState) => state.components);
   const context = useContext(SidebarContext);
   const navigate = useNavigate();
 
@@ -25,19 +25,8 @@ const Sidebar: React.FC = () => {
   const { isSidebarOpen } = context;
 
   useEffect(() => {
-    const fetchComponents = async () => {
-      try {
-        const data = await getComponentsApi();
-        setCategories(data);
-      } catch (error) {
-        console.error("Error fetching components:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchComponents();
-  }, []);
+    setCategories(componentsApiData);
+  }, [componentsApiData]);
 
   const toggleCategory = (category: string) => {
     setOpenCategories((prev) =>
@@ -47,16 +36,6 @@ const Sidebar: React.FC = () => {
     );
   };
 
-  const getNavLinkTo = (comp: IComponent) => {
-    const formattedName = createLinkPage(comp.name);
-    if (
-      routesIndex[1].children?.some((route) => route.path === formattedName)
-    ) {
-      return `/docs/${formattedName}`;
-    } else {
-      return `/docs/WipComponent/${formattedName}`;
-    }
-  };
   return (
     <aside
       className={`p-5 bg-white sm:max-w-[230px] sm:min-w-[230px] sm:flex flex-col gap-1 overflow-auto ${
@@ -81,7 +60,8 @@ const Sidebar: React.FC = () => {
         Component Status
       </NavLink>
       <strong className="text-primary-blue flex items-center">
-        Categories {isLoading && <MscMiniLoading />}
+        Categories
+        {/* {isLoading && <MscMiniLoading />} */}
       </strong>
       {categories?.map((item, idx) => (
         <React.Fragment key={idx}>
