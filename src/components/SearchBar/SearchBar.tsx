@@ -49,6 +49,10 @@ export default function SearchBar() {
       );
     } else if (event.key === "Enter" && filteredComponents.length > 0) {
       navigateToComponent(filteredComponents[selectedIndex]);
+      event.currentTarget.blur();
+    } else if (event.key === "Escape") {
+      setQuery("");
+      event.currentTarget.blur();
     }
   };
 
@@ -95,18 +99,28 @@ export default function SearchBar() {
       {query && (
         <ul className="absolute w-full bg-white border rounded shadow-md mt-1 !z-50">
           {filteredComponents.length > 0 ? (
-            filteredComponents.map((item, index) => (
-              <li
-                key={index}
-                className={`p-2 cursor-pointer ${
-                  index === selectedIndex ? "bg-gray-200" : "hover:bg-gray-100"
-                }`}
-                onMouseEnter={() => setSelectedIndex(index)}
-                onClick={() => navigateToComponent(item)}
+            <>
+              {/* <li
+                className="p-2 cursor-pointer hover:bg-gray-200"
+                onMouseEnter={() => setSelectedIndex(-1)}
               >
-                {item}
-              </li>
-            ))
+                Component Status
+              </li> */}
+              {filteredComponents.map((item, index) => (
+                <li
+                  key={index}
+                  className={`p-2 cursor-pointer ${
+                    index === selectedIndex
+                      ? "bg-gray-200"
+                      : "hover:bg-gray-100"
+                  }`}
+                  onMouseEnter={() => setSelectedIndex(index)}
+                  onClick={() => navigateToComponent(item)}
+                >
+                  {item}
+                </li>
+              ))}
+            </>
           ) : (
             <li className="p-2 text-gray-500 flex flex-col items-center">
               <span className="text-4xl">🤔</span> No results found
