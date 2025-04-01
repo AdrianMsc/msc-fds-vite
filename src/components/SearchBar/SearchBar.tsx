@@ -7,6 +7,7 @@ import handleDataSend from "../../utils/handleDataSend";
 import { ICategoryApi } from "../../interfaces/component.interface";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
+import easter from "../../assets/easter.png";
 
 export default function SearchBar() {
   const [query, setQuery] = useState("");
@@ -100,12 +101,6 @@ export default function SearchBar() {
         <ul className="absolute w-full bg-white border rounded shadow-md mt-1 !z-50">
           {filteredComponents.length > 0 ? (
             <>
-              {/* <li
-                className="p-2 cursor-pointer hover:bg-gray-200"
-                onMouseEnter={() => setSelectedIndex(-1)}
-              >
-                Component Status
-              </li> */}
               {filteredComponents.map((item, index) => (
                 <li
                   key={index}
@@ -121,6 +116,10 @@ export default function SearchBar() {
                 </li>
               ))}
             </>
+          ) : query.includes("jefe") || query.includes("Jefe") ? (
+            <li className="p-2 text-gray-500 flex flex-col items-center">
+              <img src={easter} alt="" className="w-12" /> Special for the jefe
+            </li>
           ) : (
             <li className="p-2 text-gray-500 flex flex-col items-center">
               <span className="text-4xl">🤔</span> No results found
