@@ -42,10 +42,12 @@ const Navbar: React.FC = () => {
     <header className="bg-white  shadow py-4 px-5 flex w-screen fixed justify-between items-center z-50">
       <Link to="/" className="flex">
         <MscLogo />
-        <p className="pl-2 font-medium text-sm self-end">Fuel Design System</p>
+        <p className="pl-2 font-medium text-sm self-end hidden lg:flex">
+          Fuel Design System
+        </p>
       </Link>
 
-      <div className="ml-10 mr-auto">
+      <div className="lg:ml-10 lg:mr-auto">
         <SearchBar />
       </div>
 
