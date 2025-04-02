@@ -80,53 +80,56 @@ export default function SearchBar() {
   };
 
   return (
-    <div className="ml-10 mr-auto relative w-[300px]">
-      <div className="msc-input-wrapper">
-        <input
-          id="searchComp"
-          type="text"
-          placeholder="Search for a component..."
-          className="w-full msc-input peer"
-          autoComplete="off"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          onKeyDown={handleKeyDown}
-        />
-        <label htmlFor="searchComp" className="msc-input-label">
-          Search for a component...
-        </label>
-      </div>
+    <>
+      <div className="relative  w-full lg:max-w-[300px]">
+        <div className="msc-input-wrapper">
+          <input
+            id="searchComp"
+            type="text"
+            placeholder="Search for a component..."
+            className="w-full msc-input peer"
+            autoComplete="off"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            onKeyDown={handleKeyDown}
+          />
+          <label htmlFor="searchComp" className="msc-input-label">
+            Component search...
+          </label>
+        </div>
 
-      {query && (
-        <ul className="absolute w-full bg-white border rounded shadow-md mt-1 !z-50">
-          {filteredComponents.length > 0 ? (
-            <>
-              {filteredComponents.map((item, index) => (
-                <li
-                  key={index}
-                  className={`p-2 cursor-pointer ${
-                    index === selectedIndex
-                      ? "bg-gray-200"
-                      : "hover:bg-gray-100"
-                  }`}
-                  onMouseEnter={() => setSelectedIndex(index)}
-                  onClick={() => navigateToComponent(item)}
-                >
-                  {item}
-                </li>
-              ))}
-            </>
-          ) : query.includes("jefe") || query.includes("Jefe") ? (
-            <li className="p-2 text-gray-500 flex flex-col items-center">
-              <img src={easter} alt="" className="w-12" /> Special for the jefe
-            </li>
-          ) : (
-            <li className="p-2 text-gray-500 flex flex-col items-center">
-              <span className="text-4xl">🤔</span> No results found
-            </li>
-          )}
-        </ul>
-      )}
-    </div>
+        {query && (
+          <ul className="absolute w-full bg-white border rounded shadow-md mt-1 !z-50">
+            {filteredComponents.length > 0 ? (
+              <>
+                {filteredComponents.map((item, index) => (
+                  <li
+                    key={index}
+                    className={`p-2 cursor-pointer ${
+                      index === selectedIndex
+                        ? "bg-gray-200"
+                        : "hover:bg-gray-100"
+                    }`}
+                    onMouseEnter={() => setSelectedIndex(index)}
+                    onClick={() => navigateToComponent(item)}
+                  >
+                    {item}
+                  </li>
+                ))}
+              </>
+            ) : query.includes("jefe") || query.includes("Jefe") ? (
+              <li className="p-2 text-gray-500 flex flex-col items-center">
+                <img src={easter} alt="" className="w-12" /> Special for the
+                jefe
+              </li>
+            ) : (
+              <li className="p-2 text-gray-500 flex flex-col items-center">
+                <span className="text-4xl">🤔</span> No results found
+              </li>
+            )}
+          </ul>
+        )}
+      </div>
+    </>
   );
 }
