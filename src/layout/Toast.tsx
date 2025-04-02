@@ -4,11 +4,11 @@ import {
   faExclamationCircle,
   faInfoCircle,
   faWarning,
-  faClose,
+  // faClose,
 } from "@fortawesome/free-solid-svg-icons";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
-import { removeToast } from "../redux/slices/toastSlice";
+// import { removeToast } from "../redux/slices/toastSlice";
 import { useState, useEffect } from "react";
 
 const toastConfig: {
@@ -37,7 +37,7 @@ const toastConfig: {
 };
 
 const Toast: React.FC = () => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const toasts = useSelector((state: RootState) => state.toast.toasts);
   const [fadeOutState, setFadeOutState] = useState<{ [key: string]: boolean }>(
     {}
@@ -64,9 +64,9 @@ const Toast: React.FC = () => {
     });
   }, [toasts]);
 
-  const handleClose = (id: string) => {
-    dispatch(removeToast(id));
-  };
+  // const handleClose = (id: string) => {
+  //   dispatch(removeToast(id));
+  // };
 
   const getToastConfig = (status: string) =>
     toastConfig[status] || toastConfig.info;
