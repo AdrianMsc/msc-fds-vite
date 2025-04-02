@@ -81,7 +81,7 @@ export default function SearchBar() {
 
   return (
     <>
-      <div className="relative  w-full lg:max-w-[300px]">
+      <div className="relative  w-full lg:w-[350px]">
         <div className="msc-input-wrapper">
           <input
             id="searchComp"
