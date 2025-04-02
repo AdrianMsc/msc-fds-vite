@@ -39,7 +39,7 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <header className="bg-white  shadow py-4 px-5 flex w-screen fixed justify-between items-center z-50">
+    <header className="bg-white  shadow py-4 px-5 flex w-screen fixed justify-between items-center z-auto">
       <Link to="/" className="flex">
         <MscLogo />
         <p className="pl-2 font-medium text-sm self-end hidden lg:flex">
