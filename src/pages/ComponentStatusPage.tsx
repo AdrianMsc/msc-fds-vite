@@ -206,57 +206,61 @@ const ComponentStatus: React.FC = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {category.components?.map((component, idx) => (
-                    <tr
-                      key={idx + component.name}
-                      className={`${
-                        idx % 2 === 0 ? "bg-white" : "bg-slate-100"
-                      }`}
-                    >
-                      <th
-                        scope="row"
-                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap text-center"
+                  {[...category.components]
+                    ?.sort((a: IComponentApi, b: IComponentApi) =>
+                      a.name.localeCompare(b.name)
+                    )
+                    .map((component, idx) => (
+                      <tr
+                        key={idx + component.name}
+                        className={`${
+                          idx % 2 === 0 ? "bg-white" : "bg-slate-100"
+                        }`}
                       >
-                        {component.name}
-                      </th>
-                      <td className="px-6 py-4 text-center">
-                        {component.statuses[0].guidelines}
-                      </td>
-                      <td className="px-6 py-4 text-center">
-                        {component.statuses[0].figma}
-                      </td>
-                      <td className="px-6 py-4 text-center">
-                        {component.statuses[0].storybook}
-                      </td>
-                      <td className="px-6 py-4 text-center">
-                        {component.statuses[0].cdn}
-                      </td>
-                      <td className="px-6 py-4 text-center">
-                        {component.comment}
-                      </td>
-                      {isAuthenticated && (
-                        <td>
-                          <div className="flex place-content-around items-center align-middle">
-                            <button>
-                              <FontAwesomeIcon
-                                icon={faPencil}
-                                onClick={() => {
-                                  setModalText({
-                                    buttonOne: "Update",
-                                    title: "Update component",
-                                  });
-                                  handleEdit(component);
-                                }}
-                              />
-                            </button>
-                            <button onClick={() => handleDelete(component)}>
-                              <FontAwesomeIcon icon={faTrash} />
-                            </button>
-                          </div>
+                        <th
+                          scope="row"
+                          className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap text-center"
+                        >
+                          {component.name}
+                        </th>
+                        <td className="px-6 py-4 text-center">
+                          {component.statuses[0].guidelines}
                         </td>
-                      )}
-                    </tr>
-                  ))}
+                        <td className="px-6 py-4 text-center">
+                          {component.statuses[0].figma}
+                        </td>
+                        <td className="px-6 py-4 text-center">
+                          {component.statuses[0].storybook}
+                        </td>
+                        <td className="px-6 py-4 text-center">
+                          {component.statuses[0].cdn}
+                        </td>
+                        <td className="px-6 py-4 text-center">
+                          {component.comment}
+                        </td>
+                        {isAuthenticated && (
+                          <td>
+                            <div className="flex place-content-around items-center align-middle">
+                              <button>
+                                <FontAwesomeIcon
+                                  icon={faPencil}
+                                  onClick={() => {
+                                    setModalText({
+                                      buttonOne: "Update",
+                                      title: "Update component",
+                                    });
+                                    handleEdit(component);
+                                  }}
+                                />
+                              </button>
+                              <button onClick={() => handleDelete(component)}>
+                                <FontAwesomeIcon icon={faTrash} />
+                              </button>
+                            </div>
+                          </td>
+                        )}
+                      </tr>
+                    ))}
                 </tbody>
               </table>
             </div>

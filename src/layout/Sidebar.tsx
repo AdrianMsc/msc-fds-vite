@@ -83,40 +83,44 @@ const Sidebar: React.FC = () => {
               openCategories.includes(item.category) ? "!hidden" : ""
             }`}
           >
-            {item.components.map((comp, idx) => (
-              <NavLink
-                key={idx}
-                className={({ isActive }) => {
-                  return isActive ? "font-bold text-primary-blue ml-5" : "ml-5";
-                }}
-                to={getNavLinkTo(comp)}
-                onClick={(event) => {
-                  event.preventDefault();
-                  const formattedName = createLinkPage(comp.name);
-                  if (
-                    routesIndex[1].children?.some(
-                      (route) => route.path === formattedName
-                    )
-                  ) {
-                    handleDataSend(
-                      navigate,
-                      `/docs/${formattedName}`,
-                      comp.name,
-                      categories
-                    );
-                  } else {
-                    handleDataSend(
-                      navigate,
-                      `/docs/WipComponent/${formattedName}`,
-                      comp.name,
-                      categories
-                    );
-                  }
-                }}
-              >
-                {formatComponentName(comp.name)}
-              </NavLink>
-            ))}
+            {[...item.components]
+              ?.sort((a: any, b: any) => a.name.localeCompare(b.name))
+              .map((comp, idx) => (
+                <NavLink
+                  key={idx}
+                  className={({ isActive }) => {
+                    return isActive
+                      ? "font-bold text-primary-blue ml-5"
+                      : "ml-5";
+                  }}
+                  to={getNavLinkTo(comp)}
+                  onClick={(event) => {
+                    event.preventDefault();
+                    const formattedName = createLinkPage(comp.name);
+                    if (
+                      routesIndex[1].children?.some(
+                        (route) => route.path === formattedName
+                      )
+                    ) {
+                      handleDataSend(
+                        navigate,
+                        `/docs/${formattedName}`,
+                        comp.name,
+                        categories
+                      );
+                    } else {
+                      handleDataSend(
+                        navigate,
+                        `/docs/WipComponent/${formattedName}`,
+                        comp.name,
+                        categories
+                      );
+                    }
+                  }}
+                >
+                  {formatComponentName(comp.name)}
+                </NavLink>
+              ))}
           </div>
         </React.Fragment>
       ))}
