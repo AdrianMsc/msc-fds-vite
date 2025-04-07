@@ -1,18 +1,13 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import ModalFeedback from '../components/ModalFeedback';
+import { Link, useOutletContext } from 'react-router-dom';
+
+type OutletContextType = {
+	toggleModal: () => void;
+};
 
 const GettingStarted = () => {
-	const [showModal, setshowModal] = useState('hidden');
-
-	const toggleModal = () => {
-		setshowModal((prev) => (prev === 'hidden' ? '' : 'hidden'));
-	};
-
+	const { toggleModal } = useOutletContext<OutletContextType>();
 	return (
 		<>
-			<ModalFeedback showModal={showModal} toggleModal={toggleModal} />
-
 			<h1 className="font-bold text-3xl mb-3">Welcome to the MSC Design System</h1>
 			<h2 className="font-bold text-xl mt-5">Get Started</h2>
 			<p className="text-balance">
@@ -60,14 +55,7 @@ const GettingStarted = () => {
 
 			<h2 className="font-bold text-xl mt-5">Help us improve!</h2>
 			<p className="mb-2">Tell us what you think about our app's features and design. Your feedback is valuable.</p>
-			<Link className="flex w-fit items-center text-primary-blue" to="/component-status">
-				📝 Share your feedback
-				<i className="fa-solid fa-arrow-up ml-2 mb-[2px] rotate-45"></i>
-			</Link>
-
-			<h2 className="font-bold text-xl mt-5">Share your feedback!</h2>
-			<p className="mb-2">Leave your comments</p>
-			<button className="flex w-fit items-center text-primary-blue" onClick={() => setshowModal('')}>
+			<button className="flex w-fit items-center text-primary-blue mb-4" onClick={toggleModal}>
 				📝 Send Feedback
 			</button>
 		</>
