@@ -91,10 +91,10 @@ const ModalFeedback: React.FC<ModalFeedbackProps> = ({ showModal, toggleModal })
 					</button>
 				</div>
 				<form onSubmit={handleSubmit}>
-					<div className="msc-modal-body pb-4 !w-fit">
+					<div className="msc-modal-body pb-4 sm:!w-fit overflow-hidden">
 						<div className="flex flex-col gap-5">
-							<div className="flex gap-2 w-[600px]">
-								<div className="flex flex-col gap-1 !w-[50%]">
+							<div className="flex flex-col sm:flex-row gap-2 min-w-[300px] sm:w-[600px]">
+								<div className="flex flex-col gap-1 sm:!w-[50%]">
 									<label htmlFor="name" className="font-bold">
 										Name
 									</label>
@@ -106,7 +106,7 @@ const ModalFeedback: React.FC<ModalFeedbackProps> = ({ showModal, toggleModal })
 										onChange={handleChange}
 									/>
 								</div>
-								<div className="flex flex-col gap-1 !w-[50%]">
+								<div className="flex flex-col gap-1 sm:!w-[50%]">
 									<label htmlFor="email" className="font-bold">
 										Email
 									</label>

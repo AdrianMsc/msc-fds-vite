@@ -137,10 +137,10 @@ const ModalForm: React.FC<ModalFormProps> = ({
 					</button>
 				</div>
 				<form onSubmit={handleSubmit}>
-					<div className="msc-modal-body pb-4 !w-fit">
-						<div className="flex flex-col gap-5">
-							<div className="flex gap-2 w-[600px]">
-								<div className="flex flex-col gap-1 !w-[50%]">
+					<div className="msc-modal-body pb-4 overflow-hidden">
+						<div className="flex flex-col w-full gap-5">
+							<div className="flex flex-col sm:flex-row gap-2 w-full sm:w-[600px]">
+								<div className="flex flex-col gap-1 w-full sm:!w-[50%]">
 									<label htmlFor="name" className="font-bold">
 										Name
 									</label>
@@ -153,7 +153,7 @@ const ModalForm: React.FC<ModalFormProps> = ({
 										onChange={handleChange}
 									/>
 								</div>
-								<div className="flex flex-col gap-1 !w-[50%]">
+								<div className="flex flex-col gap-1 w-full sm:!w-[50%]">
 									<label htmlFor="category" className="font-bold">
 										Category
 									</label>
@@ -169,8 +169,8 @@ const ModalForm: React.FC<ModalFormProps> = ({
 									</select>
 								</div>
 							</div>
-							<div className="flex gap-2 w-[600px]">
-								<div className="flex flex-col gap-1 !w-[50%]">
+							<div className="flex flex-col sm:flex-row gap-2 w-full sm:w-[600px]">
+								<div className="flex flex-col gap-1 w-full sm:!w-[50%]">
 									<label htmlFor="guidelines" className="font-bold">
 										Guidelines
 									</label>
@@ -188,7 +188,7 @@ const ModalForm: React.FC<ModalFormProps> = ({
 										<option value="🚫">🚫 Not Applicable</option>
 									</select>
 								</div>
-								<div className="flex flex-col gap-1 !w-[50%]">
+								<div className="flex flex-col gap-1 w-full sm:!w-[50%]">
 									<label htmlFor="figma" className="font-bold">
 										Figma
 									</label>
@@ -202,8 +202,8 @@ const ModalForm: React.FC<ModalFormProps> = ({
 									</select>
 								</div>
 							</div>
-							<div className="flex gap-2 w-[600px]">
-								<div className="flex flex-col gap-1 !w-[50%]">
+							<div className="flex flex-col sm:flex-row gap-2 w-full sm:w-[600px]">
+								<div className="flex flex-col gap-1 w-full sm:!w-[50%]">
 									<label htmlFor="storybook" className="font-bold">
 										Storybook
 									</label>
@@ -221,7 +221,7 @@ const ModalForm: React.FC<ModalFormProps> = ({
 										<option value="🚫">🚫 Not Applicable</option>
 									</select>
 								</div>
-								<div className="flex flex-col gap-1 !w-[50%]">
+								<div className="flex flex-col gap-1 w-full sm:!w-[50%]">
 									<label htmlFor="cdn" className="font-bold">
 										CDN
 									</label>
@@ -241,7 +241,7 @@ const ModalForm: React.FC<ModalFormProps> = ({
 								</label>
 								<textarea
 									name="comment"
-									className="msc-input !p-2"
+									className="msc-input !p-2 w-full"
 									value={formState.comment}
 									onChange={handleChange}
 								></textarea>
