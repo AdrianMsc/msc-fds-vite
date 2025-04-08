@@ -44,7 +44,9 @@ const Sidebar: React.FC = () => {
   return (
     <aside
       className={`pt-5 pb-20 px-4 bg-white sm:max-w-[230px] sm:min-w-[230px] sm:flex flex-col gap-1 overflow-auto ${
-        isSidebarOpen ? "flex absolute h-lvh" : "hidden"
+        isSidebarOpen
+          ? "flex absolute h-lvh lg:flex lg:static lg:h-full"
+          : "hidden"
       } z-50 lg:z-auto`}
     >
       <button
