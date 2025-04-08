@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClose } from '@fortawesome/free-solid-svg-icons';
 import { addToast, removeToast } from '../redux/slices/toastSlice';
 import { IFormStateFB, resetForm, updateField } from '../redux/slices/feedbackFormSlice';
+import { addFeedback } from '../redux/slices/feedbackSlice';
 
 interface ModalFeedbackProps {
 	showModal: string;
@@ -60,12 +61,15 @@ const ModalFeedback: React.FC<ModalFeedbackProps> = ({ showModal, toggleModal })
 
 	const handleSubmit = async (e: FormEvent) => {
 		e.preventDefault();
-		// const response: any = await dispatch(addFeedback(formState));
-		// if (response.payload.id != 0) {
-		// 	showToast('success', 'Component created');
-		// }
+		const fbCasted = {
+			...formState,
+			id: Number(formState.id)
+		};
+		const response: any = await dispatch(addFeedback(fbCasted));
+		if (response.payload.id != 0) {
+			showToast('success', 'Feedback sent', 'Thanks for your comments!');
+		}
 		dispatch(resetForm());
-		showToast('success', 'Feedback sent', 'Thanks for your comments!');
 		setFadeIn(false); // Apply fade-out effect
 		setTimeout(() => {
 			setIsVisible(false); // Hide after fade-out completes
