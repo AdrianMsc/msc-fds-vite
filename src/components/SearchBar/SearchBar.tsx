@@ -8,6 +8,8 @@ import { ICategoryApi } from "../../interfaces/component.interface";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import easter from "../../assets/easter.png";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
 export default function SearchBar() {
   const [query, setQuery] = useState("");
@@ -81,21 +83,22 @@ export default function SearchBar() {
 
   return (
     <>
-      <div className="relative  w-full lg:w-[350px]">
-        <div className="msc-input-wrapper">
+      <div className="relative w-full">
+        <div className="msc-input-wrapper relative">
           <input
             id="searchComp"
             type="text"
-            placeholder="Search for a component..."
-            className="w-full msc-input peer"
+            placeholder="Search Brand"
+            className="w-full border-monochromes-grey_xlight border rounded-full py-1 px-3 text-xs"
             autoComplete="off"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={handleKeyDown}
           />
-          <label htmlFor="searchComp" className="msc-input-label">
-            Component search...
-          </label>
+          <FontAwesomeIcon
+            icon={faSearch}
+            className="msc-modal-close absolute top-2 right-2 text-monochromes-grey_light"
+          />
         </div>
 
         {query && (

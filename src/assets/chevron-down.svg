@@ -5,10 +5,10 @@
       viewBox="0 0 10 6"
       >
       <path
-                  stroke="currentColor"
+                  stroke="#717171"
                   stroke-linecap="round"
                   stroke-linejoin="round"
-                  stroke-width="2"
+                  stroke-width="1.5"
                   d="m1 1 4 4 4-4"
                 />
               </svg>

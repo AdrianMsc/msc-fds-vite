@@ -1,12 +1,9 @@
 import React, { useContext, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-import { Link } from "react-router-dom";
 import SidebarContext from "../context/SidebarCtx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
-import MscLogo from "../assets/MscLogo";
 import UserSVG from "../assets/UserSVG";
-import SearchBar from "../components/SearchBar/SearchBar";
 
 const Navbar: React.FC = () => {
   const context = useContext(SidebarContext);
@@ -39,19 +36,12 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <header className="bg-white  shadow py-4 px-5 flex w-screen fixed justify-between items-center z-auto">
-      <Link to="/" className="flex">
-        <MscLogo />
-        <p className="pl-2 font-medium text-sm self-end hidden lg:flex">
-          Fuel Design System
-        </p>
-      </Link>
+    <header className="bg-white/50  shadow py-4 px-5 flex w-full justify-between items-center z-auto relative">
+      <button className="sm:hidden text-lg" onClick={toggleSidebar}>
+        <FontAwesomeIcon icon={faBars} />
+      </button>
 
-      <div className="lg:ml-10 lg:mr-auto">
-        <SearchBar />
-      </div>
-
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 ml-auto">
         {!isAuthenticated && (
           <button onClick={handleLogin} className="flex flex-col items-center">
             <UserSVG />
@@ -77,10 +67,6 @@ const Navbar: React.FC = () => {
           Log Out
         </button>
       </div>
-
-      <button className="sm:hidden" onClick={toggleSidebar}>
-        <FontAwesomeIcon icon={faBars} />
-      </button>
     </header>
   );
 };

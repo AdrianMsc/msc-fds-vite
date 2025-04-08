@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import formatComponentName from "../utils/formatComponentName";
 import SidebarContext from "../context/SidebarCtx";
 import { ICategoryApi } from "../interfaces/component.interface";
@@ -10,6 +10,10 @@ import handleDataSend from "../utils/handleDataSend"; // Importa la función
 import { getNavLinkTo } from "../utils/getNavLinkTo";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
+import SearchBar from "../components/SearchBar/SearchBar";
+import MscLogo from "../assets/MscLogo";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
 const Sidebar: React.FC = () => {
   const [openCategories, setOpenCategories] = useState<string[]>([]);
@@ -22,6 +26,7 @@ const Sidebar: React.FC = () => {
     throw new Error("Sidebar must be used within a SidebarProvider");
   }
 
+  const { toggleSidebar } = context;
   const { isSidebarOpen } = context;
 
   useEffect(() => {
@@ -38,13 +43,31 @@ const Sidebar: React.FC = () => {
 
   return (
     <aside
-      className={`p-5 bg-white sm:max-w-[230px] sm:min-w-[230px] sm:flex flex-col gap-1 overflow-auto ${
+      className={`pt-5 pb-20 px-4 bg-white sm:max-w-[230px] sm:min-w-[230px] sm:flex flex-col gap-1 overflow-auto ${
         isSidebarOpen ? "flex absolute h-lvh" : "hidden"
-      }`}
+      } z-50 lg:z-auto`}
     >
+      <button
+        className="absolute top-2 right-2  h-6 w-6 flex items-center justify-center"
+        onClick={toggleSidebar}
+      >
+        <FontAwesomeIcon icon={faTimes} className="text-monochromes-grey" />
+      </button>
+      <Link to="/" className="flex flex-col mb-2">
+        <MscLogo />
+        <p className="font-bold text-sm self-start hidden lg:flex">
+          Fuel Design System
+        </p>
+      </Link>
+
+      <div className="">
+        <SearchBar />
+      </div>
+
       <strong>Start Here</strong>
       <NavLink
         to={`/docs/${createLinkPage("GettingStarted")}`}
+        onClick={toggleSidebar}
         className={({ isActive }) =>
           isActive ? "font-bold text-primary-blue ml-5" : "ml-5"
         }
@@ -53,6 +76,7 @@ const Sidebar: React.FC = () => {
       </NavLink>
       <NavLink
         to={`/docs/${createLinkPage("ComponentStatus")}`}
+        onClick={toggleSidebar}
         className={({ isActive }) =>
           isActive ? "font-bold text-primary-blue ml-5" : "ml-5"
         }
@@ -95,6 +119,7 @@ const Sidebar: React.FC = () => {
                   }}
                   to={getNavLinkTo(comp)}
                   onClick={(event) => {
+                    toggleSidebar();
                     event.preventDefault();
                     const formattedName = createLinkPage(comp.name);
                     if (
