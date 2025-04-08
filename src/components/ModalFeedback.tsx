@@ -4,6 +4,7 @@ import { RootState, AppDispatch } from '../redux/store';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClose } from '@fortawesome/free-solid-svg-icons';
 import { addToast, removeToast } from '../redux/slices/toastSlice';
+import { IFormStateFB, resetForm, updateField } from '../redux/slices/feedbackFormSlice';
 
 interface ModalFeedbackProps {
 	showModal: string;
@@ -12,7 +13,7 @@ interface ModalFeedbackProps {
 
 const ModalFeedback: React.FC<ModalFeedbackProps> = ({ showModal, toggleModal }) => {
 	const dispatch = useDispatch<AppDispatch>();
-	const formState = useSelector((state: RootState) => state.form);
+	const formState = useSelector((state: RootState) => state.feedbackForm);
 	const [isVisible, setIsVisible] = useState(false);
 	const [fadeIn, setFadeIn] = useState(false);
 
@@ -40,6 +41,7 @@ const ModalFeedback: React.FC<ModalFeedbackProps> = ({ showModal, toggleModal })
 	};
 
 	const handleCancel = () => {
+		dispatch(resetForm());
 		setFadeIn(false); // Apply fade-out effect
 		setTimeout(() => {
 			setIsVisible(false); // Hide after fade-out completes
@@ -48,11 +50,21 @@ const ModalFeedback: React.FC<ModalFeedbackProps> = ({ showModal, toggleModal })
 	};
 
 	const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-		console.log(e.target.name, e.target.value);
+		dispatch(
+			updateField({
+				field: e.target.name as keyof IFormStateFB,
+				value: e.target.value
+			})
+		);
 	};
 
 	const handleSubmit = async (e: FormEvent) => {
 		e.preventDefault();
+		// const response: any = await dispatch(addFeedback(formState));
+		// if (response.payload.id != 0) {
+		// 	showToast('success', 'Component created');
+		// }
+		dispatch(resetForm());
 		showToast('success', 'Feedback sent', 'Thanks for your comments!');
 		setFadeIn(false); // Apply fade-out effect
 		setTimeout(() => {
@@ -82,7 +94,6 @@ const ModalFeedback: React.FC<ModalFeedbackProps> = ({ showModal, toggleModal })
 									<label htmlFor="name" className="font-bold">
 										Name
 									</label>
-									<input name="id" type="text" className="hidden" value={formState.id} onChange={handleChange} />
 									<input
 										name="name"
 										type="text"
@@ -91,27 +102,27 @@ const ModalFeedback: React.FC<ModalFeedbackProps> = ({ showModal, toggleModal })
 										onChange={handleChange}
 									/>
 								</div>
-								{/* <div className="flex flex-col gap-1 !w-[50%]">
-                  <label htmlFor="email" className="font-bold">
-                    Email
-                  </label>
-                  <input
-                    name="email"
-                    type="email"
-                    className="msc-input !w-full"
-                    value={formState.email}
-                    onChange={handleChange}
-                  />
-                </div> */}
+								<div className="flex flex-col gap-1 !w-[50%]">
+									<label htmlFor="email" className="font-bold">
+										Email
+									</label>
+									<input
+										name="email"
+										type="email"
+										className="msc-input !w-full"
+										value={formState.email}
+										onChange={handleChange}
+									/>
+								</div>
 							</div>
 							<div className="flex flex-col gap-1">
-								<label htmlFor="comment" className="font-bold">
-									Comments
+								<label htmlFor="message" className="font-bold">
+									Message
 								</label>
 								<textarea
-									name="comment"
+									name="message"
 									className="msc-input !p-2 h-[150px]"
-									value={formState.comment}
+									value={formState.message}
 									onChange={handleChange}
 								></textarea>
 							</div>
