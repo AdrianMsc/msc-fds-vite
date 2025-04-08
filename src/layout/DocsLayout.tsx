@@ -19,8 +19,8 @@ const DocsLayout = () => {
 			<main className="flex flex-row pt-[75px] bg-off_white h-screen w-screen overflow-hidden">
 				<Sidebar />
 				<div className="flex flex-col w-full place-content-between">
-					<div className="flex flex-col overflow-y-scroll overflow-x-visible w-full h-full pt-4 place-content-between">
-						<div className="px-8 md:px-15 xl:px-20 w-full pb-4">
+					<div className="flex flex-col overflow-y-scroll overflow-x-visible w-full h-full place-content-between">
+						<div className="px-8 md:px-15 xl:px-20 w-full ">
 							<Outlet context={{ toggleModal }} />
 						</div>
 						<Footer toggleModal={toggleModal} />

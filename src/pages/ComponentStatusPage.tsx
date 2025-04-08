@@ -99,7 +99,7 @@ const ComponentStatus: React.FC = () => {
 	};
 
 	return (
-		<div className="relative">
+		<div className="relative pb-4">
 			<h1 className="font-bold text-3xl">
 				<small className="text-sm text-primary-blue">Getting Started</small>
 				<br />

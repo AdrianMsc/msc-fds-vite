@@ -1,1 +1,1 @@
-export const baseUrl = "https://msc-component-status-ws.vercel.app";
+export const baseUrl = 'https://msc-component-status-ws.vercel.app';
