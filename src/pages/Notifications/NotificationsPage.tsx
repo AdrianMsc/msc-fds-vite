@@ -1,28 +1,28 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { baseUrl } from '../../api';
-import { IFeedback } from '../../redux/slices/feedbackSlice';
+import { IFeedback, setFeedback } from '../../redux/slices/feedbackSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
 
 const NotificationsPage = () => {
 	const [notifications, setNotifications] = useState<IFeedback[] | null>(null);
 	const [selectedNotification, setSelectedNotification] = useState<IFeedback | null>(null);
+	// const messages = useSelector((state: RootState) => state.feedback);
+	const dispatch = useDispatch();
 
 	useEffect(() => {
 		const fetchNotifications = async () => {
 			try {
 				const response = await axios.get(`${baseUrl}/inbox`);
 				setNotifications(response.data);
+				dispatch(setFeedback(response.data));
 			} catch (error) {
 				console.error('Error fetching notifications:', error);
 			}
 		};
-
 		fetchNotifications();
 	}, []);
-
-	// const handleSelection = (notification: IFeedback) => {
-	//   set
-	// };
 
 	if (notifications === null) {
 		return <div>Loading...</div>;
