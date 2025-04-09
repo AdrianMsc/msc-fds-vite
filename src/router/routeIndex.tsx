@@ -32,6 +32,7 @@ import MscDividersPage from "../pages/Dividers/MscDividersPage";
 import { SimilarItems } from "../pages/SimilarItems/SimilarItems";
 import WipComponent from "../pages/WipComponent/WipComponent";
 import ComponentTesterPage from "../pages/ComponentTesterPage/ComponentTesterPage";
+import NotificationsPage from "../pages/Notifications/NotificationsPage";
 
 export const routesIndex = [
   {
