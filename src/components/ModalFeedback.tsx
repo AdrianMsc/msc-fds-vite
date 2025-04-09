@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClose } from '@fortawesome/free-solid-svg-icons';
 import { addToast, removeToast } from '../redux/slices/toastSlice';
 import { IFormStateFB, resetForm, updateField } from '../redux/slices/feedbackFormSlice';
+import { addFeedback } from '../redux/slices/feedbackSlice';
 
 interface ModalFeedbackProps {
 	showModal: string;
@@ -60,12 +61,15 @@ const ModalFeedback: React.FC<ModalFeedbackProps> = ({ showModal, toggleModal })
 
 	const handleSubmit = async (e: FormEvent) => {
 		e.preventDefault();
-		// const response: any = await dispatch(addFeedback(formState));
-		// if (response.payload.id != 0) {
-		// 	showToast('success', 'Component created');
-		// }
+		const fbCasted = {
+			...formState,
+			id: Number(formState.id)
+		};
+		const response: any = await dispatch(addFeedback(fbCasted));
+		if (response.payload.id != 0) {
+			showToast('success', 'Feedback sent', 'Thanks for your comments!');
+		}
 		dispatch(resetForm());
-		showToast('success', 'Feedback sent', 'Thanks for your comments!');
 		setFadeIn(false); // Apply fade-out effect
 		setTimeout(() => {
 			setIsVisible(false); // Hide after fade-out completes
@@ -87,10 +91,10 @@ const ModalFeedback: React.FC<ModalFeedbackProps> = ({ showModal, toggleModal })
 					</button>
 				</div>
 				<form onSubmit={handleSubmit}>
-					<div className="msc-modal-body pb-4 !w-fit">
+					<div className="msc-modal-body pb-4 sm:!w-fit overflow-hidden">
 						<div className="flex flex-col gap-5">
-							<div className="flex gap-2 w-[600px]">
-								<div className="flex flex-col gap-1 !w-[50%]">
+							<div className="flex flex-col sm:flex-row gap-2 min-w-[300px] sm:w-[600px]">
+								<div className="flex flex-col gap-1 sm:!w-[50%]">
 									<label htmlFor="name" className="font-bold">
 										Name
 									</label>
@@ -102,7 +106,7 @@ const ModalFeedback: React.FC<ModalFeedbackProps> = ({ showModal, toggleModal })
 										onChange={handleChange}
 									/>
 								</div>
-								<div className="flex flex-col gap-1 !w-[50%]">
+								<div className="flex flex-col gap-1 sm:!w-[50%]">
 									<label htmlFor="email" className="font-bold">
 										Email
 									</label>

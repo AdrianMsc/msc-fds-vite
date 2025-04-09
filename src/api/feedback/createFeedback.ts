@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
-import { IFormStateFB } from '../../redux/slices/feedbackFormSlice';
+import { IFeedback } from '../../redux/slices/feedbackSlice';
 
-export const createFeedback = async (data: IFormStateFB): Promise<AxiosResponse<any>> => {
+export const createFeedback = async (data: IFeedback): Promise<AxiosResponse<any>> => {
 	try {
 		const dataCasted = {
 			...data,

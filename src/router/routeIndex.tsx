@@ -54,6 +54,11 @@ export const routesIndex = [
       },
       {
         index: true,
+        path: "Notifications",
+        element: <NotificationsPage />,
+      },
+      {
+        index: true,
         path: "GettingStarted",
         element: <GettingStarted />,
       },
