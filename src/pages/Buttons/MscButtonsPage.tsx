@@ -1,11 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Codeblock from "../../layout/Codeblock";
 import ComponentLayout from "../../layout/ComponentLayout/ComponentLayout";
-import {
-  faDownload,
-  faPrint,
-  faThumbsUp,
-} from "@fortawesome/free-solid-svg-icons";
+import { faDownload, faThumbsUp } from "@fortawesome/free-solid-svg-icons";
 import MscComponentSnippet from "../../components/MscComponentSnippet/MscComponentSnippet";
 import { MscButton } from "../../components";
 import {
