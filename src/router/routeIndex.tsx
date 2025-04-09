@@ -31,6 +31,7 @@ import MscPaginationPage from "../pages/Pagination/MscPaginationPage";
 import MscDividersPage from "../pages/Dividers/MscDividersPage";
 import { SimilarItems } from "../pages/SimilarItems/SimilarItems";
 import WipComponent from "../pages/WipComponent/WipComponent";
+import ComponentTesterPage from "../pages/ComponentTesterPage/ComponentTesterPage";
 
 export const routesIndex = [
   {
@@ -168,6 +169,10 @@ export const routesIndex = [
       {
         path: "SimilarItems",
         element: <SimilarItems />,
+      },
+      {
+        path: "ComponentTester",
+        element: <ComponentTesterPage />,
       },
     ],
   },

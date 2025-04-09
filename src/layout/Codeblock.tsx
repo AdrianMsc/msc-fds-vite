@@ -3,14 +3,15 @@ import { atomDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 interface Props {
   children: string;
+  className?: string;
 }
 
-const Codeblock = ({ children }: Props) => {
+const Codeblock = ({ children, className }: Props) => {
   return (
     <SyntaxHighlighter
       language="cshtml"
       style={atomDark}
-      className="max-[1500px] mt-2 rounded mb-10"
+      className={`max-[1500px] ${className}`}
     >
       {children}
     </SyntaxHighlighter>

@@ -6,176 +6,80 @@ import {
   faPrint,
   faThumbsUp,
 } from "@fortawesome/free-solid-svg-icons";
+import MscComponentSnippet from "../../components/MscComponentSnippet/MscComponentSnippet";
+import { MscButton } from "../../components";
+import {
+  buttonIcon,
+  buttonLoadingState,
+  buttonTextIcon,
+  defaultButtons,
+  disabledButtons,
+} from "./constants";
 
 const MscButtonsPage = () => {
   return (
     <ComponentLayout>
-      <div>
-        <h2 className="font-bold text-2xl mb-2">Default Buttons</h2>
+      <MscComponentSnippet
+        title="Default Buttons"
+        code={defaultButtons}
+        className="mb-4"
+      >
         <div className="msc-component-container-row">
-          <button className="msc-btn msc-btn-blue-solid">Blue Solid</button>
-          <button className="msc-btn msc-btn-blue-outline">Blue Outline</button>
-          <button className="msc-btn msc-btn-transparent">Text Only</button>
-          <button className="msc-btn msc-btn-blue-solid msc-btn-sm">
-            Small Button
-          </button>
+          <MscButton label="Blue solid" variant="solid" />
+          <MscButton label="Blue outline" variant="outline" />
+          <MscButton label="Text Only" variant="transparent" />
+          <MscButton label="Small button" variant="solid" size="small" />
         </div>
-        <div className="max-w-[1500px] mt-5">
-          <Codeblock>{`
-      <!-- Primary -->        
-      <button className="msc-btn msc-btn-blue-solid">Blue Solid</button>
-      <!-- Secondary -->
-      <button className="msc-btn msc-btn-blue-outline">Blue Outline</button>
-      <!-- Tertiary -->
-      <button className="msc-btn msc-btn-blue-transparent">Text Only</button>
-      <!-- Small -->        
-      <button className="msc-btn msc-btn-blue-solid msc-btn-sm">Small Button</button>
-          `}</Codeblock>
-        </div>
+      </MscComponentSnippet>
 
-        <div className="max-w-screen-2xl mx-auto">
-          <h2 className="font-bold text-2xl mb-2">Disabled</h2>
-          <div className="msc-component-container-row">
-            <button disabled className="msc-btn msc-btn-blue-solid">
-              Primary
-            </button>
-            <button disabled className="msc-btn msc-btn-blue-outline">
-              Secondary
-            </button>
-            <button disabled className="msc-btn msc-btn-transparent">
-              Tertiary
-            </button>
-            <button
-              disabled
-              className="msc-btn disabled:msc-btn-blue-solid msc-btn-sm"
-            >
-              Small
-            </button>
-          </div>
-          <div className="max-w-[1500px] mt-5">
-            <Codeblock>
-              {`
-      <!-- Primary -->        
-      <button disabled class="msc-btn msc-btn-blue-solid">Primary</button>
-      <!-- Secondary -->
-      <button disabled class="msc-btn msc-btn-blue-outline">Secondary</button>
-      <!-- Tertiary -->
-      <button disabled class="msc-btn msc-btn-transparent">Tertiary</button>
-            `}
-            </Codeblock>
-          </div>
+      <MscComponentSnippet
+        title="Disabled Buttons"
+        code={disabledButtons}
+        className="mb-4"
+      >
+        <div className="msc-component-container-row">
+          <MscButton label="Blue solid" variant="solid" disabled />
+          <MscButton label="Blue outline" variant="outline" disabled />
+          <MscButton label="Text Only" variant="transparent" disabled />
+          <MscButton
+            label="Small button"
+            variant="solid"
+            size="small"
+            disabled
+          />
         </div>
+      </MscComponentSnippet>
 
-        <div className="max-w-screen-2xl mx-auto">
-          <h2 className="font-bold text-2xl mb-2">Button With Icon</h2>
-          <div className="msc-component-container-row">
-            <button className="msc-btn msc-btn-blue-solid msc-btn-icon">
-              <FontAwesomeIcon icon={faDownload} className="icon-btn" />
-              Primary
-            </button>
-            <button className="msc-btn msc-btn-blue-outline msc-btn-icon">
-              <FontAwesomeIcon icon={faDownload} className="icon-btn" />
-              Secondary
-            </button>
-            <button className="msc-btn msc-btn-transparent msc-btn-icon">
-              <FontAwesomeIcon icon={faDownload} className="icon-btn" />
-              Tertiary
-            </button>
-          </div>
-          <div className="max-w-[1500px] mt-5">
-            <Codeblock>
-              {`
-      <!-- Primary -->        
-      <button class="msc-btn msc-btn-blue-solid msc-btn-icon">Primary
-        <img src="..." class="icon-btn" />
-      </button>
-      <!-- Secondary -->
-      <button class="msc-btn msc-btn-blue-outline msc-btn-icon">Secondary
-        <img src="..." class="icon-btn" />
-      </button>
-      <!-- Tertiary -->
-      <button class="msc-btn msc-btn-transparent msc-btn-icon">Tertiary
-        <img src="..." class="icon-btn" />
-      </button>
-              `}
-            </Codeblock>
-          </div>
+      <MscComponentSnippet
+        title="Button with icon"
+        code={buttonTextIcon}
+        className="mb-4"
+      >
+        <div className="msc-component-container-row">
+          <MscButton label="Primary" variant="solid" icon={faDownload} />
+          <MscButton label="Secondary" variant="outline" icon={faDownload} />
+          <MscButton label="Tertiary" variant="transparent" icon={faDownload} />
         </div>
+      </MscComponentSnippet>
 
-        <div className="max-w-screen-2xl mx-auto">
-          <h2 className="font-bold text-2xl mb-2">Button Loading State</h2>
-          <div className="msc-component-container-row">
-            <button className="msc-btn msc-btn-blue-solid">
-              <div className="msc-btn-dots-container">
-                <div className="msc-btn-dot1"></div>
-                <div className="msc-btn-dot2"></div>
-                <div className="msc-btn-dot3"></div>
-              </div>
-            </button>
-            <button className="msc-btn msc-btn-blue-outline">
-              <div className="msc-btn-dots-container">
-                <div className="msc-btn-dot1"></div>
-                <div className="msc-btn-dot2"></div>
-                <div className="msc-btn-dot3"></div>
-              </div>
-            </button>
-            <button className="msc-btn msc-btn-transparent">
-              <div className="msc-btn-dots-container">
-                <div className="msc-btn-dot1"></div>
-                <div className="msc-btn-dot2"></div>
-                <div className="msc-btn-dot3"></div>
-              </div>
-            </button>
-            <button className="msc-btn msc-btn-blue-solid msc-btn-sm">
-              <div className="msc-btn-dots-container">
-                <div className="msc-btn-dot1"></div>
-                <div className="msc-btn-dot2"></div>
-                <div className="msc-btn-dot3"></div>
-              </div>
-            </button>
-          </div>
+      <MscComponentSnippet
+        title="Button loading state"
+        code={buttonLoadingState}
+        className="mb-4"
+      >
+        <div className="msc-component-container-row">
+          <MscButton label="Primary" variant="solid" loading={true} />
+          <MscButton label="Secondary" variant="outline" loading={true} />
+          <MscButton label="Tertiary" variant="transparent" loading={true} />
+        </div>
+      </MscComponentSnippet>
 
-          <div className="max-w-[1500px] mt-5">
-            <Codeblock>{`
-            <!-- Primary -->
-      <button class="msc-btn msc-btn-blue-solid">
-        <div class="msc-btn-dots-container">
-          <div class="msc-btn-dot1"></div>
-          <div class="msc-btn-dot2"></div>
-          <div class="msc-btn-dot3"></div>
-        </div>
-      </button>
-      <!-- Secondary -->
-      <button class="msc-btn msc-btn-blue-outline">
-        <div class="msc-btn-dots-container">
-          <div class="msc-btn-dot1"></div>
-          <div class="msc-btn-dot2"></div>
-          <div class="msc-btn-dot3"></div>
-        </div>
-      </button>
-      <!-- Tertiary -->
-      <button class="msc-btn msc-btn-transparent">
-        <div class="msc-btn-dots-container">
-          <div class="msc-btn-dot1"></div>
-          <div class="msc-btn-dot2"></div>
-          <div class="msc-btn-dot3"></div>
-        </div>
-      </button>
-      <!-- Small -->
-      <button class="msc-btn msc-btn-blue-solid msc-btn-sm">
-        <div class="msc-btn-dots-container">
-          <div class="msc-btn-dot1"></div>
-          <div class="msc-btn-dot2"></div>
-          <div class="msc-btn-dot3"></div>
-        </div>
-      </button>
-            `}</Codeblock>
-          </div>
-        </div>
-
-        <h2 className="mb-2">Icon Button</h2>
-
-        <div className="flex items-center bg-white p-5 w-fit rounded">
+      <MscComponentSnippet
+        title="Icon button"
+        code={buttonIcon}
+        className="mb-4"
+      >
+        <div className="flex items-center ">
           <table className="border-separate border-spacing-5 text-center">
             <tr className="text-[14px]">
               <th>Button</th>
@@ -255,78 +159,7 @@ const MscButtonsPage = () => {
             </tr>
           </table>
         </div>
-
-        <div className="max-w-[1500px] mt-5">
-          <Codeblock>{`
-    <!-- Small -->  
-    <button class="msc-icon-button-sm">
-      <i class="fa-solid fa-thumbs-up"></i>
-    </button>
-
-    <!-- Medium | defautl -->
-    <button class="msc-icon-button">
-      <i class="fa-solid fa-thumbs-up"></i>
-    </button>
-
-    <!-- Large -->
-    <button class="msc-icon-button-lg">
-      <i class="fa-solid fa-thumbs-up"></i>
-    </button>
-
-    <!-- Disabled -->
-    <button class="msc-icon-button" disabled>
-      <i class="fa-solid fa-thumbs-up"></i>
-    </button>
-          `}</Codeblock>
-        </div>
-
-        <h2 className="mb-2">Grey Button</h2>
-        <div className="msc-component-container-row mb-5">
-          <div className="flex flex-col items-center gap-3">
-            <p>Default</p>
-            <button className="msc-grey-button">
-              <FontAwesomeIcon icon={faPrint} />
-              <p>Print</p>
-            </button>
-          </div>
-          <div className="flex flex-col items-center gap-3">
-            <p>Hover</p>
-            <button className="msc-grey-button text-monochromes-main">
-              <FontAwesomeIcon icon={faPrint} />
-              <p>Print</p>
-            </button>
-          </div>
-          <div className="flex flex-col items-center gap-3">
-            <p>Bold</p>
-            <button className="msc-grey-button font-bold">
-              <FontAwesomeIcon icon={faPrint} />
-              <p>Print</p>
-            </button>
-          </div>
-          <div className="flex flex-col items-center gap-3">
-            <p>Disabled</p>
-            <button disabled className="msc-grey-button">
-              <FontAwesomeIcon icon={faPrint} />
-              <p>Print</p>
-            </button>
-          </div>
-        </div>
-
-        <Codeblock>
-          {`
-  <button class="msc-grey-button">
-    <i class="fa-solid fa-print mb-[1px]"></i>
-    <p>Print</p>
-  </button>
-
-  <!-- Bold Variant -->
-  <button class="msc-grey-button font-bold">
-    <i class="fa-solid fa-print mb-[1px]"></i>
-    <p>Print</p>
-  </button>
-          `}
-        </Codeblock>
-      </div>
+      </MscComponentSnippet>
     </ComponentLayout>
   );
 };

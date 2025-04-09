@@ -1,3 +1,5 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 type Variant = "solid" | "outline" | "transparent";
 type Size = "default" | "small";
 
@@ -6,15 +8,17 @@ interface MscButtonProps {
   variant?: Variant;
   size?: Size;
   loading?: boolean;
-  icon?: string;
+  icon?: any;
+  disabled?: boolean;
 }
 
 export const MscButton: React.FC<MscButtonProps> = ({
-  label = "Button",
+  label = "",
   variant = "solid",
   size = "default",
   loading = false,
-  icon = "",
+  icon,
+  disabled = false,
 }) => {
   const variantClasses: Record<Variant, string> = {
     solid: "msc-btn msc-btn-blue-solid",
@@ -27,18 +31,18 @@ export const MscButton: React.FC<MscButtonProps> = ({
     small: "msc-btn-sm",
   };
 
-  const ico = <i className={`${icon} mr-2`}></i>;
-
   const className = `${variantClasses[variant]} ${variantSizes[size]}`;
 
   return (
-    <button className={className}>
+    <button className={className} disabled={disabled}>
       {loading === false ? (
-        icon && icon.trim() !== "" && !icon.includes("none") ? (
-          <span>
-            {ico}
-            {label}
-          </span>
+        icon && label ? (
+          <>
+            <FontAwesomeIcon icon={icon} />
+            <span className="ml-2">{label}</span>
+          </>
+        ) : label === "" ? (
+          <FontAwesomeIcon icon={icon} />
         ) : (
           label
         )
