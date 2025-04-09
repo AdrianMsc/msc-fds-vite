@@ -12,12 +12,10 @@ const MscColorsPage = () => {
     <ComponentLayout>
       <div className="flex flex-col md:flex-row space-x-2 flex-wrap">
         {palettes.map((palette) => (
-          <article
-            key={palette.key}
-            className="flex flex-col items-start mb-3 bg-white rounded p-3 w-full md:w-fit flex-grow"
-          >
+          <article key={palette.key} className="w-full">
             <h2 className="mb-2">{palette.name}</h2>
-            <div className="w-full flex overflow-auto">
+
+            <div className="w-full flex flex-col items-start mb-3 bg-white rounded p-10">
               <MscColors palette={palette.key} />
             </div>
           </article>
