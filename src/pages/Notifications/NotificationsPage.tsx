@@ -43,9 +43,17 @@ const NotificationsPage = () => {
 								onClick={() => setSelectedNotification(noti)}
 								className={`text-start min-w-[250px] max-w-[300px] ${isSelected ? 'bg-blue-100' : 'hover:bg-blue-50'}`}
 							>
-								<div className="pl-6 pr-3 py-3 border-b border-r border-l border-gray-300" key={noti.id}>
-									<p className="font-bold text-blue-700">{noti.name}</p>
-									<p className="truncate">{noti.message}</p>
+								<div
+									className="flex flex-row gap-2 pl-6 pr-3 py-3 border-b border-r border-l border-gray-300 overflow-hidden"
+									key={noti.id}
+								>
+									<div className="flex size-10 min-w-10 rounded-full text-center place-content-center bg-blue-600">
+										<p className="text-xl font-semibold my-auto">{noti.name.charAt(0)}</p>
+									</div>
+									<div className="w-full overflow-hidden">
+										<p className="font-bold text-blue-700">{noti.name}</p>
+										<p className="truncate">{noti.message}</p>
+									</div>
 								</div>
 							</button>
 						);
