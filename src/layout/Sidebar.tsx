@@ -50,10 +50,13 @@ const Sidebar: React.FC = () => {
       } z-50 lg:z-auto`}
     >
       <button
-        className="absolute top-2 right-2  h-6 w-6 flex lg:hidden items-center justify-center"
+        className="absolute top-2 right-2  h-6 w-6 flex sm:hidden items-center justify-center"
         onClick={toggleSidebar}
       >
-        <FontAwesomeIcon icon={faTimes} className="text-monochromes-grey" />
+        <FontAwesomeIcon
+          icon={faTimes}
+          className="text-monochromes-grey sm:hidden"
+        />
       </button>
       <Link to="/" className="flex flex-col mb-2">
         <MscLogo />

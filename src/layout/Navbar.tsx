@@ -36,7 +36,7 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <header className="bg-white bg-opacity-50  shadow py-4 px-5 flex w-full justify-between items-center z-auto relative">
+    <header className="bg-white bg-opacity-50  shadow py-4 px-5 flex w-full justify-between items-center z-auto sticky left-0 top-0">
       <button className="sm:hidden text-lg" onClick={toggleSidebar}>
         <FontAwesomeIcon icon={faBars} />
       </button>
