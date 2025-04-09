@@ -76,82 +76,84 @@ const MscButtonsPage = () => {
       >
         <div className="flex items-center ">
           <table className="border-separate border-spacing-5 text-center">
-            <tr className="text-[14px]">
-              <th>Button</th>
-              <td>Default</td>
-              <td>Hover</td>
-              <td>Focused</td>
-              <td>Disabled</td>
-            </tr>
-            <tr>
-              <th>LG</th>
-              <td>
-                <button className="msc-icon-button-lg">
-                  <FontAwesomeIcon icon={faThumbsUp} />
-                </button>
-              </td>
-              <td>
-                <button className="msc-icon-button-lg bg-off_white rounded-full">
-                  <FontAwesomeIcon icon={faThumbsUp} />
-                </button>
-              </td>
-              <td>
-                <button className="msc-icon-button-lg bg-monochromes-grey_xlight hover:bg-monochromes-grey_xlight">
-                  <FontAwesomeIcon icon={faThumbsUp} />
-                </button>
-              </td>
-              <td>
-                <button className="msc-icon-button-lg" disabled>
-                  <FontAwesomeIcon icon={faThumbsUp} />
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <th>MD</th>
-              <td>
-                <button className="msc-icon-button">
-                  <FontAwesomeIcon icon={faThumbsUp} />
-                </button>
-              </td>
-              <td>
-                <button className="msc-icon-button bg-off_white rounded-full">
-                  <FontAwesomeIcon icon={faThumbsUp} />
-                </button>
-              </td>
-              <td>
-                <button className="msc-icon-button bg-monochromes-grey_xlight hover:bg-monochromes-grey_xlight rounded-full">
-                  <FontAwesomeIcon icon={faThumbsUp} />
-                </button>
-              </td>
-              <td>
-                <button className="msc-icon-button" disabled>
-                  <FontAwesomeIcon icon={faThumbsUp} />
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <th>SM</th>
-              <td>
-                <button className="msc-icon-button-sm">
-                  <FontAwesomeIcon icon={faThumbsUp} />
-                </button>
-              </td>
-              <td>
-                <button className="msc-icon-button-sm bg-off_white rounded-full">
-                  <FontAwesomeIcon icon={faThumbsUp} />
-                </button>
-              </td>
-              <td>
-                <button className="msc-icon-button-sm bg-monochromes-grey_xlight hover:bg-monochromes-grey_xlight rounded-full">
-                  <FontAwesomeIcon icon={faThumbsUp} />
-                </button>
-              </td>
-              <td>
-                <button className="msc-icon-button-sm" disabled>
-                  <FontAwesomeIcon icon={faThumbsUp} />
-                </button>
-              </td>
-            </tr>
+            <tbody>
+              <tr className="text-[14px]">
+                <th>Button</th>
+                <td>Default</td>
+                <td>Hover</td>
+                <td>Focused</td>
+                <td>Disabled</td>
+              </tr>
+              <tr>
+                <th>LG</th>
+                <td>
+                  <button className="msc-icon-button-lg">
+                    <FontAwesomeIcon icon={faThumbsUp} />
+                  </button>
+                </td>
+                <td>
+                  <button className="msc-icon-button-lg bg-off_white rounded-full">
+                    <FontAwesomeIcon icon={faThumbsUp} />
+                  </button>
+                </td>
+                <td>
+                  <button className="msc-icon-button-lg bg-monochromes-grey_xlight hover:bg-monochromes-grey_xlight">
+                    <FontAwesomeIcon icon={faThumbsUp} />
+                  </button>
+                </td>
+                <td>
+                  <button className="msc-icon-button-lg" disabled>
+                    <FontAwesomeIcon icon={faThumbsUp} />
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <th>MD</th>
+                <td>
+                  <button className="msc-icon-button">
+                    <FontAwesomeIcon icon={faThumbsUp} />
+                  </button>
+                </td>
+                <td>
+                  <button className="msc-icon-button bg-off_white rounded-full">
+                    <FontAwesomeIcon icon={faThumbsUp} />
+                  </button>
+                </td>
+                <td>
+                  <button className="msc-icon-button bg-monochromes-grey_xlight hover:bg-monochromes-grey_xlight rounded-full">
+                    <FontAwesomeIcon icon={faThumbsUp} />
+                  </button>
+                </td>
+                <td>
+                  <button className="msc-icon-button" disabled>
+                    <FontAwesomeIcon icon={faThumbsUp} />
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <th>SM</th>
+                <td>
+                  <button className="msc-icon-button-sm">
+                    <FontAwesomeIcon icon={faThumbsUp} />
+                  </button>
+                </td>
+                <td>
+                  <button className="msc-icon-button-sm bg-off_white rounded-full">
+                    <FontAwesomeIcon icon={faThumbsUp} />
+                  </button>
+                </td>
+                <td>
+                  <button className="msc-icon-button-sm bg-monochromes-grey_xlight hover:bg-monochromes-grey_xlight rounded-full">
+                    <FontAwesomeIcon icon={faThumbsUp} />
+                  </button>
+                </td>
+                <td>
+                  <button className="msc-icon-button-sm" disabled>
+                    <FontAwesomeIcon icon={faThumbsUp} />
+                  </button>
+                </td>
+              </tr>
+            </tbody>
           </table>
         </div>
       </MscComponentSnippet>

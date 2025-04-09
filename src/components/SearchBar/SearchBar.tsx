@@ -88,7 +88,7 @@ export default function SearchBar() {
           <input
             id="searchComp"
             type="text"
-            placeholder="Search Brand"
+            placeholder="Search component"
             className="w-full border-monochromes-grey_xlight border rounded-full py-1 px-3 text-xs"
             autoComplete="off"
             value={query}
