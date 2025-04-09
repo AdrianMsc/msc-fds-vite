@@ -1,38 +1,38 @@
-import GettingStarted from "../pages/GettingStartedPage";
 import Home from "../pages/HomePage";
 import DocsLayout from "../layout/DocsLayout";
-import ComponentStatus from "../pages/ComponentStatusPage";
-import LoginPage from "../pages/LoginPage/LoginPage";
-import MscColorsPage from "../pages/ColorsPage/MscColorsPage";
-import MscShadowsPage from "../pages/ShadowsPage/MscShadowsPage";
-import MscSpacingPage from "../pages/SpacingPage/MscSpacingPage";
-import MscTypographyPage from "../pages/TypographyPage/MscTypographyPage";
-import MscButtonsPage from "../pages/Buttons/MscButtonsPage";
-import MscCartActionBarPage from "../pages/CartActionBar/MscCartActionBarPage";
-import MscDropdownPage from "../pages/Dropdown/MscDropdownPage";
 import MscLinkPage from "../pages/Link/MscLinkPage";
 import MscTabsPage from "../pages/Tabs/MscTabsPage";
-import MscFilterPage from "../pages/Filter/MscFilterPage";
+import LoginPage from "../pages/LoginPage/LoginPage";
 import MscAlertPage from "../pages/Alert/MscAlertPage";
-import MscCheckboxPage from "../pages/Checkbox/MscCheckboxPage";
 import MscRadioPage from "../pages/Radio/MscRadioPage";
 import MscInputPage from "../pages/Input/MscInputPage";
-import MscTableModalPage from "../pages/TableModal/MscTableModalPage";
-import MscTogglePage from "../pages/Toggle/MscTogglePage";
 import MscModalPage from "../pages/Modal/MscModalPage";
-import MscDialogPage from "../pages/Dialog/MscDialogPage";
-import MscModalListPage from "../pages/ModalList/MscModalListPage";
-import MscErrorPage from "../pages/ErrorPage/MscErrorPage";
 import MscPagedown from "../pages/Pagedown/MscPagedown";
+import GettingStarted from "../pages/GettingStartedPage";
+import MscFilterPage from "../pages/Filter/MscFilterPage";
+import MscTogglePage from "../pages/Toggle/MscTogglePage";
+import MscDialogPage from "../pages/Dialog/MscDialogPage";
+import ComponentStatus from "../pages/ComponentStatusPage";
+import MscErrorPage from "../pages/ErrorPage/MscErrorPage";
 import MscSpinnerPage from "../pages/Spinner/MscSpinnerPage";
-import MscAlphabeticPagerPage from "../pages/AlphabeticPager/MscAlphabeticPagerPage";
-import MscBreadcumbPage from "../pages/Breadcumb/MscBreadcumbPage";
-import MscPaginationPage from "../pages/Pagination/MscPaginationPage";
-import MscDividersPage from "../pages/Dividers/MscDividersPage";
-import { SimilarItems } from "../pages/SimilarItems/SimilarItems";
+import MscButtonsPage from "../pages/Buttons/MscButtonsPage";
 import WipComponent from "../pages/WipComponent/WipComponent";
-import ComponentTesterPage from "../pages/ComponentTesterPage/ComponentTesterPage";
+import MscColorsPage from "../pages/ColorsPage/MscColorsPage";
+import MscDividersPage from "../pages/Dividers/MscDividersPage";
+import MscCheckboxPage from "../pages/Checkbox/MscCheckboxPage";
+import MscDropdownPage from "../pages/Dropdown/MscDropdownPage";
+import MscShadowsPage from "../pages/ShadowsPage/MscShadowsPage";
+import MscSpacingPage from "../pages/SpacingPage/MscSpacingPage";
+import MscBreadcumbPage from "../pages/Breadcumb/MscBreadcumbPage";
+import MscModalListPage from "../pages/ModalList/MscModalListPage";
+import MscPaginationPage from "../pages/Pagination/MscPaginationPage";
+import MscTableModalPage from "../pages/TableModal/MscTableModalPage";
+import MscSimilarItems from "../pages/SimilarItems/MscSimilarItemsPage";
 import NotificationsPage from "../pages/Notifications/NotificationsPage";
+import MscTypographyPage from "../pages/TypographyPage/MscTypographyPage";
+import MscCartActionBarPage from "../pages/CartActionBar/MscCartActionBarPage";
+import ComponentTesterPage from "../pages/ComponentTesterPage/ComponentTesterPage";
+import MscAlphabeticPagerPage from "../pages/AlphabeticPager/MscAlphabeticPagerPage";
 
 export const routesIndex = [
   {
@@ -174,7 +174,7 @@ export const routesIndex = [
       },
       {
         path: "SimilarItems",
-        element: <SimilarItems />,
+        element: <MscSimilarItems />,
       },
       {
         path: "ComponentTester",
