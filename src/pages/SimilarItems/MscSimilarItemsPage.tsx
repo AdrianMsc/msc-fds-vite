@@ -1,5 +1,11 @@
+import ComponentLayout from "../../layout/ComponentLayout/ComponentLayout";
+
 const MscSimilarItems = () => {
-  return <div>SimilarItems</div>;
+  return (
+    <>
+      <ComponentLayout>componente pendiente</ComponentLayout>
+    </>
+  );
 };
 
 export default MscSimilarItems;
