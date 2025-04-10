@@ -15,7 +15,7 @@ const MscColorsPage = () => {
           <article key={palette.key} className="w-full">
             <h2 className="mb-2">{palette.name}</h2>
 
-            <div className="w-full flex flex-col items-start mb-3 bg-white rounded p-10">
+            <div className="w-full flex flex-col items-start mb-3 bg-white rounded p-10 overflow-auto">
               <MscColors palette={palette.key} />
             </div>
           </article>
