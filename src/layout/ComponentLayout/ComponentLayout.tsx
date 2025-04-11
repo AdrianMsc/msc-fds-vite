@@ -23,21 +23,19 @@ const ComponentLayout: React.FC<ComponentLayoutProps> = ({
   const route = location.pathname.split("/").pop();
 
   return (
-    <>
-      <section className={`${className ? className : ""}`}>
-        <h1 className="font-bold text-3xl mb-3">
-          <small className="text-sm text-primary-blue">{category}</small> <br />
-          {route === "Wipcomponent" ? "WIP:" : ""} {name}
-        </h1>
-        {statusBar ? <MscStatusComponentBar id={id} stats={statuses} /> : ""}
-        <p className="mb-4">
-          {description
-            ? description
-            : "This component doesn't have any description yet"}
-        </p>
-        {children}
-      </section>
-    </>
+    <main className={`${className ? className : ""} mx-auto container`}>
+      <h1 className="font-bold text-3xl mb-3">
+        <small className="text-sm text-primary-blue">{category}</small> <br />
+        {route === "Wipcomponent" ? "WIP:" : ""} {name}
+      </h1>
+      {statusBar ? <MscStatusComponentBar id={id} stats={statuses} /> : ""}
+      <p className="mb-4">
+        {description
+          ? description
+          : "This component doesn't have any description yet"}
+      </p>
+      {children}
+    </main>
   );
 };
 
