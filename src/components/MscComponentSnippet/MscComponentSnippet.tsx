@@ -12,7 +12,7 @@ interface MscComponentSnippetProps {
 }
 
 const MscComponentSnippet: React.FC<MscComponentSnippetProps> = ({
-  title = "Component Name",
+  title = "",
   children,
   code = "<!-- Your Code Goes Here -->",
   className,
@@ -38,7 +38,7 @@ const MscComponentSnippet: React.FC<MscComponentSnippetProps> = ({
 
   return (
     <article className={className}>
-      <h2 className="font-bold text-2xl mb-2">{title}</h2>
+      {title ? <h2 className="font-bold text-2xl mb-2">{title}</h2> : null}
 
       <div className="bg-white rounded-lg border border-monochromes-grey_xlight">
         <div className="p-5">{children}</div>

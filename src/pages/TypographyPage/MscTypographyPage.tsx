@@ -1,7 +1,7 @@
 import { useState } from "react";
-import Codeblock from "../../layout/Codeblock";
 import ComponentLayout from "../../layout/ComponentLayout/ComponentLayout";
-import { typography } from "./constants";
+import MscComponentSnippet from "../../components/MscComponentSnippet/MscComponentSnippet";
+import { typographyCode } from "./constants";
 
 const MscTypographyPage = () => {
   const [inputValue, setInputValue] = useState("");
@@ -11,11 +11,7 @@ const MscTypographyPage = () => {
   };
 
   return (
-    <ComponentLayout
-      name={typography.title}
-      category={typography.category}
-      description={typography.description}
-    >
+    <ComponentLayout>
       <div className="msc-input-wrapper mb-4">
         <input
           id="default"
@@ -36,31 +32,118 @@ const MscTypographyPage = () => {
         <span className="hidden lg:inline"> Desktop</span>
       </span>
 
-      <section className="overflow-hidden">
-        <h1>{inputValue || "Heading 1"}</h1>
-        <h2>{inputValue || "Heading 2"}</h2>
-        <h3>{inputValue || "Heading 3"}</h3>
-        <h4>{inputValue || "Heading 4"}</h4>
-        <h5>{inputValue || "Heading 5"}</h5>
-        <h6>{inputValue || "Heading 6"}</h6>
-      </section>
+      <MscComponentSnippet code={typographyCode} className="mt-3">
+        <section className="flex justify-between">
+          <div>
+            <p className="text-[#9747FF]">Arial Bold</p>
+            <p className="text-[#9747FF] mb-6"> Headers - LG 1025+</p>
 
-      <Codeblock>
-        {`
-<!-- Heading 1 -->
-<h1>Heading 1</h1>
-<!-- Heading 2 -->
-<h2>Heading 2</h2>
-<!-- Heading 3 -->
-<h3>Heading 3</h3>
-<!-- Heading 4 -->
-<h4>Heading 4</h4>
-<!-- Heading 5 -->
-<h5>Heading 5</h5>
-<!-- Heading 6 -->
-<h6>Heading 6</h6>
-`}
-      </Codeblock>
+            <h1>{inputValue || "H1 Typography"}</h1>
+            <p className="text-[#9747FF] mb-4">
+              SIZE: 2.00REM / LINE-HEIGHT: 2.50REM
+            </p>
+
+            <h2>{inputValue || "H2 Typography"}</h2>
+            <p className="text-[#9747FF] mb-4">
+              SIZE: 1.75REM / LINE-HEIGHT: 2.25REM
+            </p>
+
+            <h3>{inputValue || "H3 Typography"}</h3>
+            <p className="text-[#9747FF] mb-4">
+              SIZE: 1.50REM / LINE-HEIGHT: 2.00REM
+            </p>
+
+            <h4>{inputValue || "H4 Typography"}</h4>
+            <p className="text-[#9747FF] mb-4">
+              SIZE: 2.00REM / LINE-HEIGHT: 2.50REM
+            </p>
+
+            <h5>{inputValue || "H5 Typography"}</h5>
+            <p className="text-[#9747FF] mb-4">
+              SIZE: 1.00REM / LINE-HEIGHT: 1.50REM
+            </p>
+
+            <h6>{inputValue || "H6 Typography"}</h6>
+            <p className="text-[#9747FF] mb-4">
+              SIZE: 0.875REM / LINE-HEIGHT: 1.25REM
+            </p>
+          </div>
+
+          <div>
+            <p className="text-[#9747FF]">Arial Bold</p>
+            <p className="text-[#9747FF] mb-6">Headers - SM 0-1024</p>
+
+            <h1 className="text-[1.75rem]">{inputValue || "H1 Typography"}</h1>
+            <p className="text-[#9747FF] mb-4">
+              SIZE: 1.75REM / LINE-HEIGHT: 2.25REM
+            </p>
+
+            <h2 className="text-[1.5rem]">{inputValue || "H2 Typography"}</h2>
+            <p className="text-[#9747FF] mb-4">
+              SIZE: 1.50REM / LINE-HEIGHT: 2.00REM
+            </p>
+
+            <h3 className="text-[1.25rem]">{inputValue || "H3 Typography"}</h3>
+            <p className="text-[#9747FF] mb-4">
+              SIZE: 1.25REM / LINE-HEIGHT: 1.75REM
+            </p>
+
+            <h4 className="text-[1rem]">{inputValue || "H4 Typography"}</h4>
+            <p className="text-[#9747FF] mb-4">
+              SIZE: 1.00REM / LINE-HEIGHT: 1.50REM
+            </p>
+
+            <h5 className="text-[0.875rem]">{inputValue || "H5 Typography"}</h5>
+            <p className="text-[#9747FF] mb-4">
+              SIZE: 0.875REM / LINE-HEIGHT: 1.25REM
+            </p>
+
+            <h6 className="text-[0.75rem]">{inputValue || "H6 Typography"}</h6>
+            <p className="text-[#9747FF] mb-4">
+              SIZE: 0.75REM / LINE-HEIGHT: 1.00REM
+            </p>
+          </div>
+
+          <div>
+            <p className="text-[#9747FF]">Body</p>
+            <p className="text-[#9747FF] mb-6">
+              SIZE: 0.875REM / LINE-HEIGHT: 1.25REM
+            </p>
+
+            <p className="mb-6">Typography</p>
+
+            <p className="text-[#9747FF]">Overline</p>
+            <p className="text-[#9747FF] mb-6">
+              SIZE: 0.75REM / LINE-HEIGHT: 1.00REM
+            </p>
+
+            <p className="font-bold uppercase">Typography</p>
+
+            <p className="text-[#9747FF]">Caption</p>
+            <p className="text-[#9747FF] mb-6">
+              SIZE: 0.75REM / LINE-HEIGHT: 1.00REM
+            </p>
+
+            <p>Typography</p>
+          </div>
+
+          <div>
+            <p className="text-[#9747FF]">Helper text</p>
+            <p className="text-[#9747FF] mb-6">
+              SIZE: 0.75REM / LINE-HEIGHT: 1.00REM
+            </p>
+
+            <p className="mb-6 font-bold">Typography</p>
+
+            <p className="text-[#9747FF]">Custom</p>
+            <p className="text-[#9747FF] mb-6">
+              SIZE: 0.875REM / LINE-HEIGHT: 1.25REM
+            </p>
+
+            <p className="mb-6">Typography</p>
+          </div>
+        </section>
+      </MscComponentSnippet>
     </ComponentLayout>
   );
 };
