@@ -33,7 +33,7 @@ const MscTypographyPage = () => {
       </span>
 
       <MscComponentSnippet code={typographyCode} className="mt-3">
-        <section className="flex justify-between">
+        <section className="flex flex-col lg:flex-row justify-between">
           <div>
             <p className="text-[#9747FF]">Arial Bold</p>
             <p className="text-[#9747FF] mb-6"> Headers - LG 1025+</p>
