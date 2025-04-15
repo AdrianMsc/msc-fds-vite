@@ -43,10 +43,12 @@ const Navbar: React.FC = () => {
 			</button>
 
 			<div className="flex items-center gap-5 ml-auto">
-				<Link to={'/docs/notifications'} className="flex flex-col items-center justify-end">
-					<FontAwesomeIcon icon={faInbox} className="text-primary-blue size-5 self-center" />
-					<p className="text-primary-blue font-bold">Inbox</p>
-				</Link>
+				{isAuthenticated && (
+					<Link to={'/docs/notifications'} className="flex flex-col items-center justify-end">
+						<FontAwesomeIcon icon={faInbox} className="text-primary-blue size-5 self-center" />
+						<p className="text-primary-blue font-bold">Inbox</p>
+					</Link>
+				)}
 				{!isAuthenticated && (
 					<button onClick={handleLogin} className="flex flex-col items-center justify-end">
 						<UserSVG />
