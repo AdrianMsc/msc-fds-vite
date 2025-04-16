@@ -44,38 +44,12 @@ const NotificationsPage = () => {
     fetchNotifications();
   }, []);
 
-  // useEffect(() => {
-  // 	const handleHeigth = () => {
-  // 		let autoHeight = window.outerHeight - 135;
-  // 		setInboxHeight(autoHeight);
-  // 	};
-  // 	const handleWidth = () => {
-  // 		let autoWidth = window.outerWidth;
-  // 		setMessageWidth(autoWidth);
-  // 	};
-
-  // 	window.addEventListener("load", handleHeigth);
-  // 	window.addEventListener("resize", handleHeigth);
-  // 	window.addEventListener("load", handleWidth);
-  // 	window.addEventListener("resize", handleWidth);
-
-  // 	handleHeigth(); // Initial call to set the size based on the current window size
-  // 	handleWidth(); // Initial call to set the size based on the current window size
-
-  // 	return () => {
-  // 		window.removeEventListener("load", handleHeigth);
-  // 		window.removeEventListener("resize", handleHeigth);
-  // 		window.removeEventListener("load", handleWidth);
-  // 		window.removeEventListener("resize", handleWidth);
-  // 	};
-  // }, []);
-
   if (notifications === null) {
     return <div>Loading...</div>;
   }
 
   return (
-    <div className="flex flex-row w-full self-center h-[80vh] overflow-hidden">
+    <div className="flex flex-row w-full max-w-[1500px] self-center mx-auto h-[80vh] max-h-[1200px] overflow-hidden">
       <div className="flex flex-col min-w-fit h-full bg-white">
         <div className="border-b border-gray-300 text-start pl-5 py-4 min-w-[250px] max-w-[300px] ">
           <h3 className="text-nowrap">Inbox 📥</h3>
@@ -116,14 +90,14 @@ const NotificationsPage = () => {
       </div>
       {selectedNotification === null ? (
         <div className="flex w-full bg-white items-center border-l border-gray-300">
-          <div className="flex flex-col w-full overflow-y-scroll">
+          <div className="flex flex-col w-full">
             <p className="text-center text-2xl text-stone-400">
               Select a message to view details
             </p>
           </div>
         </div>
       ) : (
-        <div className="flex w-full overflow-y-scroll p-4 bg-white border-l border-gray-300">
+        <div className="flex w-full overflow-y-auto p-4 bg-white border-l border-gray-300">
           <div className="flex flex-col w-full h-full">
             <div className="flex flex-row w-full place-content-between p-4 overflow-hidden">
               <div className="flex flex-row gap-2 items-center overflow-hidden w-full">
