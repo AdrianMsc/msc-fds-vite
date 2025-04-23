@@ -8,6 +8,7 @@ interface MscComponentSnippetProps {
   title?: string;
   children: ReactNode;
   code?: string;
+  variant?: "white" | "transparent";
   className?: string;
 }
 
@@ -15,6 +16,7 @@ const MscComponentSnippet: React.FC<MscComponentSnippetProps> = ({
   title = "",
   children,
   code = "<!-- Your Code Goes Here -->",
+  variant = "white",
   className,
 }) => {
   const [isCodeVisible, setIsCodeVisible] = useState(true);
@@ -40,9 +42,13 @@ const MscComponentSnippet: React.FC<MscComponentSnippetProps> = ({
     <article className={className}>
       {title ? <h2 className="font-bold text-2xl mb-2">{title}</h2> : null}
 
-      <div className="bg-white rounded-lg border border-monochromes-grey_xlight">
+      <div
+        className={`${
+          variant === "white" ? "bg-white" : "bg-transparent"
+        } rounded-lg border border-monochromes-grey_xlight`}
+      >
         <div className="p-5">{children}</div>
-        <div className="border-y border-monochromes-grey_xlight py-1 px-2 flex">
+        <div className="border-y border-monochromes-grey_xlight py-1 px-2 flex bg-white">
           <button
             className="text-monochromes-grey_light ml-auto"
             onClick={() => toggleCode()}

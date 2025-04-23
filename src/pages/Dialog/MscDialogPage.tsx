@@ -1,6 +1,7 @@
 import { useState } from "react";
 import ComponentLayout from "../../layout/ComponentLayout/ComponentLayout";
-import Codeblock from "../../layout/Codeblock";
+import MscComponentSnippet from "../../components/MscComponentSnippet/MscComponentSnippet";
+import { codeDialog } from "./constants";
 
 const MscDialogPage = () => {
   const [isDialogOpen, setIsDialogOpen] = useState("");
@@ -11,13 +12,15 @@ const MscDialogPage = () => {
 
   return (
     <ComponentLayout>
-      <button
-        id="dialogBtn"
-        className="msc-btn msc-btn-blue-solid mb-4"
-        onClick={toggleDialog}
-      >
-        Trigger Dialog
-      </button>
+      <MscComponentSnippet code={codeDialog} className="mb-4">
+        <button
+          id="dialogBtn"
+          className="msc-btn msc-btn-blue-solid mb-4"
+          onClick={toggleDialog}
+        >
+          Trigger Dialog
+        </button>
+      </MscComponentSnippet>
 
       {isDialogOpen && (
         <div className={`msc-modal-bg ${toggleDialog}`}>
@@ -39,31 +42,6 @@ const MscDialogPage = () => {
           </article>
         </div>
       )}
-      <div className="py-2">
-        <Codeblock>{`
-  <article class="msc-dialog">
-      <h4 class="msc-dialog-title">Are you sure?</h4>
-      <p>
-        You are setting your status as Out of Office. Your organization
-        will see this status until you turn it off.
-      </p>
-      <div class="msc-dialog-footer">
-        <button class="msc-btn msc-btn-transparent">Cancel</button>
-  
-        <button class="msc-btn msc-btn-blue-solid">Continue</button>
-      </div>
-    </article>
-  </div>
-  
-  <button
-    id="dialogBtn"
-    class="msc-btn msc-btn-blue-solid mb-4"
-    onclick="toggleDialog()"
-  >
-    Trigger Dialog
-  </button>
-        `}</Codeblock>
-      </div>
     </ComponentLayout>
   );
 };

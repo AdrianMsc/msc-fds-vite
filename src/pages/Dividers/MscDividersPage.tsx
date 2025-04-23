@@ -1,39 +1,26 @@
-import Codeblock from "../../layout/Codeblock";
+import MscComponentSnippet from "../../components/MscComponentSnippet/MscComponentSnippet";
 import ComponentLayout from "../../layout/ComponentLayout/ComponentLayout";
+import { codeDividersHorizontal, codeDividerVertical } from "./constants";
 
 const MscDividersPage = () => {
   return (
     <>
       <ComponentLayout>
-        <article className="flex flex-col gap-2 place-content-evenly w-full h-[100px] bg-white rounded py-3 px-4 mb-4">
-          <div className="msc-h-divider-gray"></div>
+        <MscComponentSnippet className="mb-4" code={codeDividersHorizontal}>
+          <article className="flex flex-col gap-2 place-content-evenly w-full h-[100px] bg-white rounded py-3 px-4 ">
+            <div className="msc-h-divider-gray"></div>
 
-          <div className="msc-h-divider-blue"></div>
-        </article>
+            <div className="msc-h-divider-blue"></div>
+          </article>
+        </MscComponentSnippet>
 
-        <Codeblock>
-          {`
-  <!-- Horizontal Gray Divider -->
-  <div class="msc-h-divider-gray"></div>
-  <!-- Horizontal Blue Divider -->
-  <div class="msc-h-divider-blue"></div>
-            `}
-        </Codeblock>
+        <MscComponentSnippet code={codeDividerVertical} className="mb-4">
+          <article className="flex flex-row gap-2 place-content-evenly w-[100px] h-[300px] bg-white rounded py-3 px-4 my-4">
+            <div className="msc-v-divider-gray"></div>
 
-        <article className="flex flex-row gap-2 place-content-evenly w-[100px] h-[300px] bg-white rounded py-3 px-4 my-4">
-          <div className="msc-v-divider-gray"></div>
-
-          <div className="msc-v-divider-blue"></div>
-        </article>
-
-        <Codeblock>
-          {`
-  <!-- Vertical Gray Divider -->
-  <div class="msc-v-divider-gray"></div>
-  <!-- Vertical Blue Divider -->
-  <div class="msc-v-divider-blue"></div>
-            `}
-        </Codeblock>
+            <div className="msc-v-divider-blue"></div>
+          </article>
+        </MscComponentSnippet>
       </ComponentLayout>
     </>
   );

@@ -1,7 +1,8 @@
 import { useEffect } from "react";
 import ComponentLayout from "../../layout/ComponentLayout/ComponentLayout";
 import { MscBreadcrumb } from "../../components";
-import Codeblock from "../../layout/Codeblock";
+import MscComponentSnippet from "../../components/MscComponentSnippet/MscComponentSnippet";
+import { codeBreadcumbs } from "./constants";
 
 const MscBreadcumbPage = () => {
   useEffect(() => {
@@ -11,26 +12,9 @@ const MscBreadcumbPage = () => {
   return (
     <>
       <ComponentLayout>
-        <MscBreadcrumb />
-
-        <Codeblock>
-          {`
-  <ol class="msc-breadcrumb-container">
-    <li>
-      <a class="msc-breadcrumb">breadcrumb</a>
-      <span>/</span>
-    </li>
-    <li>
-      <a class="msc-breadcrumb">breadcrumb</a>
-      <span>/</span>
-    </li>
-    <li>
-      <a class="msc-breadcrumb">breadcrumb</a>
-      <span>/</span>
-    </li>
-  </ol>
-              `}
-        </Codeblock>
+        <MscComponentSnippet code={codeBreadcumbs}>
+          <MscBreadcrumb />
+        </MscComponentSnippet>
       </ComponentLayout>
     </>
   );
