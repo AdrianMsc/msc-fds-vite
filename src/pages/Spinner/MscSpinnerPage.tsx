@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { MscButton, MscSpinner } from "../../components";
-import Codeblock from "../../layout/Codeblock";
 import ComponentLayout from "../../layout/ComponentLayout/ComponentLayout";
 import MscComponentSnippet from "../../components/MscComponentSnippet/MscComponentSnippet";
 import { codeSpinner } from "./constants";

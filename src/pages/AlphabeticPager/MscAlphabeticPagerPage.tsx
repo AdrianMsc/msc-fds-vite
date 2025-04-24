@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { MscAlphabeticPager } from "../../components";
-import Codeblock from "../../layout/Codeblock";
 import ComponentLayout from "../../layout/ComponentLayout/ComponentLayout";
 import MscComponentSnippet from "../../components/MscComponentSnippet/MscComponentSnippet";
 import { codeAlphabeticPager } from "./constants";

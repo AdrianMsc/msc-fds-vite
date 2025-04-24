@@ -1,5 +1,4 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Codeblock from "../../layout/Codeblock";
 import ComponentLayout from "../../layout/ComponentLayout/ComponentLayout";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import MscComponentSnippet from "../../components/MscComponentSnippet/MscComponentSnippet";

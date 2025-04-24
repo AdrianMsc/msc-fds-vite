@@ -1,6 +1,5 @@
 import { MscToggle } from "../../components";
 import MscComponentSnippet from "../../components/MscComponentSnippet/MscComponentSnippet";
-import Codeblock from "../../layout/Codeblock";
 import ComponentLayout from "../../layout/ComponentLayout/ComponentLayout";
 import {
   codeToggleAddres,

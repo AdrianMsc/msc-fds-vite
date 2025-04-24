@@ -1,6 +1,5 @@
 import { useState } from "react";
 import ComponentLayout from "../../layout/ComponentLayout/ComponentLayout";
-import Codeblock from "../../layout/Codeblock";
 import MscComponentSnippet from "../../components/MscComponentSnippet/MscComponentSnippet";
 import { codeTabs } from "./constants";
 
