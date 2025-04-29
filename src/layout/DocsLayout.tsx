@@ -19,7 +19,7 @@ const DocsLayout = () => {
         <Sidebar />
         <div className="flex flex-col overflow-y-scroll overflow-x-visible w-full">
           <Navbar />
-          <div className="flex px-8 md:px-15 xl:px-20 flex-1">
+          <div className="flex px-8 pt-5 md:px-15 xl:px-20 flex-1">
             <Outlet context={{ toggleModal }} />
           </div>
           <Footer toggleModal={toggleModal} />
