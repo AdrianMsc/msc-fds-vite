@@ -1,18 +1,27 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { baseUrl } from "../../api";
-import { IFeedback, setFeedback } from "../../redux/slices/feedbackSlice";
-import { useDispatch } from "react-redux";
+import {
+  IFeedback,
+  removeFeedback,
+  setFeedback,
+} from "../../redux/slices/feedbackSlice";
+import { useDispatch, useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEllipsisV } from "@fortawesome/free-solid-svg-icons";
+import { faEllipsisV, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { openDialog } from "../../redux/slices/dialogSlice";
+import { RootState } from "../../redux/store";
+import { AppDispatch } from "../../redux/store";
+import showToast from "../../utils/showToast";
 
 const NotificationsPage = () => {
-  const [notifications, setNotifications] = useState<IFeedback[] | null>(null);
   const [selectedNotification, setSelectedNotification] =
     useState<IFeedback | null>(null);
   const [notiColors, setNotiColors] = useState<{ [key: string]: string }>({});
+  const [optionsVisible, setOptionsVisible] = useState(false);
 
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
+  const messages = useSelector((state: RootState) => state.feedback);
 
   const colors = [
     "bg-blue-300",
@@ -26,7 +35,6 @@ const NotificationsPage = () => {
     const fetchNotifications = async () => {
       try {
         const response = await axios.get(`${baseUrl}/inbox`);
-        setNotifications(response.data);
         dispatch(setFeedback(response.data));
 
         const colorMap: { [key: string]: string } = {};
@@ -44,7 +52,27 @@ const NotificationsPage = () => {
     fetchNotifications();
   }, []);
 
-  if (notifications === null) {
+  const handleDelete = async (notification: IFeedback) => {
+    try {
+      dispatch(
+        openDialog({
+          title: "Are you sure?",
+          text: "Do you really want to delete this message?",
+          onConfirm: () => {
+            dispatch(removeFeedback(notification));
+            setSelectedNotification(null); // Clear selected notification
+            setTimeout(() => {
+              showToast(dispatch, "success", "Message removed");
+            }, 300);
+          },
+        })
+      );
+    } catch (error) {
+      console.error("Failed to delete message:", error);
+    }
+  };
+
+  if (messages === null) {
     return <div>Loading...</div>;
   }
 
@@ -55,11 +83,11 @@ const NotificationsPage = () => {
           <h3 className="text-nowrap">Inbox 📥</h3>
         </div>
         <div className="flex flex-col w-full h-[100%] overflow-y-scroll overflow-x-hidden">
-          {notifications.map((noti) => {
+          {messages.map((noti) => {
             const isSelected = selectedNotification?.id === noti.id;
             return (
               <button
-                key={noti.id}
+                key={noti.message + noti.name}
                 onClick={() => setSelectedNotification(noti)}
                 className={`text-start min-w-[250px] max-w-[300px] ${
                   isSelected ? "bg-blue-100" : "hover:bg-blue-50"
@@ -118,9 +146,27 @@ const NotificationsPage = () => {
                 </div>
               </div>
               <div className="flex flex-col gap-2">
-                <button className="self-end">
-                  <FontAwesomeIcon icon={faEllipsisV} />
-                </button>
+                <div className="flex flex-row gap-2 place-content-end items-center h-8">
+                  <div
+                    className={`flex flex-row gap-2 items-center justify-center text-gray-500 hover:text-red-500 ${
+                      optionsVisible ? "visible" : "invisible"
+                    }`}
+                  >
+                    <button
+                      className="bg-zinc-200 py-1 px-2 flex flex-row gap-2 items-center justify-center text-gray-500 hover:text-red-500"
+                      onClick={() => handleDelete(selectedNotification)}
+                    >
+                      <FontAwesomeIcon icon={faTrash} />
+                      Delete
+                    </button>
+                  </div>
+                  <button
+                    className="self-center"
+                    onClick={() => setOptionsVisible(!optionsVisible)}
+                  >
+                    <FontAwesomeIcon icon={faEllipsisV} />
+                  </button>
+                </div>
                 <span className="text-end text-xs text-gray-400 self-end text-nowrap">
                   {selectedNotification?.created_at?.slice(0, 10)}
                 </span>
