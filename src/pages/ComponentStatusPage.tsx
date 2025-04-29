@@ -10,6 +10,12 @@ import { removeComponent } from "../redux/slices/componentsSlice";
 import ModalForm from "../components/ModalForm";
 import { addToast, removeToast } from "../redux/slices/toastSlice";
 import { openDialog } from "../redux/slices/dialogSlice";
+import formatComponentName from "../utils/formatComponentName";
+import { NavLink, useNavigate } from "react-router-dom";
+import { createLinkPage } from "../utils/createLinkPage";
+import { getNavLinkTo } from "../utils/getNavLinkTo";
+import { routesIndex } from "../router/routeIndex";
+import handleDataSend from "../utils/handleDataSend";
 
 const defaultValuesEmpty = {
   id: Number(""),
@@ -51,6 +57,7 @@ const ComponentStatus: React.FC = () => {
       dispatch(removeToast(id));
     }, 4000);
   };
+  const navigate = useNavigate();
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -221,7 +228,42 @@ const ComponentStatus: React.FC = () => {
                           scope="row"
                           className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap text-center"
                         >
-                          {component.name}
+                          <NavLink
+                            key={idx}
+                            className={({ isActive }) => {
+                              return isActive
+                                ? "font-bold text-primary-blue ml-5"
+                                : "font-bold ml-5";
+                            }}
+                            to={getNavLinkTo(component)}
+                            onClick={(event) => {
+                              event.preventDefault();
+                              const formattedName = createLinkPage(
+                                component.name
+                              );
+                              if (
+                                routesIndex[1].children?.some(
+                                  (route) => route.path === formattedName
+                                )
+                              ) {
+                                handleDataSend(
+                                  navigate,
+                                  `/docs/${formattedName}`,
+                                  component.name,
+                                  componentsApiData
+                                );
+                              } else {
+                                handleDataSend(
+                                  navigate,
+                                  `/docs/WipComponent/${formattedName}`,
+                                  component.name,
+                                  componentsApiData
+                                );
+                              }
+                            }}
+                          >
+                            {formatComponentName(component.name)}
+                          </NavLink>
                         </th>
                         <td className="px-6 py-4 text-center">
                           {component.statuses[0].guidelines}
