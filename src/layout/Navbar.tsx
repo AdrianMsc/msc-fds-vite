@@ -5,6 +5,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faInbox } from "@fortawesome/free-solid-svg-icons";
 import UserSVG from "../assets/UserSVG";
 import { Link } from "react-router-dom";
+import MscLogo from "../assets/MscLogo";
+import SearchBar from "../components/SearchBar/SearchBar";
 
 const Navbar: React.FC = () => {
   const context = useContext(SidebarContext);
@@ -37,12 +39,22 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <header className="bg-white bg-opacity-50  shadow py-4 px-5 flex w-full justify-between items-center z-auto sticky top-0">
+    <header className="bg-white bg-opacity-50 shadow py-4 px-5 flex flex-row w-full place-content-between items-center z-auto sticky top-0">
       <button className="sm:hidden text-lg" onClick={toggleSidebar}>
         <FontAwesomeIcon icon={faBars} />
       </button>
-
-      <div className="flex items-center gap-5 ml-auto">
+      <div className="flex flex-row gap-[1rem] sm:gap-[7rem] lg:gap-[5rem] items-center">
+        <Link to="/" className="sm:flex flex-col mb-2 hidden">
+          <MscLogo />
+          <p className="font-bold text-sm self-start hidden lg:flex">
+            Fuel Design System
+          </p>
+        </Link>
+        <div className="">
+          <SearchBar />
+        </div>
+      </div>
+      <div className="flex items-center gap-5">
         {/* {isAuthenticated && ( */}
         <Link
           to={"/docs/notifications"}

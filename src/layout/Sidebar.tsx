@@ -58,16 +58,6 @@ const Sidebar: React.FC = () => {
           className="text-monochromes-grey sm:hidden"
         />
       </button>
-      <Link to="/" className="flex flex-col mb-2">
-        <MscLogo />
-        <p className="font-bold text-sm self-start hidden lg:flex">
-          Fuel Design System
-        </p>
-      </Link>
-
-      <div className="">
-        <SearchBar />
-      </div>
 
       <strong>Start Here</strong>
       <NavLink

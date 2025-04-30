@@ -15,10 +15,10 @@ const DocsLayout = () => {
   };
   return (
     <>
-      <main className="flex flex-row  bg-off_white h-screen w-screen overflow-hidden">
+      <Navbar />
+      <main className="flex flex-row bg-off_white h-screen w-screen overflow-hidden">
         <Sidebar />
         <div className="flex flex-col overflow-y-scroll overflow-x-visible w-full">
-          <Navbar />
           <div className="flex px-8 pt-5 md:px-15 xl:px-20 flex-1">
             <Outlet context={{ toggleModal }} />
           </div>
