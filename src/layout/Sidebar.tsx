@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import formatComponentName from "../utils/formatComponentName";
 import SidebarContext from "../context/SidebarCtx";
 import { ICategoryApi } from "../interfaces/component.interface";
