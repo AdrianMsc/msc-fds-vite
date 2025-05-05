@@ -19,7 +19,7 @@ const MscComponentSnippet: React.FC<MscComponentSnippetProps> = ({
   variant = "white",
   className,
 }) => {
-  const [isCodeVisible, setIsCodeVisible] = useState(true);
+  const [isCodeVisible, setIsCodeVisible] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
 
   const toggleCode = () => {

@@ -6,7 +6,7 @@ import { ICategoryApi } from "../interfaces/component.interface";
 import { createLinkPage } from "../utils/createLinkPage";
 import chevron from "../assets/chevron-down.svg";
 import { routesIndex } from "../router/routeIndex";
-import handleDataSend from "../utils/handleDataSend"; // Importa la función
+import handleDataSend from "../utils/handleDataSend";
 import { getNavLinkTo } from "../utils/getNavLinkTo";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
