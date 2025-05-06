@@ -3425,14 +3425,6 @@ h6 {
 	height: 100vh;
 }
 
-.h-\[50\] {
-	height: 50;
-}
-
-.h-\[50px\] {
-	height: 50px;
-}
-
 .max-h-\[1200px\] {
 	max-height: 1200px;
 }
@@ -5577,10 +5569,6 @@ h6 {
 @media (min-width: 1280px) {
 	.xl\:mb-3 {
 		margin-bottom: 0.75rem;
-	}
-
-	.xl\:gap-\[9\.5rem\] {
-		gap: 9.5rem;
 	}
 
 	.xl\:px-20 {
