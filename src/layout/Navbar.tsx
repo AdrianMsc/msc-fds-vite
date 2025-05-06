@@ -50,7 +50,7 @@ const Navbar: React.FC = () => {
             Fuel Design System
           </p>
         </Link>
-        <div className="">
+        <div className="w-[250px]">
           <SearchBar />
         </div>
       </div>
