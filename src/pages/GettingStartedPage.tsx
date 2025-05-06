@@ -9,7 +9,7 @@ const GettingStarted = () => {
   return (
     <main className="pt-4 mx-auto container">
       <h1 className="font-bold text-3xl mb-3">
-        Welcome to the MSC Design System
+        Welcome to the MSC Design System Dev
       </h1>
       <h2 className="font-bold text-xl mt-5">Get Started</h2>
       <p className="text-balance">
