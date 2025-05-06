@@ -43,7 +43,7 @@ const Navbar: React.FC = () => {
       <button className="sm:hidden text-lg" onClick={toggleSidebar}>
         <FontAwesomeIcon icon={faBars} />
       </button>
-      <div className="flex flex-row gap-[1rem] sm:gap-[7rem] lg:gap-[5rem] items-center">
+      <div className="flex flex-row gap-[1rem] sm:gap-[7rem] lg:gap-[6.6rem] xl:gap-[9.5rem] items-center">
         <Link to="/" className="sm:flex flex-col mb-2 hidden">
           <MscLogo />
           <p className="font-bold text-sm self-start hidden lg:flex">
