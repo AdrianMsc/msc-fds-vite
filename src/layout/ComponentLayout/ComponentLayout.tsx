@@ -2,8 +2,10 @@ import React, { ReactNode, useEffect, useState } from 'react';
 import MscStatusComponentBar from '../../components/MscStatusComponentBar/MscStatusComponentBar';
 import { useLocation } from 'react-router-dom';
 import { createSBLink } from '../../utils/createSBLink';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBook } from '@fortawesome/free-solid-svg-icons';
+import SBIcon from '../../assets/icons/SBIcon';
+import FigmaIcon from '../../assets/icons/FigmaIcon';
+import { getFigmaLink } from '../../utils/getFigmaLink';
+import { FigmaLinks } from '../../constants/FigmaLinks';
 
 interface ComponentLayoutProps {
 	id?: number;
@@ -16,17 +18,30 @@ interface ComponentLayoutProps {
 }
 
 const ComponentLayout: React.FC<ComponentLayoutProps> = ({ children, className, statusBar = true }) => {
-	const [figmaLink, setFigmaLink] = useState('');
+	const [SBLink, setSBLink] = useState('');
+	const [figmaLink, setFigmaLink] = useState<string | null>('');
 	const location = useLocation();
 
-	const { id, name, category, description, statuses } = location.state || {};
+	const { id, name, category, description, statuses } =
+		(location.state as {
+			id?: number;
+			name?: keyof (typeof FigmaLinks)[keyof typeof FigmaLinks];
+			category?: keyof typeof FigmaLinks;
+			description?: string;
+			statuses?: any;
+		}) || {};
 	const route = location.pathname.split('/').pop();
-	const hasFigma = statuses && statuses[0] && statuses[0].storybook === '✅';
+	const hasSB = statuses && statuses[0] && statuses[0].storybook === '✅';
+	const hasFigmaLink = statuses && statuses[0] && statuses[0].figma === '✅';
 
 	useEffect(() => {
-		console.log(hasFigma);
-		if (hasFigma) {
-			const figmaLink = createSBLink(name, category);
+		if (hasSB) {
+			const SBLink = name && category ? createSBLink(name, category) : '';
+			setSBLink(SBLink);
+		}
+		if (hasFigmaLink) {
+			const figmaLink = name && category ? getFigmaLink(name, category) : null;
+
 			setFigmaLink(figmaLink);
 		}
 	}, []);
@@ -38,12 +53,26 @@ const ComponentLayout: React.FC<ComponentLayoutProps> = ({ children, className, 
 				{route === 'Wipcomponent' ? 'WIP:' : ''} {name}
 			</h1>
 			{statusBar ? <MscStatusComponentBar id={id} stats={statuses} /> : ''}
-			{hasFigma && (
-				<a href={figmaLink} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 no-underline">
-					<FontAwesomeIcon icon={faBook} className="text-[#ff4785]" height={16} width={16} />
-					<span className="text-sm text-primary-blue">See in Storybook</span>
-				</a>
-			)}
+			<div className="flex flex-row items-center gap-2">
+				<p className="font-bold">Links:</p>
+				{hasSB && (
+					<a href={SBLink} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 no-underline">
+						<SBIcon />
+						<span className="text-sm text-primary-blue">Storybook</span>
+					</a>
+				)}
+				{hasFigmaLink && figmaLink && (
+					<a
+						href={figmaLink}
+						target="_blank"
+						rel="noopener noreferrer"
+						className="flex items-center gap-1 no-underline"
+					>
+						<FigmaIcon />
+						<span className="text-sm text-primary-blue">Figma</span>
+					</a>
+				)}
+			</div>
 			<p className="my-2">{description ? description : "This component doesn't have any description yet"}</p>
 			{children}
 		</main>
