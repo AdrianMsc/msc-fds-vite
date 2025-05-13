@@ -11,6 +11,8 @@ export interface IComponentApi {
 	statuses: IStatusApi[];
 	comment: string;
 	category: string;
+	figmaLink?: string;
+	storybookLink?: string;
 }
 
 export interface ICategoryApi {

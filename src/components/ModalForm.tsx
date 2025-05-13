@@ -69,7 +69,9 @@ const ModalForm: React.FC<ModalFormProps> = ({
 				cdn: selectedRecord.statuses[0].cdn,
 				figma: selectedRecord.statuses[0].figma,
 				guidelines: selectedRecord.statuses[0].guidelines,
-				storybook: selectedRecord.statuses[0].storybook
+				storybook: selectedRecord.statuses[0].storybook,
+				figmaLink: selectedRecord.figmaLink,
+				storybookLink: selectedRecord.storybookLink
 			};
 			dispatch(setComponentData(formattedData));
 		}
