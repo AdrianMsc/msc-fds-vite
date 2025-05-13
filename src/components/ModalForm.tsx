@@ -236,6 +236,28 @@ const ModalForm: React.FC<ModalFormProps> = ({
 								</div>
 							</div>
 							<div className="flex flex-col gap-1">
+								<label htmlFor="figmaLink" className="font-bold">
+									Figma Link
+								</label>
+								<textarea
+									name="figmaLink"
+									className="msc-input !p-2 w-full"
+									value={formState.figmaLink}
+									onChange={handleChange}
+								></textarea>
+							</div>
+							<div className="flex flex-col gap-1">
+								<label htmlFor="storybookLink" className="font-bold">
+									Storybook Link
+								</label>
+								<textarea
+									name="storybookLink"
+									className="msc-input !p-2 w-full"
+									value={formState.storybookLink}
+									onChange={handleChange}
+								></textarea>
+							</div>
+							<div className="flex flex-col gap-1">
 								<label htmlFor="comment" className="font-bold">
 									Comments
 								</label>
