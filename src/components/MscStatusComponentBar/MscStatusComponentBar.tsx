@@ -1,9 +1,3 @@
-import { useAuth0 } from '@auth0/auth0-react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPencil } from '@fortawesome/free-solid-svg-icons';
-
-import React from 'react';
-
 interface Stats {
 	guidelines: string;
 	figma: string;
@@ -17,8 +11,6 @@ interface MscStatusComponentBarProps {
 }
 
 const MscStatusComponentBar: React.FC<MscStatusComponentBarProps> = ({ id, stats }) => {
-	const { isAuthenticated } = useAuth0();
-
 	const currentStats =
 		stats && stats.length > 0
 			? stats[0]
@@ -45,11 +37,6 @@ const MscStatusComponentBar: React.FC<MscStatusComponentBarProps> = ({ id, stats
 				<li>
 					<b>CDN:</b> {currentStats.cdn}
 				</li>
-				{isAuthenticated ? (
-					<li>
-						<FontAwesomeIcon icon={faPencil} className="opacity-20 hover:opacity-100 transition-all cursor-pointer " />
-					</li>
-				) : null}
 			</ul>
 		</>
 	);
