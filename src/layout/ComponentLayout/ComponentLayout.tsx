@@ -6,9 +6,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencil } from '@fortawesome/free-solid-svg-icons';
 import { useAuth0 } from '@auth0/auth0-react';
 import ModalForm from '../../components/ModalForm';
-import { addToast, removeToast } from '../../redux/slices/toastSlice';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../../redux/store';
 import { IComponentApi } from '../../interfaces/component.interface';
 
 interface ComponentStatus {
@@ -61,7 +58,6 @@ const defaultValuesEmpty: IComponentApi = {
 export const ComponentLayout: React.FC<ComponentLayoutProps> = ({ children, className = '', statusBar = true }) => {
 	const [modalVisibility, setModalVisibility] = useState(MODAL_VISIBILITY.HIDE);
 	const [selectedRecord, setSelectedRecord] = useState<IComponentApi>(defaultValuesEmpty);
-	const dispatch = useDispatch<AppDispatch>();
 	const location = useLocation();
 	const { isAuthenticated } = useAuth0();
 
