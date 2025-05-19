@@ -19,6 +19,45 @@ interface ModalFormProps {
 	emptyValues: IComponentApi;
 }
 
+const ANIMATION_DURATION = 300; // milliseconds for fade animation
+const TOAST_DURATION = 4000; // milliseconds for toast visibility
+
+const CATEGORY_OPTIONS = [
+	{ value: '', label: '-- Select a category --' },
+	{ value: 'Foundations', label: 'Foundations' },
+	{ value: 'Action', label: 'Action' },
+	{ value: 'Form', label: 'Form' },
+	{ value: 'Indicator', label: 'Indicator' },
+	{ value: 'Layout', label: 'Layout' },
+	{ value: 'Navigation', label: 'Navigation' },
+	{ value: 'Overlay', label: 'Overlay' }
+];
+
+const STATUS_OPTIONS = [
+	{ value: '🧱', label: '🧱 Todo' },
+	{ value: '🔨', label: '🔨 WIP' },
+	{ value: '🔭', label: '🔭 Alpha' },
+	{ value: '🧪', label: '🧪 Beta' },
+	{ value: '✅', label: '✅ Live' },
+	{ value: '🚫', label: '🚫 Not Applicable' }
+];
+
+//* Map component data to form data structure
+export const mapComponentToFormData = (component: IComponentApi): any => {
+	return {
+		id: component.id,
+		name: component.name,
+		category: component.category,
+		comment: component.comment,
+		cdn: component.statuses[0].cdn,
+		figma: component.statuses[0].figma,
+		guidelines: component.statuses[0].guidelines,
+		storybook: component.statuses[0].storybook,
+		figmaLink: component.figmaLink,
+		storybookLink: component.storybookLink
+	};
+};
+
 const ModalForm: React.FC<ModalFormProps> = ({
 	triggerModal,
 	toggleModal,
@@ -36,10 +75,20 @@ const ModalForm: React.FC<ModalFormProps> = ({
 
 	useEffect(() => {
 		if (triggerModal !== 'hidden') {
-			setIsVisible(true); // Show modal
-			setTimeout(() => setFadeIn(true), 50); // Apply fade-in
+			setIsVisible(true);
+			setTimeout(() => setFadeIn(true), 50);
 		}
 	}, [triggerModal]);
+
+	//* Initialize form data based on whether we're editing or creating
+	useEffect(() => {
+		if (selectedRecord.id === 0) {
+			dispatch(resetForm());
+		} else {
+			const formattedData = mapComponentToFormData(selectedRecord);
+			dispatch(setComponentData(formattedData));
+		}
+	}, [selectedRecord, dispatch]);
 
 	const showToast = (status: string, title: string, description?: string) => {
 		const id = Date.now().toString();
@@ -54,35 +103,21 @@ const ModalForm: React.FC<ModalFormProps> = ({
 
 		setTimeout(() => {
 			dispatch(removeToast(id));
-		}, 4000);
+		}, TOAST_DURATION);
 	};
 
-	useEffect(() => {
-		if (selectedRecord.id === 0) {
-			dispatch(resetForm());
-		} else {
-			const formattedData: any = {
-				id: selectedRecord.id,
-				name: selectedRecord.name,
-				category: selectedRecord.category,
-				comment: selectedRecord.comment,
-				cdn: selectedRecord.statuses[0].cdn,
-				figma: selectedRecord.statuses[0].figma,
-				guidelines: selectedRecord.statuses[0].guidelines,
-				storybook: selectedRecord.statuses[0].storybook
-			};
-			dispatch(setComponentData(formattedData));
-		}
-	}, [selectedRecord]);
+	const closeModalWithAnimation = () => {
+		setFadeIn(false);
+		setTimeout(() => {
+			setIsVisible(false);
+			toggleModal();
+		}, ANIMATION_DURATION);
+	};
 
 	const handleCancel = () => {
 		dispatch(resetForm());
 		setSelectedRecord(emptyValues);
-		setFadeIn(false); // Apply fade-out effect
-		setTimeout(() => {
-			setIsVisible(false); // Hide after fade-out completes
-			toggleModal();
-		}, 300);
+		closeModalWithAnimation();
 	};
 
 	const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
@@ -96,34 +131,66 @@ const ModalForm: React.FC<ModalFormProps> = ({
 
 	const handleSubmit = async (e: FormEvent) => {
 		e.preventDefault();
-		if (formState.id === '') {
-			const componentCasted = {
-				...formState,
-				id: Number(formState.id)
-			};
-			const response: any = await dispatch(addComponent(componentCasted));
-			if (response.payload.id != 0) {
-				showToast('success', 'Component created');
-			}
+
+		const componentCasted = {
+			...formState,
+			id: Number(formState.id)
+		};
+
+		//* Check if we're creating or updating a component
+		const isNewComponent = formState.id === '';
+		const actionType = isNewComponent ? 'created' : 'updated';
+
+		//* Dispatch the appropriate action directly instead of using a variable
+		let response: any;
+		if (isNewComponent) {
+			response = await dispatch(addComponent(componentCasted));
 		} else {
-			const componentCasted = {
-				...formState,
-				id: Number(formState.id)
-			};
-			const response: any = await dispatch(updateComponentThunk(componentCasted));
-			if (response.payload.id != 0) {
-				showToast('success', 'Component updated');
-			}
+			response = await dispatch(updateComponentThunk(componentCasted));
 		}
-		setFadeIn(false); // Apply fade-out effect
-		setTimeout(() => {
-			setIsVisible(false); // Hide after fade-out completes
-			toggleModal();
-		}, 300);
+
+		if (response.payload && response.payload.id !== 0) {
+			showToast('success', `Component ${actionType}`);
+		}
+
+		closeModalWithAnimation();
 		dispatch(resetForm());
 	};
 
-	return isVisible ? (
+	const renderFieldGroup = (id: string, label: string, children: React.ReactNode) => (
+		<div className="flex flex-col gap-1 w-full">
+			<label htmlFor={id} className="font-bold">
+				{label}
+			</label>
+			{children}
+		</div>
+	);
+
+	const renderSelectField = (name: string, value: string, options: Array<{ value: string; label: string }>) => (
+		<select name={name} className="msc-input !p-2" value={value} onChange={handleChange}>
+			{options.map((option) => (
+				<option key={option.value} value={option.value}>
+					{option.label}
+				</option>
+			))}
+		</select>
+	);
+
+	const renderTextField = (name: string, value: string, isTextarea: boolean = false) => {
+		const commonProps = {
+			name,
+			value,
+			onChange: handleChange,
+			className: isTextarea ? 'msc-input !p-2 w-full' : 'msc-input !w-full'
+		};
+
+		return isTextarea ? <textarea {...commonProps} /> : <input type="text" {...commonProps} />;
+	};
+
+	//* Don't render anything if not visible
+	if (!isVisible) return null;
+
+	return (
 		<div
 			className={`msc-modal-bg !fixed ${triggerModal} !bg-[#00000087] transition-opacity duration-300 ${
 				fadeIn ? 'opacity-100' : 'opacity-0'
@@ -139,115 +206,62 @@ const ModalForm: React.FC<ModalFormProps> = ({
 				<form onSubmit={handleSubmit}>
 					<div className="msc-modal-body pb-4 overflow-hidden">
 						<div className="flex flex-col w-full gap-5">
+							{/* Hidden ID field */}
+							<input name="id" type="text" className="hidden" value={formState.id} onChange={handleChange} />
+
+							{/* Name and Category Row */}
 							<div className="flex flex-col sm:flex-row gap-2 w-full sm:w-[600px]">
 								<div className="flex flex-col gap-1 w-full sm:!w-[50%]">
-									<label htmlFor="name" className="font-bold">
-										Name
-									</label>
-									<input name="id" type="text" className="hidden" value={formState.id} onChange={handleChange} />
-									<input
-										name="name"
-										type="text"
-										className="msc-input !w-full"
-										value={formState.name}
-										onChange={handleChange}
-									/>
+									{renderFieldGroup('name', 'Name', renderTextField('name', formState.name))}
 								</div>
 								<div className="flex flex-col gap-1 w-full sm:!w-[50%]">
-									<label htmlFor="category" className="font-bold">
-										Category
-									</label>
-									<select name="category" className="msc-input !p-2" value={formState.category} onChange={handleChange}>
-										<option value="">-- Select a category --</option>
-										<option value="Foundations">Foundations</option>
-										<option value="Action">Action</option>
-										<option value="Form">Form</option>
-										<option value="Indicator">Indicator</option>
-										<option value="Layout">Layout</option>
-										<option value="Navigation">Navigation</option>
-										<option value="Overlay">Overlay</option>
-									</select>
+									{renderFieldGroup(
+										'category',
+										'Category',
+										renderSelectField('category', formState.category, CATEGORY_OPTIONS)
+									)}
 								</div>
 							</div>
+
+							{/* Guidelines and Figma Row */}
 							<div className="flex flex-col sm:flex-row gap-2 w-full sm:w-[600px]">
 								<div className="flex flex-col gap-1 w-full sm:!w-[50%]">
-									<label htmlFor="guidelines" className="font-bold">
-										Guidelines
-									</label>
-									<select
-										name="guidelines"
-										className="msc-input !p-2"
-										value={formState.guidelines}
-										onChange={handleChange}
-									>
-										<option value="🧱">🧱 Todo</option>
-										<option value="🔨">🔨 WIP</option>
-										<option value="🔭">🔭 Alpha</option>
-										<option value="🧪">🧪 Beta</option>
-										<option value="✅">✅ Live</option>
-										<option value="🚫">🚫 Not Applicable</option>
-									</select>
+									{renderFieldGroup(
+										'guidelines',
+										'Guidelines',
+										renderSelectField('guidelines', formState.guidelines, STATUS_OPTIONS)
+									)}
 								</div>
 								<div className="flex flex-col gap-1 w-full sm:!w-[50%]">
-									<label htmlFor="figma" className="font-bold">
-										Figma
-									</label>
-									<select name="figma" className="msc-input !p-2" value={formState.figma} onChange={handleChange}>
-										<option value="🧱">🧱 Todo</option>
-										<option value="🔨">🔨 WIP</option>
-										<option value="🔭">🔭 Alpha</option>
-										<option value="🧪">🧪 Beta</option>
-										<option value="✅">✅ Live</option>
-										<option value="🚫">🚫 Not Applicable</option>
-									</select>
+									{renderFieldGroup('figma', 'Figma', renderSelectField('figma', formState.figma, STATUS_OPTIONS))}
 								</div>
 							</div>
+
+							{/* Storybook and CDN Row */}
 							<div className="flex flex-col sm:flex-row gap-2 w-full sm:w-[600px]">
 								<div className="flex flex-col gap-1 w-full sm:!w-[50%]">
-									<label htmlFor="storybook" className="font-bold">
-										Storybook
-									</label>
-									<select
-										name="storybook"
-										className="msc-input !p-2"
-										value={formState.storybook}
-										onChange={handleChange}
-									>
-										<option value="🧱">🧱 Todo</option>
-										<option value="🔨">🔨 WIP</option>
-										<option value="🔭">🔭 Alpha</option>
-										<option value="🧪">🧪 Beta</option>
-										<option value="✅">✅ Live</option>
-										<option value="🚫">🚫 Not Applicable</option>
-									</select>
+									{renderFieldGroup(
+										'storybook',
+										'Storybook',
+										renderSelectField('storybook', formState.storybook, STATUS_OPTIONS)
+									)}
 								</div>
 								<div className="flex flex-col gap-1 w-full sm:!w-[50%]">
-									<label htmlFor="cdn" className="font-bold">
-										CDN
-									</label>
-									<select name="cdn" className="msc-input !p-2" value={formState.cdn} onChange={handleChange}>
-										<option value="🧱">🧱 Todo</option>
-										<option value="🔨">🔨 WIP</option>
-										<option value="🔭">🔭 Alpha</option>
-										<option value="🧪">🧪 Beta</option>
-										<option value="✅">✅ Live</option>
-										<option value="🚫">🚫 Not Applicable</option>
-									</select>
+									{renderFieldGroup('cdn', 'CDN', renderSelectField('cdn', formState.cdn, STATUS_OPTIONS))}
 								</div>
 							</div>
-							<div className="flex flex-col gap-1">
-								<label htmlFor="comment" className="font-bold">
-									Comments
-								</label>
-								<textarea
-									name="comment"
-									className="msc-input !p-2 w-full"
-									value={formState.comment}
-									onChange={handleChange}
-								></textarea>
-							</div>
+
+							{/* Links and Comments */}
+							{renderFieldGroup('figmaLink', 'Figma Link', renderTextField('figmaLink', formState.figmaLink, true))}
+							{renderFieldGroup(
+								'storybookLink',
+								'Storybook Link',
+								renderTextField('storybookLink', formState.storybookLink, true)
+							)}
+							{renderFieldGroup('comment', 'Comments', renderTextField('comment', formState.comment, true))}
 						</div>
 					</div>
+
 					<div className="msc-modal-footer">
 						<button type="submit" className="msc-btn msc-btn-blue-solid w-full">
 							{buttonOne}
@@ -259,7 +273,7 @@ const ModalForm: React.FC<ModalFormProps> = ({
 				</form>
 			</div>
 		</div>
-	) : null;
+	);
 };
 
 export default ModalForm;
