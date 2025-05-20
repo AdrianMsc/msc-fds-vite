@@ -19,7 +19,7 @@ export const addComponent = createAsyncThunk(
 					comment: data.comment,
 					description: '',
 					category: data.category,
-					image: data.image,
+					image: typeof data.image === 'string' ? data.image : data.image instanceof File ? data.image.name : undefined,
 					statuses: [
 						{
 							guidelines: data.guidelines,
