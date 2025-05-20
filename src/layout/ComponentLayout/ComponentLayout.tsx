@@ -1,15 +1,17 @@
 import React, { ReactNode, useState, useCallback, useMemo } from 'react';
-import MscStatusComponentBar from '../../components/MscStatusComponentBar/MscStatusComponentBar';
-import Links from '../../components/Links/Links';
 import { useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { useAuth0 } from '@auth0/auth0-react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencil } from '@fortawesome/free-solid-svg-icons';
-import { useAuth0 } from '@auth0/auth0-react';
+
+import MscStatusComponentBar from '../../components/MscStatusComponentBar/MscStatusComponentBar';
+import Links from '../../components/Links/Links';
 import ModalForm from '../../components/ModalForm';
 import { IComponentApi } from '../../interfaces/component.interface';
-import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 
+// 🔢 TypeScript interfaces
 interface ComponentStatus {
 	guidelines: string;
 	figma: string;
@@ -38,13 +40,14 @@ interface ComponentLayoutProps {
 	statusBar?: boolean;
 }
 
+// 🔒 Constants
 const MODAL_VISIBILITY = {
 	SHOW: '',
 	HIDE: 'hidden'
-};
+} as const;
 
-const defaultValuesEmpty: IComponentApi = {
-	id: Number(''),
+const DEFAULT_VALUES: IComponentApi = {
+	id: 0,
 	name: '',
 	category: '',
 	comment: '',
@@ -61,24 +64,34 @@ const defaultValuesEmpty: IComponentApi = {
 	]
 };
 
+/**
+ ** ComponentLayout - Displays component information with optional status bar and editing capabilities
+ */
 export const ComponentLayout: React.FC<ComponentLayoutProps> = ({ children, className = '', statusBar = true }) => {
-	const [modalVisibility, setModalVisibility] = useState(MODAL_VISIBILITY.HIDE);
-	const [selectedRecord, setSelectedRecord] = useState<IComponentApi>(defaultValuesEmpty);
+	// 🪝 Hooks
 	const location = useLocation();
 	const { isAuthenticated } = useAuth0();
 	const components = useSelector((state: RootState) => state.components);
 
-	// * Extract and memoize location state to avoid unnecessary re-renders
-	const state = useMemo(() => (location.state as LocationState) || {}, [location.state]);
-	const { id, name, category, description, statuses, figmaLink, storybookLink, image } = state;
-	const imageUrl = components
-		.find((cat) => cat.category === category)
-		?.components.find((comp) => comp.id === id)?.image;
+	// 🏷️ State
+	const [modalVisibility, setModalVisibility] = useState<'' | 'hidden'>(MODAL_VISIBILITY.HIDE);
+	const [selectedRecord, setSelectedRecord] = useState<IComponentApi>(DEFAULT_VALUES);
 
-	// * Extract route logic into reusable memo
-	const isWipComponent = useMemo(() => location.pathname.split('/').pop() === 'Wipcomponent', [location]);
+	// 🧠 Memoized values
+	const state = useMemo<LocationState>(() => (location.state as LocationState) || {}, [location.state]);
+
+	const { id, name, category, description, statuses, figmaLink, storybookLink } = state;
+
+	const imageUrl = useMemo(() => {
+		if (!category || !id) return '';
+		return components.find((cat) => cat.category === category)?.components.find((comp) => comp.id === id)?.image;
+	}, [category, components, id]);
+
+	const isWipComponent = useMemo(() => location.pathname.split('/').pop() === 'Wipcomponent', [location.pathname]);
+
 	const hasLinks = Boolean(figmaLink || storybookLink);
 
+	// 🎬 Event handlers
 	const toggleModal = useCallback(() => {
 		setModalVisibility((prev) => (prev === MODAL_VISIBILITY.HIDE ? MODAL_VISIBILITY.SHOW : MODAL_VISIBILITY.HIDE));
 	}, []);
@@ -100,7 +113,6 @@ export const ComponentLayout: React.FC<ComponentLayoutProps> = ({ children, clas
 					{name}
 					{isAuthenticated && (
 						<button onClick={handleEdit} aria-label="Edit component" title="Edit component" className="pb-1">
-							{/* ! Using aria-label for accessibility */}
 							<FontAwesomeIcon
 								icon={faPencil}
 								className="size-5 opacity-10 hover:opacity-80 transition-all cursor-pointer"
@@ -109,9 +121,10 @@ export const ComponentLayout: React.FC<ComponentLayoutProps> = ({ children, clas
 					)}
 				</h1>
 
-				{/* * Conditional rendering with safe checks */}
-				{statusBar && statuses?.length && <MscStatusComponentBar id={id} stats={statuses} />}
+				{statusBar && (statuses?.length ?? 0) > 0 && <MscStatusComponentBar id={id} stats={statuses ?? []} />}
+
 				{hasLinks && <Links storybookLink={storybookLink} figmaLink={figmaLink} />}
+
 				<p className="mb-4">{description || "This component doesn't have any description yet"}</p>
 			</header>
 
@@ -123,10 +136,12 @@ export const ComponentLayout: React.FC<ComponentLayoutProps> = ({ children, clas
 				title="Edit Component"
 				buttonOne="Update"
 				buttonTwo="Cancel"
-				emptyValues={defaultValuesEmpty}
+				emptyValues={DEFAULT_VALUES}
 			/>
 
-			<section>{image ? <img src={imageUrl} alt={name} className="max-h-[500px]" /> : children}</section>
+			<section className="pb-4">
+				{imageUrl ? <img src={imageUrl} alt={`${name} component visualization`} /> : children}
+			</section>
 		</main>
 	);
 };
