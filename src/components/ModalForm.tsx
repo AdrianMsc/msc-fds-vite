@@ -213,19 +213,19 @@ const ModalForm: React.FC<ModalFormProps> = ({
 
 	return (
 		<div
-			className={`msc-modal-bg !fixed ${triggerModal} !bg-[#00000087] transition-opacity duration-300 ${
+			className={`msc-modal-bg !fixed ${triggerModal} !bg-[#00000087] transition-opacity duration-300 z-50 ${
 				fadeIn ? 'opacity-100' : 'opacity-0'
 			}`}
 		>
-			<div className="msc-modal">
+			<div className="msc-modal flex flex-col max-h-[90vh]">
 				<div className="msc-modal-header">
 					<h4 className="msc-modal-title">{title}</h4>
 					<button onClick={handleCancel}>
 						<FontAwesomeIcon icon={faClose} />
 					</button>
 				</div>
-				<form onSubmit={handleSubmit}>
-					<div className="msc-modal-body pb-4 overflow-hidden">
+				<form onSubmit={handleSubmit} className="flex flex-col flex-1 overflow-hidden">
+					<div className="msc-modal-body flex-1 pb-4 overflow-y-auto">
 						<div className="flex flex-col w-full gap-5">
 							{/* Hidden ID field */}
 							<input name="id" type="text" className="hidden" value={formState.id} onChange={handleChange} />
@@ -294,11 +294,11 @@ const ModalForm: React.FC<ModalFormProps> = ({
 					</div>
 
 					<div className="msc-modal-footer">
-						<button type="submit" className="msc-btn msc-btn-blue-solid w-full">
-							{buttonOne}
-						</button>
 						<button type="reset" onClick={handleCancel} className="msc-btn msc-btn-blue-outline w-full">
 							{buttonTwo}
+						</button>
+						<button type="submit" className="msc-btn msc-btn-blue-solid w-full">
+							{buttonOne}
 						</button>
 					</div>
 				</form>
