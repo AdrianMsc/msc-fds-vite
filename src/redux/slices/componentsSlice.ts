@@ -19,6 +19,7 @@ export const addComponent = createAsyncThunk(
 					comment: data.comment,
 					description: '',
 					category: data.category,
+					image: data.image,
 					statuses: [
 						{
 							guidelines: data.guidelines,

@@ -12,6 +12,7 @@ export interface IFormState {
 	figmaLink: string;
 	storybookLink: string;
 	comment: string;
+	image?: File | null;
 }
 
 const initialState: IFormState = {
@@ -24,16 +25,21 @@ const initialState: IFormState = {
 	cdn: '🧱',
 	figmaLink: '',
 	storybookLink: '',
-	comment: ''
+	comment: '',
+	image: null
 };
 
 const formSlice = createSlice({
 	name: 'form',
 	initialState,
 	reducers: {
-		updateField: (state, action: PayloadAction<{ field: keyof IFormState; value: string }>) => {
+		updateField: (state, action: PayloadAction<{ field: keyof IFormState; value: string | File | null }>) => {
 			const { field, value } = action.payload;
-			state[field] = value;
+			if (field === 'image') {
+				state.image = value as File | null;
+			} else {
+				state[field] = value as string;
+			}
 		},
 		setComponentData: (state: IFormState, action: PayloadAction<IComponentForm>) => {
 			return {

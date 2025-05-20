@@ -13,6 +13,7 @@ export interface IComponentApi {
 	category: string;
 	figmaLink?: string;
 	storybookLink?: string;
+	image?: string;
 }
 
 export interface ICategoryApi {
@@ -31,4 +32,5 @@ export interface IComponentForm {
 	cdn: string;
 	figmaLink?: string;
 	storybookLink?: string;
+	image?: File | null;
 }

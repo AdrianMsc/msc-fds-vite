@@ -176,15 +176,36 @@ const ModalForm: React.FC<ModalFormProps> = ({
 		</select>
 	);
 
-	const renderTextField = (name: string, value: string, isTextarea: boolean = false) => {
+	const renderTextField = (
+		name: string,
+		value: string | File | null | undefined,
+		isTextarea: boolean = false,
+		isImage: boolean = false
+	) => {
+		if (isImage) {
+			return (
+				<input
+					type="file"
+					name={name}
+					onChange={(e) => {
+						const file = e.target.files?.[0] || null;
+						dispatch(updateField({ field: 'image', value: file }));
+					}}
+				/>
+			);
+		}
+
 		const commonProps = {
 			name,
-			value,
 			onChange: handleChange,
 			className: isTextarea ? 'msc-input !p-2 w-full' : 'msc-input !w-full'
-		};
+		} as const;
 
-		return isTextarea ? <textarea {...commonProps} /> : <input type="text" {...commonProps} />;
+		if (isTextarea) {
+			return <textarea {...commonProps} value={value as string} />;
+		}
+
+		return <input type="text" {...commonProps} value={value as string} />;
 	};
 
 	//* Don't render anything if not visible
@@ -249,6 +270,16 @@ const ModalForm: React.FC<ModalFormProps> = ({
 								<div className="flex flex-col gap-1 w-full sm:!w-[50%]">
 									{renderFieldGroup('cdn', 'CDN', renderSelectField('cdn', formState.cdn, STATUS_OPTIONS))}
 								</div>
+							</div>
+
+							{/* Image Row */}
+							<div className="flex flex-col gap-1 w-full">
+								{renderFieldGroup('image', 'Image', renderTextField('image', '', false, true))}
+								{/* {formState.image && (
+									<div className="mt-2">
+									<img src={URL.createObjectURL(formState.image)} alt="Preview" className="max-w-[150px] h-auto" />
+									</div>
+									)} */}
 							</div>
 
 							{/* Links and Comments */}
