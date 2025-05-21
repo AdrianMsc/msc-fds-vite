@@ -8,6 +8,7 @@ import { IComponentApi } from '../interfaces/component.interface';
 import { addComponent, updateComponentThunk } from '../redux/slices/componentsSlice';
 import { addToast, removeToast } from '../redux/slices/toastSlice';
 import { getNavLinkTo } from '../utils/getNavLinkTo';
+import { isValidURL } from '../utils/urlValidator';
 
 interface ModalFormProps {
 	triggerModal: string;
@@ -139,6 +140,17 @@ const ModalForm: React.FC<ModalFormProps> = ({
 			...formState,
 			id: Number(formState.id)
 		};
+
+		// Validate links
+		if (formState.figmaLink && !isValidURL(formState.figmaLink.trim())) {
+			showToast('error', 'Invalid Figma link', 'Please enter a valid URL.');
+			return;
+		}
+
+		if (formState.storybookLink && !isValidURL(formState.storybookLink.trim())) {
+			showToast('error', 'Invalid Storybook link', 'Please enter a valid URL.');
+			return;
+		}
 
 		//* Check if we're creating or updating a component
 		const isNewComponent = formState.id === '';
