@@ -1,6 +1,5 @@
 import React, { ReactNode, useState, useCallback, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import { useAuth0 } from '@auth0/auth0-react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencil } from '@fortawesome/free-solid-svg-icons';
@@ -9,7 +8,6 @@ import MscStatusComponentBar from '../../components/MscStatusComponentBar/MscSta
 import Links from '../../components/Links/Links';
 import ModalForm from '../../components/ModalForm';
 import { IComponentApi } from '../../interfaces/component.interface';
-import { RootState } from '../../redux/store';
 
 // 🔢 TypeScript interfaces
 interface ComponentStatus {
