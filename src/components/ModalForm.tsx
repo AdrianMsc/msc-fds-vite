@@ -7,6 +7,7 @@ import { faClose } from '@fortawesome/free-solid-svg-icons';
 import { IComponentApi } from '../interfaces/component.interface';
 import { addComponent, updateComponentThunk } from '../redux/slices/componentsSlice';
 import { addToast, removeToast } from '../redux/slices/toastSlice';
+import { getNavLinkTo } from '../utils/getNavLinkTo';
 
 interface ModalFormProps {
 	triggerModal: string;
@@ -275,50 +276,55 @@ const ModalForm: React.FC<ModalFormProps> = ({
 							</div>
 
 							{/* Image Row */}
-							<div className="flex flex-col gap-1 w-full">
-								{renderFieldGroup(
-									'image',
-									'Image',
-									<>
-										{!isEditingImage && (formState.image || selectedRecord.image) && (
-											<div className="flex flex-col gap-2">
-												<img
-													src={
-														formState.image instanceof File
-															? URL.createObjectURL(formState.image)
-															: typeof formState.image === 'string'
-															? formState.image
-															: selectedRecord.image ?? ''
-													}
-													alt="Preview"
-													className="max-w-[150px] h-auto"
+							{(() => {
+								const formattedName = selectedRecord.name ? selectedRecord.name.replace(/\s+/g, '') : '';
+								return getNavLinkTo(selectedRecord) === `/docs/WipComponent/${formattedName}`;
+							})() && (
+								<div className="flex flex-col gap-1 w-full">
+									{renderFieldGroup(
+										'image',
+										'Image',
+										<>
+											{!isEditingImage && (formState.image || selectedRecord.image) && (
+												<div className="flex flex-col gap-2">
+													<img
+														src={
+															formState.image instanceof File
+																? URL.createObjectURL(formState.image)
+																: typeof formState.image === 'string'
+																? formState.image
+																: selectedRecord.image ?? ''
+														}
+														alt="Preview"
+														className="max-w-[150px] h-auto"
+													/>
+													<button
+														type="button"
+														onClick={() => setIsEditingImage(true)}
+														className="msc-btn msc-btn-blue-outline !max-w-[150px] !px-2"
+													>
+														Change Image
+													</button>
+												</div>
+											)}
+
+											{(isEditingImage || (!formState.image && !selectedRecord.image)) && (
+												<input
+													type="file"
+													name="image"
+													onChange={(e) => {
+														const file = e.target.files?.[0] || null;
+														dispatch(updateField({ field: 'image', value: file }));
+														setIsEditingImage(false); // Exit edit mode on file select
+													}}
 												/>
-												<button
-													type="button"
-													onClick={() => setIsEditingImage(true)}
-													className="msc-btn msc-btn-blue-outline !max-w-[150px] !px-2"
-												>
-													Change Image
-												</button>
-											</div>
-										)}
+											)}
+										</>
+									)}
+								</div>
+							)}
 
-										{(isEditingImage || (!formState.image && !selectedRecord.image)) && (
-											<input
-												type="file"
-												name="image"
-												onChange={(e) => {
-													const file = e.target.files?.[0] || null;
-													dispatch(updateField({ field: 'image', value: file }));
-													setIsEditingImage(false); // Exit edit mode on file select
-												}}
-											/>
-										)}
-									</>
-								)}
-							</div>
-
-							{/* Links and Comments */}
+							{/* Description Row */}
 							{renderFieldGroup('figmaLink', 'Figma Link', renderTextField('figmaLink', formState.figmaLink, true))}
 							{renderFieldGroup(
 								'storybookLink',
