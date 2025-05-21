@@ -71,7 +71,6 @@ export const ComponentLayout: React.FC<ComponentLayoutProps> = ({ children, clas
 	// 🪝 Hooks
 	const location = useLocation();
 	const { isAuthenticated } = useAuth0();
-	const components = useSelector((state: RootState) => state.components);
 
 	// 🏷️ State
 	const [modalVisibility, setModalVisibility] = useState<'' | 'hidden'>(MODAL_VISIBILITY.HIDE);
@@ -80,12 +79,7 @@ export const ComponentLayout: React.FC<ComponentLayoutProps> = ({ children, clas
 	// 🧠 Memoized values
 	const state = useMemo<LocationState>(() => (location.state as LocationState) || {}, [location.state]);
 
-	const { id, name, category, description, statuses, figmaLink, storybookLink } = state;
-
-	const imageUrl = useMemo(() => {
-		if (!category || !id) return '';
-		return components.find((cat) => cat.category === category)?.components.find((comp) => comp.id === id)?.image;
-	}, [category, components, id]);
+	const { id, name, category, description, statuses, figmaLink, storybookLink, image } = state;
 
 	const isWipComponent = useMemo(() => location.pathname.split('/').pop() === 'Wipcomponent', [location.pathname]);
 
@@ -140,7 +134,7 @@ export const ComponentLayout: React.FC<ComponentLayoutProps> = ({ children, clas
 			/>
 
 			<section className="pb-4">
-				{imageUrl ? <img src={imageUrl} alt={`${name} component visualization`} /> : children}
+				{image ? <img src={image} alt={`${name} component visualization`} /> : children}
 			</section>
 		</main>
 	);

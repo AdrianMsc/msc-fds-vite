@@ -49,6 +49,7 @@ export const mapComponentToFormData = (component: IComponentApi): any => {
 		name: component.name,
 		category: component.category,
 		comment: component.comment,
+		image: component.image,
 		cdn: component.statuses[0].cdn,
 		figma: component.statuses[0].figma,
 		guidelines: component.statuses[0].guidelines,
@@ -72,6 +73,7 @@ const ModalForm: React.FC<ModalFormProps> = ({
 	const formState = useSelector((state: RootState) => state.form);
 	const [isVisible, setIsVisible] = useState(false);
 	const [fadeIn, setFadeIn] = useState(false);
+	const [isEditingImage, setIsEditingImage] = useState(false);
 
 	useEffect(() => {
 		if (triggerModal !== 'hidden') {
@@ -274,12 +276,46 @@ const ModalForm: React.FC<ModalFormProps> = ({
 
 							{/* Image Row */}
 							<div className="flex flex-col gap-1 w-full">
-								{renderFieldGroup('image', 'Image', renderTextField('image', '', false, true))}
-								{/* {formState.image && (
-									<div className="mt-2">
-									<img src={URL.createObjectURL(formState.image)} alt="Preview" className="max-w-[150px] h-auto" />
-									</div>
-									)} */}
+								{renderFieldGroup(
+									'image',
+									'Image',
+									<>
+										{!isEditingImage && (formState.image || selectedRecord.image) && (
+											<div className="flex flex-col gap-2">
+												<img
+													src={
+														formState.image instanceof File
+															? URL.createObjectURL(formState.image)
+															: typeof formState.image === 'string'
+															? formState.image
+															: selectedRecord.image ?? ''
+													}
+													alt="Preview"
+													className="max-w-[150px] h-auto"
+												/>
+												<button
+													type="button"
+													onClick={() => setIsEditingImage(true)}
+													className="msc-btn msc-btn-blue-outline !max-w-[150px] !px-2"
+												>
+													Change Image
+												</button>
+											</div>
+										)}
+
+										{(isEditingImage || (!formState.image && !selectedRecord.image)) && (
+											<input
+												type="file"
+												name="image"
+												onChange={(e) => {
+													const file = e.target.files?.[0] || null;
+													dispatch(updateField({ field: 'image', value: file }));
+													setIsEditingImage(false); // Exit edit mode on file select
+												}}
+											/>
+										)}
+									</>
+								)}
 							</div>
 
 							{/* Links and Comments */}
