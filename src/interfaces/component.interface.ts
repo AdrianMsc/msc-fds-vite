@@ -10,6 +10,7 @@ export interface IComponentApi {
 	name: string;
 	statuses: IStatusApi[];
 	comment: string;
+	description?: string;
 	category: string;
 	figmaLink?: string;
 	storybookLink?: string;
@@ -26,6 +27,7 @@ export interface IComponentForm {
 	name: string;
 	category: string;
 	comment: string;
+	description?: string;
 	guidelines: string;
 	figma: string;
 	storybook: string;

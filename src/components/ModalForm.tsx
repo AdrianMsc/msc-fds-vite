@@ -51,6 +51,7 @@ export const mapComponentToFormData = (component: IComponentApi): any => {
 		name: component.name,
 		category: component.category,
 		comment: component.comment,
+		description: component.description,
 		image: component.image,
 		cdn: component.statuses[0].cdn,
 		figma: component.statuses[0].figma,
@@ -287,6 +288,13 @@ const ModalForm: React.FC<ModalFormProps> = ({
 								</div>
 							</div>
 
+							{/* Description Row */}
+							{renderFieldGroup(
+								'description',
+								'Description',
+								renderTextField('description', formState.description, true)
+							)}
+
 							{/* Image Row */}
 							{(() => {
 								const formattedName = selectedRecord.name ? selectedRecord.name.replace(/\s+/g, '') : '';
@@ -336,7 +344,7 @@ const ModalForm: React.FC<ModalFormProps> = ({
 								</div>
 							)}
 
-							{/* Description Row */}
+							{/* Links */}
 							{renderFieldGroup('figmaLink', 'Figma Link', renderTextField('figmaLink', formState.figmaLink, true))}
 							{renderFieldGroup(
 								'storybookLink',

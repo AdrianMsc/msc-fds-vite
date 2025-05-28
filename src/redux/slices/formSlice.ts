@@ -12,6 +12,7 @@ export interface IFormState {
 	figmaLink: string;
 	storybookLink: string;
 	comment: string;
+	description?: string;
 	image?: File | null;
 }
 
@@ -26,6 +27,7 @@ const initialState: IFormState = {
 	figmaLink: '',
 	storybookLink: '',
 	comment: '',
+	description: '',
 	image: null
 };
 
@@ -53,7 +55,9 @@ const formSlice = createSlice({
 				cdn: action.payload.cdn,
 				figmaLink: action.payload.figmaLink || '',
 				storybookLink: action.payload.storybookLink || '',
-				comment: action.payload.comment
+				comment: action.payload.comment,
+				description: action.payload.description || '',
+				image: action.payload.image || null
 			};
 		},
 		resetForm: () => initialState

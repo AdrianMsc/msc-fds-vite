@@ -9,6 +9,7 @@ export const createComponent = async (data: IComponentForm): Promise<AxiosRespon
 		formData.append('name', data.name);
 		formData.append('category', data.category);
 		formData.append('comment', data.comment || '');
+		formData.append('description', data.description || '');
 		formData.append('guidelines', data.guidelines || '');
 		formData.append('figma', data.figma || '');
 		formData.append('storybook', data.storybook || '');
