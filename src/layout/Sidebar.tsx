@@ -1,31 +1,28 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import formatComponentName from '../utils/formatComponentName';
-import SidebarContext from '../context/SidebarCtx';
-import { ICategoryApi } from '../interfaces/component.interface';
-import { createLinkPage } from '../utils/createLinkPage';
-import chevron from '../assets/chevron-down.svg';
-import { routesIndex } from '../router/routeIndex';
-import handleDataSend from '../utils/handleDataSend';
-import { getNavLinkTo } from '../utils/getNavLinkTo';
 import { useSelector } from 'react-redux';
+
+import SidebarContext from '../context/SidebarCtx';
+import formatComponentName from '../utils/formatComponentName';
+import handleDataSend from '../utils/handleDataSend';
+import { routesIndex } from '../router/routeIndex';
 import { RootState } from '../redux/store';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { ICategoryApi } from '../interfaces/component.interface';
+
+import chevron from '../assets/chevron-down.svg';
+import { createLinkPage } from '../utils/createLinkPage';
+import { getNavLinkTo } from '../utils/getNavLinkTo';
 
 const Sidebar: React.FC = () => {
-	const [openCategories, setOpenCategories] = useState<string[]>([]);
-	const [categories, setCategories] = useState<ICategoryApi[] | null>(null);
-	const componentsApiData = useSelector((state: RootState) => state.components);
-	const context = useContext(SidebarContext);
 	const navigate = useNavigate();
+	const { components: componentsApiData } = useSelector((state: RootState) => state);
+	const [categories, setCategories] = useState<ICategoryApi[] | null>(null);
+	const [openCategories, setOpenCategories] = useState<string[]>([]);
 
-	if (!context) {
-		throw new Error('Sidebar must be used within a SidebarProvider');
-	}
+	const context = useContext(SidebarContext);
+	if (!context) throw new Error('Sidebar must be used within a SidebarProvider');
 
-	const { toggleSidebar } = context;
-	const { isSidebarOpen } = context;
+	const { toggleSidebar, isSidebarOpen } = context;
 
 	useEffect(() => {
 		setCategories(componentsApiData);
@@ -37,74 +34,78 @@ const Sidebar: React.FC = () => {
 		);
 	};
 
+	const renderComponentLinks = (categoryComponents: ICategoryApi['components']) => {
+		return [...categoryComponents]
+			.sort((a, b) => a.name.localeCompare(b.name))
+			.map((comp, idx) => {
+				const formattedName = createLinkPage(comp.name);
+				const routeExists = routesIndex[1].children?.some((route) => route.path === formattedName);
+				const navTo = routeExists ? `/docs/${formattedName}` : `/docs/WipComponent/${formattedName}`;
+
+				return (
+					<NavLink
+						key={idx}
+						to={getNavLinkTo(comp)}
+						onClick={(e) => {
+							e.preventDefault();
+							toggleSidebar();
+							handleDataSend(navigate, navTo, comp.name, categories ?? []);
+						}}
+						className={({ isActive }) =>
+							isActive ? 'bg-monochromes-grey_xlight pl-7 py-1' : 'pl-7 py-1 hover:bg-monochromes-grey_xlight'
+						}
+					>
+						{formatComponentName(comp.name)}
+					</NavLink>
+				);
+			});
+	};
+
+	const renderCategorySection = () =>
+		categories?.map(({ category, components }, idx) => (
+			<React.Fragment key={idx}>
+				<strong className="flex cursor-pointer px-4" onClick={() => toggleCategory(category)}>
+					{category}
+					<img
+						src={chevron}
+						alt="Toggle Category"
+						className={`w-3 ml-auto transition-all ${openCategories.includes(category) ? '-rotate-90' : ''}`}
+					/>
+				</strong>
+				<div className={`flex flex-col ${openCategories.includes(category) ? '!hidden' : ''}`}>
+					{renderComponentLinks(components)}
+				</div>
+			</React.Fragment>
+		));
+
 	return (
 		<aside
-			className={`pt-5 pb-20 bg-white sm:max-w-[230px] sm:min-w-[230px] hidden lg:flex flex-col overflow-auto ${
-				isSidebarOpen ? 'flex absolute h-lvh lg:flex lg:static lg:h-full' : 'hidden'
-			} z-50 lg:z-auto`}
+			className={`
+				mt-[3px]
+    md:mt-[43px] pb-20 bg-white sm:max-w-[230px] sm:min-w-[230px]
+    absolute left-0 z-50 lg:static lg:z-auto
+    transform transition-transform duration-300 ease-in-out
+    ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
+    flex flex-col overflow-auto h-full
+  `}
 		>
-			<button className="absolute top-2 right-2  h-6 w-6 flex items-center justify-center" onClick={toggleSidebar}>
-				<FontAwesomeIcon icon={faTimes} className="text-monochromes-grey sm:hidden" />
-			</button>
-
+			{/* 🚀 Static Links */}
 			<strong className="px-4">Start Here</strong>
-			<NavLink
-				to={`/docs/${createLinkPage('GettingStarted')}`}
-				onClick={toggleSidebar}
-				className={({ isActive }) =>
-					isActive ? 'bg-monochromes-grey_xlight pl-7 py-1' : 'pl-7 py-1 hover:bg-monochromes-grey_xlight'
-				}
-			>
-				Getting Started
-			</NavLink>
-			<NavLink
-				to={`/docs/${createLinkPage('ComponentStatus')}`}
-				onClick={toggleSidebar}
-				className={({ isActive }) =>
-					isActive ? 'bg-monochromes-grey_xlight pl-7 py-1' : 'pl-7 py-1 hover:bg-monochromes-grey_xlight'
-				}
-			>
-				Component Status
-			</NavLink>
-			{categories?.map((item, idx) => (
-				<React.Fragment key={idx}>
-					<strong className="flex cursor-pointer px-4" onClick={() => toggleCategory(item.category)}>
-						{item.category}
-						<img
-							src={chevron}
-							alt="Chevron"
-							className={`w-3 ml-auto transition-all ${openCategories.includes(item.category) ? '-rotate-90' : ''}`}
-						/>
-					</strong>
-					<div className={`flex flex-col  ${openCategories.includes(item.category) ? '!hidden' : ''}`}>
-						{[...item.components]
-							?.sort((a: any, b: any) => a.name.localeCompare(b.name))
-							.map((comp, idx) => (
-								<NavLink
-									key={idx}
-									className={({ isActive }) => {
-										return isActive
-											? 'bg-monochromes-grey_xlight pl-7 py-1'
-											: 'pl-7 py-1 hover:bg-monochromes-grey_xlight';
-									}}
-									to={getNavLinkTo(comp)}
-									onClick={(event) => {
-										toggleSidebar();
-										event.preventDefault();
-										const formattedName = createLinkPage(comp.name);
-										if (routesIndex[1].children?.some((route) => route.path === formattedName)) {
-											handleDataSend(navigate, `/docs/${formattedName}`, comp.name, categories);
-										} else {
-											handleDataSend(navigate, `/docs/WipComponent/${formattedName}`, comp.name, categories);
-										}
-									}}
-								>
-									{formatComponentName(comp.name)}
-								</NavLink>
-							))}
-					</div>
-				</React.Fragment>
+			{['GettingStarted', 'ComponentStatus'].map((page) => (
+				<NavLink
+					key={page}
+					to={`/docs/${createLinkPage(page)}`}
+					onClick={toggleSidebar}
+					className={({ isActive }) =>
+						isActive ? 'bg-monochromes-grey_xlight pl-7 py-1' : 'pl-7 py-1 hover:bg-monochromes-grey_xlight'
+					}
+				>
+					{formatComponentName(page)}
+				</NavLink>
 			))}
+
+			{/* 📂 Dynamic Categories */}
+			{renderCategorySection()}
 		</aside>
 	);
 };
