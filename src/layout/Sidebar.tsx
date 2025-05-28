@@ -82,7 +82,7 @@ const Sidebar: React.FC = () => {
 		<aside
 			className={`
 				mt-[3px]
-    md:mt-[43px] pb-20 bg-white sm:max-w-[230px] sm:min-w-[230px]
+    md:mt-[43px] lg:mt-[3px] pb-20 bg-white sm:max-w-[230px] sm:min-w-[230px]
     absolute left-0 z-50 lg:static lg:z-auto
     transform transition-transform duration-300 ease-in-out
     ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
