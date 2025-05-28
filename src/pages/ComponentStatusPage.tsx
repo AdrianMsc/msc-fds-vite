@@ -22,6 +22,8 @@ const defaultValuesEmpty = {
   name: "",
   category: "",
   comment: "",
+  createdAt: "",
+  updatedAt: "",
   statuses: [
     {
       guidelines: "",
