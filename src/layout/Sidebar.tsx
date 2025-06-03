@@ -12,14 +12,15 @@ import chevron from "../assets/chevron-down.svg";
 import { createLinkPage } from "../utils/createLinkPage";
 import { getNavLinkTo } from "../utils/getNavLinkTo";
 import { setCurrentComponent } from "../redux/slices/currentComponentSlice";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const Sidebar: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { isAuthenticated } = useAuth0();
 
-  const { components: componentsApiData } = useSelector(
-    (state: RootState) => state
-  );
+  const componentsApiData = useSelector((state: RootState) => state.components);
+
   const [categories, setCategories] = useState<ICategoryApi[] | null>(null);
   const [openCategories, setOpenCategories] = useState<string[]>([]);
 
@@ -54,6 +55,10 @@ const Sidebar: React.FC = () => {
         const navTo = routeExists
           ? `/docs/${formattedName}`
           : `/docs/WipComponent/${formattedName}`;
+
+        if (!isAuthenticated && navTo.includes("/docs/WipComponent/")) {
+          return null;
+        }
 
         return (
           <NavLink
