@@ -36,7 +36,7 @@ const defaultValuesEmpty = {
 
 const ComponentStatus: React.FC = () => {
   const [triggerModal, setTriggerModal] = useState("hidden");
-  const { isAuthenticated, isLoading } = useAuth0();
+  const { isAuthenticated } = useAuth0();
   const [selectedRecord, setSelectedRecord] =
     useState<IComponentApi>(defaultValuesEmpty);
   const [modalText, setModalText] = useState({ buttonOne: "", title: "" });
@@ -100,8 +100,6 @@ const ComponentStatus: React.FC = () => {
     setSelectedRecord(component);
     toggleModal();
   };
-
-  if (isLoading) return <SkeletonTable />;
 
   return (
     <main className="relative pb-4 mx-auto container">
@@ -177,135 +175,133 @@ const ComponentStatus: React.FC = () => {
       {!componentsApiData ? (
         <SkeletonTable />
       ) : (
-        componentsApiData.map((category) => {
-          const visibleComponents = category.components.filter((component) => {
-            const formattedName = createLinkPage(component.name);
-            const navTo = routesIndex[1].children?.some(
-              (route) => route.path === formattedName
-            )
-              ? `/docs/${formattedName}`
-              : `/docs/WipComponent/${formattedName}`;
-            return isAuthenticated || !navTo.includes("/docs/WipComponent/");
-          });
+        componentsApiData?.map((category) => (
+          <React.Fragment key={category.category}>
+            <h2 className="font-bold text-2xl mt-5">{category.category}</h2>
 
-          return (
-            <React.Fragment key={category.category}>
-              <h2 className="font-bold text-2xl mt-5">{category.category}</h2>
+            <div className="overflow-x-auto mt-3">
+              <table className="w-full text-sm text-left rtl:text-right text-gray-500">
+                <thead className="text-xs text-gray-700 bg-gray-50 text-center">
+                  <tr>
+                    <th scope="col" className="px-6 py-3 w-[20%]">
+                      Component
+                    </th>
+                    <th scope="col" className="px-6 py-3 w-[15%]">
+                      Guidelines
+                    </th>
+                    <th scope="col" className="px-6 py-3 w-[15%]">
+                      Figma
+                    </th>
+                    <th scope="col" className="px-6 py-3 w-[15%]">
+                      Storybook
+                    </th>
+                    <th scope="col" className="px-6 py-3 w-[15%]">
+                      CDN
+                    </th>
+                    <th scope="col" className="px-6 py-3 min-w-[250px]">
+                      Comments
+                    </th>
+                    {isAuthenticated && (
+                      <th scope="col" className="px-6 py-3">
+                        Actions
+                      </th>
+                    )}
+                  </tr>
+                </thead>
+                <tbody>
+                  {[...category.components]
+                    ?.sort((a, b) => a.name.localeCompare(b.name))
+                    .map((component, idx) => {
+                      const formattedName = createLinkPage(component.name);
+                      const routeExists = routesIndex[1].children?.some(
+                        (route) => route.path === formattedName
+                      );
+                      const navTo = routeExists
+                        ? `/docs/${formattedName}`
+                        : `/docs/WipComponent/${formattedName}`;
 
-              <div className="overflow-x-auto mt-3">
-                <table className="w-full text-sm text-left rtl:text-right text-gray-500">
-                  <thead className="text-xs text-gray-700 bg-gray-50 text-center">
-                    <tr>
-                      <th scope="col" className="px-6 py-3 w-[20%]">
-                        Component
-                      </th>
-                      <th scope="col" className="px-6 py-3 w-[15%]">
-                        Guidelines
-                      </th>
-                      <th scope="col" className="px-6 py-3 w-[15%]">
-                        Figma
-                      </th>
-                      <th scope="col" className="px-6 py-3 w-[15%]">
-                        Storybook
-                      </th>
-                      <th scope="col" className="px-6 py-3 w-[15%]">
-                        CDN
-                      </th>
-                      <th scope="col" className="px-6 py-3 min-w-[250px]">
-                        Comments
-                      </th>
-                      {isAuthenticated && (
-                        <th scope="col" className="px-6 py-3">
-                          Actions
-                        </th>
-                      )}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {visibleComponents
-                      .sort((a, b) => a.name.localeCompare(b.name))
-                      .map((component, idx) => {
-                        const formattedName = createLinkPage(component.name);
-                        const navTo = routesIndex[1].children?.some(
-                          (route) => route.path === formattedName
-                        )
-                          ? `/docs/${formattedName}`
-                          : `/docs/WipComponent/${formattedName}`;
+                      if (
+                        !isAuthenticated &&
+                        navTo.includes("/docs/WipComponent/")
+                      ) {
+                        return null;
+                      }
 
-                        return (
-                          <tr
-                            key={idx + component.name}
-                            className={`${
-                              idx % 2 === 0 ? "bg-white" : "bg-slate-100"
-                            }`}
+                      return (
+                        <tr
+                          key={idx + component.name}
+                          className={`${
+                            idx % 2 === 0 ? "bg-white" : "bg-slate-100"
+                          } ${
+                            !isAuthenticated &&
+                            navTo.includes("/docs/WipComponent/")
+                          }`}
+                        >
+                          <th
+                            scope="row"
+                            className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap text-center"
                           >
-                            <th
-                              scope="row"
-                              className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap text-center"
+                            <NavLink
+                              key={idx}
+                              className={({ isActive }) =>
+                                isActive
+                                  ? "font-bold text-primary-blue ml-5"
+                                  : "font-bold ml-5"
+                              }
+                              to={getNavLinkTo(component)}
+                              onClick={(event) => {
+                                event.preventDefault();
+                                dispatch(setCurrentComponent(component));
+                                navigate(navTo);
+                              }}
                             >
-                              <NavLink
-                                className={({ isActive }) =>
-                                  isActive
-                                    ? "font-bold text-primary-blue ml-5"
-                                    : "font-bold ml-5"
-                                }
-                                to={getNavLinkTo(component)}
-                                onClick={(event) => {
-                                  event.preventDefault();
-                                  dispatch(setCurrentComponent(component));
-                                  navigate(navTo);
-                                }}
-                              >
-                                {formatComponentName(component.name)}
-                              </NavLink>
-                            </th>
-                            <td className="px-6 py-4 text-center">
-                              {component.statuses[0].guidelines}
+                              {formatComponentName(component.name)}
+                            </NavLink>
+                          </th>
+                          <td className="px-6 py-4 text-center">
+                            {component.statuses[0].guidelines}
+                          </td>
+                          <td className="px-6 py-4 text-center">
+                            {component.statuses[0].figma}
+                          </td>
+                          <td className="px-6 py-4 text-center">
+                            {component.statuses[0].storybook}
+                          </td>
+                          <td className="px-6 py-4 text-center">
+                            {component.statuses[0].cdn}
+                          </td>
+                          <td className="px-6 py-4 text-center">
+                            {component.comment}
+                          </td>
+                          {isAuthenticated && (
+                            <td>
+                              <div className="flex place-content-around items-center align-middle">
+                                <button>
+                                  <FontAwesomeIcon
+                                    icon={faPencil}
+                                    onClick={() => {
+                                      setModalText({
+                                        buttonOne: "Update",
+                                        title: "Update component",
+                                      });
+                                      handleEdit(component);
+                                    }}
+                                  />
+                                </button>
+                                <button onClick={() => handleDelete(component)}>
+                                  <FontAwesomeIcon icon={faTrash} />
+                                </button>
+                              </div>
                             </td>
-                            <td className="px-6 py-4 text-center">
-                              {component.statuses[0].figma}
-                            </td>
-                            <td className="px-6 py-4 text-center">
-                              {component.statuses[0].storybook}
-                            </td>
-                            <td className="px-6 py-4 text-center">
-                              {component.statuses[0].cdn}
-                            </td>
-                            <td className="px-6 py-4 text-center">
-                              {component.comment}
-                            </td>
-                            {isAuthenticated && (
-                              <td>
-                                <div className="flex place-content-around items-center align-middle">
-                                  <button>
-                                    <FontAwesomeIcon
-                                      icon={faPencil}
-                                      onClick={() => {
-                                        setModalText({
-                                          buttonOne: "Update",
-                                          title: "Update component",
-                                        });
-                                        handleEdit(component);
-                                      }}
-                                    />
-                                  </button>
-                                  <button
-                                    onClick={() => handleDelete(component)}
-                                  >
-                                    <FontAwesomeIcon icon={faTrash} />
-                                  </button>
-                                </div>
-                              </td>
-                            )}
-                          </tr>
-                        );
-                      })}
-                  </tbody>
-                </table>
-              </div>
-            </React.Fragment>
-          );
-        })
+                          )}
+                        </tr>
+                      );
+                    })}
+                </tbody>
+              </table>
+            </div>
+          </React.Fragment>
+        ))
       )}
     </main>
   );
