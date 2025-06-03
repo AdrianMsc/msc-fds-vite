@@ -15,13 +15,15 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { createLinkPage } from "../utils/createLinkPage";
 import { getNavLinkTo } from "../utils/getNavLinkTo";
 import { routesIndex } from "../router/routeIndex";
-import handleDataSend from "../utils/handleDataSend";
+import { setCurrentComponent } from "../redux/slices/currentComponentSlice";
 
 const defaultValuesEmpty = {
   id: Number(""),
   name: "",
   category: "",
   comment: "",
+  createdAt: "",
+  updatedAt: "",
   statuses: [
     {
       guidelines: "",
@@ -42,21 +44,6 @@ const ComponentStatus: React.FC = () => {
   const firstButtonRef = useRef(null);
   const componentsApiData = useSelector((state: RootState) => state.components);
   const dispatch = useDispatch<AppDispatch>();
-  const showToast = (status: string, title: string, description?: string) => {
-    const id = Date.now().toString();
-    dispatch(
-      addToast({
-        id,
-        status,
-        title,
-        description,
-      })
-    );
-
-    setTimeout(() => {
-      dispatch(removeToast(id));
-    }, 4000);
-  };
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -76,7 +63,15 @@ const ComponentStatus: React.FC = () => {
         observer.unobserve(firstButtonRef.current);
       }
     };
-  }, []);
+  }, [isAuthenticated]);
+
+  const showToast = (status: string, title: string, description?: string) => {
+    const id = Date.now().toString();
+    dispatch(addToast({ id, status, title, description }));
+    setTimeout(() => {
+      dispatch(removeToast(id));
+    }, 4000);
+  };
 
   const handleDelete = async (component: IComponentApi) => {
     try {
@@ -85,7 +80,7 @@ const ComponentStatus: React.FC = () => {
           title: "Are you sure?",
           text: "Do you really want to delete this component?",
           onConfirm: () => {
-            dispatch(removeComponent(component)).unwrap(); // Dispatch delete action on confirm
+            dispatch(removeComponent(component)).unwrap();
             setTimeout(() => {
               showToast("success", "Component removed");
             }, 300);
@@ -107,7 +102,7 @@ const ComponentStatus: React.FC = () => {
   };
 
   return (
-    <main className="relative pb-4 mx-auto container ">
+    <main className="relative pb-4 mx-auto container">
       <h1 className="font-bold text-3xl">
         <small className="text-sm text-primary-blue">Getting Started</small>
         <br />
@@ -121,6 +116,7 @@ const ComponentStatus: React.FC = () => {
       <small className="text-sm">
         Components count: <strong>23</strong>
       </small>
+
       <div className="flex flex-col items-start lg:flex-row lg:items-center justify-between">
         <ul className="flex mt-5">
           <li className="mr-3">🧱 Todo</li>
@@ -214,95 +210,93 @@ const ComponentStatus: React.FC = () => {
                 </thead>
                 <tbody>
                   {[...category.components]
-                    ?.sort((a: IComponentApi, b: IComponentApi) =>
-                      a.name.localeCompare(b.name)
-                    )
-                    .map((component, idx) => (
-                      <tr
-                        key={idx + component.name}
-                        className={`${
-                          idx % 2 === 0 ? "bg-white" : "bg-slate-100"
-                        }`}
-                      >
-                        <th
-                          scope="row"
-                          className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap text-center"
+                    ?.sort((a, b) => a.name.localeCompare(b.name))
+                    .map((component, idx) => {
+                      const formattedName = createLinkPage(component.name);
+                      const routeExists = routesIndex[1].children?.some(
+                        (route) => route.path === formattedName
+                      );
+                      const navTo = routeExists
+                        ? `/docs/${formattedName}`
+                        : `/docs/WipComponent/${formattedName}`;
+
+                      if (
+                        !isAuthenticated &&
+                        navTo.includes("/docs/WipComponent/")
+                      ) {
+                        return null;
+                      }
+
+                      return (
+                        <tr
+                          key={idx + component.name}
+                          className={`${
+                            idx % 2 === 0 ? "bg-white" : "bg-slate-100"
+                          } ${
+                            !isAuthenticated &&
+                            navTo.includes("/docs/WipComponent/")
+                          }`}
                         >
-                          <NavLink
-                            key={idx}
-                            className={({ isActive }) => {
-                              return isActive
-                                ? "font-bold text-primary-blue ml-5"
-                                : "font-bold ml-5";
-                            }}
-                            to={getNavLinkTo(component)}
-                            onClick={(event) => {
-                              event.preventDefault();
-                              const formattedName = createLinkPage(
-                                component.name
-                              );
-                              if (
-                                routesIndex[1].children?.some(
-                                  (route) => route.path === formattedName
-                                )
-                              ) {
-                                handleDataSend(
-                                  navigate,
-                                  `/docs/${formattedName}`,
-                                  component.name,
-                                  componentsApiData
-                                );
-                              } else {
-                                handleDataSend(
-                                  navigate,
-                                  `/docs/WipComponent/${formattedName}`,
-                                  component.name,
-                                  componentsApiData
-                                );
-                              }
-                            }}
+                          <th
+                            scope="row"
+                            className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap text-center"
                           >
-                            {formatComponentName(component.name)}
-                          </NavLink>
-                        </th>
-                        <td className="px-6 py-4 text-center">
-                          {component.statuses[0].guidelines}
-                        </td>
-                        <td className="px-6 py-4 text-center">
-                          {component.statuses[0].figma}
-                        </td>
-                        <td className="px-6 py-4 text-center">
-                          {component.statuses[0].storybook}
-                        </td>
-                        <td className="px-6 py-4 text-center">
-                          {component.statuses[0].cdn}
-                        </td>
-                        <td className="px-6 py-4 text-center">
-                          {component.comment}
-                        </td>
-                        {isAuthenticated && (
-                          <td>
-                            <div className="flex place-content-around items-center align-middle">
-                              <button>
-                                <FontAwesomeIcon
-                                  icon={faPencil}
-                                  onClick={() => {
-                                    setModalText({
-                                      buttonOne: "Update",
-                                      title: "Update component",
-                                    });
-                                    handleEdit(component);
-                                  }}
-                                />
-                              </button>
-                              <button onClick={() => handleDelete(component)}>
-                                <FontAwesomeIcon icon={faTrash} />
-                              </button>
-                            </div>
+                            <NavLink
+                              key={idx}
+                              className={({ isActive }) =>
+                                isActive
+                                  ? "font-bold text-primary-blue ml-5"
+                                  : "font-bold ml-5"
+                              }
+                              to={getNavLinkTo(component)}
+                              onClick={(event) => {
+                                event.preventDefault();
+                                dispatch(setCurrentComponent(component));
+                                navigate(navTo);
+                              }}
+                            >
+                              {formatComponentName(component.name)}
+                            </NavLink>
+                          </th>
+                          <td className="px-6 py-4 text-center">
+                            {component.statuses[0].guidelines}
                           </td>
-                        )}
-                      </tr>
-                    ))}
+                          <td className="px-6 py-4 text-center">
+                            {component.statuses[0].figma}
+                          </td>
+                          <td className="px-6 py-4 text-center">
+                            {component.statuses[0].storybook}
+                          </td>
+                          <td className="px-6 py-4 text-center">
+                            {component.statuses[0].cdn}
+                          </td>
+                          <td className="px-6 py-4 text-center">
+                            {component.comment}
+                          </td>
+                          {isAuthenticated && (
+                            <td>
+                              <div className="flex place-content-around items-center align-middle">
+                                <button>
+                                  <FontAwesomeIcon
+                                    icon={faPencil}
+                                    onClick={() => {
+                                      setModalText({
+                                        buttonOne: "Update",
+                                        title: "Update component",
+                                      });
+                                      handleEdit(component);
+                                    }}
+                                  />
+                                </button>
+                                <button onClick={() => handleDelete(component)}>
+                                  <FontAwesomeIcon icon={faTrash} />
+                                </button>
+                              </div>
+                            </td>
+                          )}
+                        </tr>
+                      );
+                    })}
                 </tbody>
               </table>
             </div>

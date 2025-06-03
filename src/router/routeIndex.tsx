@@ -33,6 +33,7 @@ import MscTypographyPage from "../pages/TypographyPage/MscTypographyPage";
 import MscCartActionBarPage from "../pages/CartActionBar/MscCartActionBarPage";
 import ComponentTesterPage from "../pages/ComponentTesterPage/ComponentTesterPage";
 import MscAlphabeticPagerPage from "../pages/AlphabeticPager/MscAlphabeticPagerPage";
+import ChangeLog from "../pages/ChangeLog/ChangeLog";
 
 export const routesIndex = [
   {
@@ -179,6 +180,10 @@ export const routesIndex = [
       {
         path: "ComponentTester",
         element: <ComponentTesterPage />,
+      },
+      {
+        path: "ChangeLog",
+        element: <ChangeLog />,
       },
     ],
   },
