@@ -34,6 +34,7 @@ import MscCartActionBarPage from "../pages/CartActionBar/MscCartActionBarPage";
 import ComponentTesterPage from "../pages/ComponentTesterPage/ComponentTesterPage";
 import MscAlphabeticPagerPage from "../pages/AlphabeticPager/MscAlphabeticPagerPage";
 import ChangeLog from "../pages/ChangeLog/ChangeLog";
+import ArchitectureFlow from "../pages/ArchitectureFlow/ArchitectureFlow";
 
 export const routesIndex = [
   {
@@ -184,6 +185,10 @@ export const routesIndex = [
       {
         path: "ChangeLog",
         element: <ChangeLog />,
+      },
+      {
+        path: "ArchitectureFlow",
+        element: <ArchitectureFlow />,
       },
     ],
   },
