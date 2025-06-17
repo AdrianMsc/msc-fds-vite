@@ -13,6 +13,7 @@ import { createLinkPage } from "../utils/createLinkPage";
 import { getNavLinkTo } from "../utils/getNavLinkTo";
 import { setCurrentComponent } from "../redux/slices/currentComponentSlice";
 import { useAuth0 } from "@auth0/auth0-react";
+import { mapApiToComponent } from '../utils/mapApiToComponent';
 
 const Sidebar: React.FC = () => {
   const navigate = useNavigate();
@@ -68,7 +69,7 @@ const Sidebar: React.FC = () => {
               e.preventDefault();
               toggleSidebar();
               navigate(navTo);
-              dispatch(setCurrentComponent(comp));
+              dispatch(setCurrentComponent(mapApiToComponent(comp)));
             }}
             className={({ isActive }) =>
               isActive

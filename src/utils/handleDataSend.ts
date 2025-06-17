@@ -11,8 +11,9 @@ const handleDataSend = (
     .find((comp: any) => comp.name === componentName);
 
   if (component) {
+    // Only pass the component ID in the state, not the entire component
     navigate(path, {
-      state: component,
+      state: { componentId: component.id },
     });
   }
 };

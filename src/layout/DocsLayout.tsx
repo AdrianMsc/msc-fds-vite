@@ -1,7 +1,7 @@
 import { useState } from 'react';
+import { Outlet } from 'react-router-dom';
 import Navbar from './Navbar';
 import Sidebar from './Sidebar';
-import { Outlet } from 'react-router-dom';
 import Toast from './Toast';
 import Dialog from './Dialog';
 import Footer from './Footer';
