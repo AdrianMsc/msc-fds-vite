@@ -24,17 +24,6 @@ interface ModalFormProps {
 const ANIMATION_DURATION = 300; // milliseconds for fade animation
 const TOAST_DURATION = 4000; // milliseconds for toast visibility
 
-const CATEGORY_OPTIONS = [
-	{ value: '', label: '-- Select a category --' },
-	{ value: 'Foundations', label: 'Foundations' },
-	{ value: 'Action', label: 'Action' },
-	{ value: 'Form', label: 'Form' },
-	{ value: 'Indicator', label: 'Indicator' },
-	{ value: 'Layout', label: 'Layout' },
-	{ value: 'Navigation', label: 'Navigation' },
-	{ value: 'Overlay', label: 'Overlay' }
-];
-
 const STATUS_OPTIONS = [
 	{ value: '🧱', label: '🧱 Todo' },
 	{ value: '🔨', label: '🔨 WIP' },
@@ -77,6 +66,9 @@ const ModalForm: React.FC<ModalFormProps> = ({
 	const [isVisible, setIsVisible] = useState(false);
 	const [fadeIn, setFadeIn] = useState(false);
 	const [isEditingImage, setIsEditingImage] = useState(false);
+	const categoryOptions = useSelector((state: RootState) =>
+		state.components.map((group: any) => ({ value: group.categoryId, label: group.category }))
+	);
 
 	useEffect(() => {
 		if (triggerModal !== 'hidden') {
@@ -139,7 +131,8 @@ const ModalForm: React.FC<ModalFormProps> = ({
 
 		const componentCasted = {
 			...formState,
-			id: Number(formState.id)
+			id: Number(formState.id),
+			category: categoryOptions[0].value
 		};
 
 		// Validate links
@@ -255,7 +248,7 @@ const ModalForm: React.FC<ModalFormProps> = ({
 									{renderFieldGroup(
 										'category',
 										'Category',
-										renderSelectField('category', formState.category, CATEGORY_OPTIONS)
+										renderSelectField('category', formState.category, categoryOptions)
 									)}
 								</div>
 							</div>

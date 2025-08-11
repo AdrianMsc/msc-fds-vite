@@ -6,7 +6,7 @@ export interface IStatusApi {
 export interface IComponentApi {
 	id: number;
 	name: string;
-	status: IStatusApi[];
+	statuses: IStatusApi[];
 	comment: string;
 	description?: string | undefined;
 	category: any;
@@ -35,4 +35,6 @@ export interface IComponentForm {
 	figmaLink?: string;
 	storybookLink?: string;
 	image?: File | null;
+	// Allow string indexing for dynamic field access
+	[key: string]: any;
 }
