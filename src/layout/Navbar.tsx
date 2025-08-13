@@ -44,7 +44,7 @@ const Navbar: React.FC = () => {
         <FontAwesomeIcon icon={faBars} />
       </button>
       <div className="flex flex-row gap-[1rem] sm:gap-[7rem] lg:gap-[6.6rem] xl:gap-[9.5rem] items-center">
-        <Link to="/" className="sm:flex flex-col mb-2 hidden">
+        <Link to="/" className="sm:flex flex-col hidden">
           <MscLogo />
           <p className="font-bold text-sm self-start hidden lg:flex">
             Fuel Design System
