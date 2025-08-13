@@ -13,6 +13,7 @@ import { createLinkPage } from "../utils/createLinkPage";
 import { getNavLinkTo } from "../utils/getNavLinkTo";
 import { setCurrentComponent } from "../redux/slices/currentComponentSlice";
 import { useAuth0 } from "@auth0/auth0-react";
+import SkeletonMenu from "./SkeletonMenu";
 
 const Sidebar: React.FC = () => {
   const navigate = useNavigate();
@@ -108,6 +109,8 @@ const Sidebar: React.FC = () => {
       </React.Fragment>
     ));
 
+  console.log(renderCategorySection());
+
   return (
     <aside
       className={`
@@ -135,6 +138,8 @@ const Sidebar: React.FC = () => {
           {formatComponentName(page)}
         </NavLink>
       ))}
+
+      {(renderCategorySection()?.length ?? 0) > 0 ? null : <SkeletonMenu />}
 
       {/* 📂 Dynamic Categories */}
       {renderCategorySection()}
