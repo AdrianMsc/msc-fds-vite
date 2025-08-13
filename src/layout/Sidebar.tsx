@@ -116,7 +116,7 @@ const Sidebar: React.FC = () => {
     absolute left-0 z-50 lg:static lg:z-auto
     transform transition-transform duration-300 ease-in-out
     ${isSidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}
-    flex flex-col overflow-auto h-full
+    flex flex-col overflow-auto h-full pt-4
   `}
     >
       {/* 🚀 Static Links */}
