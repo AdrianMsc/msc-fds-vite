@@ -1,14 +1,15 @@
 import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, AppDispatch } from '../redux/store';
-import { updateField, resetForm, IFormState, setComponentData } from '../redux/slices/formSlice';
+import { updateField, resetForm, setComponentData } from '../redux/slices/formSlice';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClose } from '@fortawesome/free-solid-svg-icons';
-import { IComponentApi } from '../interfaces/component.interface';
+import { IComponentApi, IComponentForm } from '../interfaces/component.interface';
 import { addComponent, updateComponentThunk } from '../redux/slices/componentsSlice';
 import { addToast, removeToast } from '../redux/slices/toastSlice';
 import { getNavLinkTo } from '../utils/getNavLinkTo';
 import { isValidURL } from '../utils/urlValidator';
+import { castComponent } from '../utils/castComponent';
 
 interface ModalFormProps {
 	triggerModal: string;
@@ -33,24 +34,6 @@ const STATUS_OPTIONS = [
 	{ value: '🚫', label: '🚫 Not Applicable' }
 ];
 
-//* Map component data to form data structure
-export const mapComponentToFormData = (component: IComponentApi): any => {
-	return {
-		id: component.id,
-		name: component.name,
-		category: component.category,
-		comment: component.comment,
-		description: component.description,
-		image: component.image,
-		cdn: component.statuses[0].cdn,
-		figma: component.statuses[0].figma,
-		guidelines: component.statuses[0].guidelines,
-		storybook: component.statuses[0].storybook,
-		figmaLink: component.figmaLink,
-		storybookLink: component.storybookLink
-	};
-};
-
 const ModalForm: React.FC<ModalFormProps> = ({
 	triggerModal,
 	toggleModal,
@@ -67,7 +50,7 @@ const ModalForm: React.FC<ModalFormProps> = ({
 	const [fadeIn, setFadeIn] = useState(false);
 	const [isEditingImage, setIsEditingImage] = useState(false);
 	const categoryOptions = useSelector((state: RootState) =>
-		state.components.map((group: any) => ({ value: group.categoryId, label: group.category }))
+		state.components.map((group: any) => ({ value: String(group.category), label: group.category }))
 	);
 
 	useEffect(() => {
@@ -79,11 +62,13 @@ const ModalForm: React.FC<ModalFormProps> = ({
 
 	//* Initialize form data based on whether we're editing or creating
 	useEffect(() => {
-		if (selectedRecord.id === 0) {
+		if (!selectedRecord.id) {
 			dispatch(resetForm());
 		} else {
-			const formattedData = mapComponentToFormData(selectedRecord);
-			dispatch(setComponentData(formattedData));
+			const formattedData = castComponent(selectedRecord);
+			console.log('[ModalForm] selectedRecord:', selectedRecord);
+			console.log('[ModalForm] formattedData from castComponent:', formattedData);
+			dispatch(setComponentData(formattedData as unknown as IComponentForm));
 		}
 	}, [selectedRecord, dispatch]);
 
@@ -120,7 +105,7 @@ const ModalForm: React.FC<ModalFormProps> = ({
 	const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
 		dispatch(
 			updateField({
-				field: e.target.name as keyof IFormState,
+				field: e.target.name as keyof IComponentForm,
 				value: e.target.value
 			})
 		);
@@ -129,11 +114,7 @@ const ModalForm: React.FC<ModalFormProps> = ({
 	const handleSubmit = async (e: FormEvent) => {
 		e.preventDefault();
 
-		const componentCasted = {
-			...formState,
-			id: Number(formState.id),
-			category: categoryOptions[0].value
-		};
+		console.log(formState);
 
 		// Validate links
 		if (formState.figmaLink && !isValidURL(formState.figmaLink.trim())) {
@@ -152,10 +133,20 @@ const ModalForm: React.FC<ModalFormProps> = ({
 
 		//* Dispatch the appropriate action directly instead of using a variable
 		let response: any;
+		// Normalize empty status fields to default '🧱' to avoid submitting empty stages
+		const normalizedForm: IComponentForm = {
+			...(formState as IComponentForm),
+			guidelines: formState.guidelines && formState.guidelines.length ? formState.guidelines : '🧱',
+			figma: formState.figma && formState.figma.length ? formState.figma : '🧱',
+			storybook: formState.storybook && formState.storybook.length ? formState.storybook : '🧱',
+			cdn: formState.cdn && formState.cdn.length ? formState.cdn : '🧱'
+		};
+		// Cast form state to API shape so status/link arrays are included
+		const payload = castComponent(normalizedForm as unknown as IComponentForm);
 		if (isNewComponent) {
-			response = await dispatch(addComponent(componentCasted));
+			response = await dispatch(addComponent(payload as any));
 		} else {
-			response = await dispatch(updateComponentThunk(componentCasted));
+			response = await dispatch(updateComponentThunk(payload as any));
 		}
 
 		if (response.payload && response.payload.id !== 0) {
@@ -176,7 +167,12 @@ const ModalForm: React.FC<ModalFormProps> = ({
 	);
 
 	const renderSelectField = (name: string, value: string, options: Array<{ value: string; label: string }>) => (
-		<select name={name} className="msc-input !p-2" value={value} onChange={handleChange}>
+		<select
+			name={name}
+			className="msc-input !p-2"
+			value={value && value.length > 0 ? value : options?.[0]?.value ?? ''}
+			onChange={handleChange}
+		>
 			{options.map((option) => (
 				<option key={option.value} value={option.value}>
 					{option.label}
@@ -246,9 +242,9 @@ const ModalForm: React.FC<ModalFormProps> = ({
 								</div>
 								<div className="flex flex-col gap-1 w-full sm:!w-[50%]">
 									{renderFieldGroup(
-										'category',
+										'categoryId',
 										'Category',
-										renderSelectField('category', formState.category, categoryOptions)
+										renderSelectField('categoryId', String(formState.categoryId ?? ''), categoryOptions)
 									)}
 								</div>
 							</div>

@@ -1,25 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IComponentForm } from '../../interfaces/component.interface';
 
-export interface IFormState {
-	id: string;
-	name: string;
-	category: string;
-	guidelines: string;
-	figma: string;
-	storybook: string;
-	cdn: string;
-	figmaLink: string;
-	storybookLink: string;
-	comment: string;
-	description?: string;
-	image?: File | null;
-}
-
-const initialState: IFormState = {
+const initialState: IComponentForm = {
 	id: '',
 	name: '',
-	category: '',
+	categoryId: '',
 	guidelines: '🧱',
 	figma: '🧱',
 	storybook: '🧱',
@@ -35,7 +20,7 @@ const formSlice = createSlice({
 	name: 'form',
 	initialState,
 	reducers: {
-		updateField: (state, action: PayloadAction<{ field: keyof IFormState; value: string | File | null }>) => {
+		updateField: (state, action: PayloadAction<{ field: keyof IComponentForm; value: string | File | null }>) => {
 			const { field, value } = action.payload;
 			if (field === 'image') {
 				state.image = value as File | null;
@@ -43,21 +28,24 @@ const formSlice = createSlice({
 				state[field] = value as string;
 			}
 		},
-		setComponentData: (state: IFormState, action: PayloadAction<IComponentForm>) => {
+		setComponentData: (state: IComponentForm, action: PayloadAction<IComponentForm>) => {
+			const nonEmpty = (v?: string) => (typeof v === 'string' && v.trim().length > 0 ? v : undefined);
 			return {
 				...state,
 				id: action.payload.id?.toString() || '',
 				name: action.payload.name,
-				category: action.payload.category,
-				guidelines: action.payload.guidelines,
-				figma: action.payload.figma,
-				storybook: action.payload.storybook,
-				cdn: action.payload.cdn,
-				figmaLink: action.payload.figmaLink || '',
-				storybookLink: action.payload.storybookLink || '',
-				comment: action.payload.comment,
-				description: action.payload.description || '',
-				image: action.payload.image || null
+				// Ensure categoryId is stored correctly in form state
+				categoryId: (action.payload as any).categoryId ?? (action.payload as any).category ?? '',
+				guidelines: nonEmpty(action.payload.guidelines) ?? state.guidelines,
+				figma: nonEmpty(action.payload.figma) ?? state.figma,
+				storybook: nonEmpty(action.payload.storybook) ?? state.storybook,
+				cdn: nonEmpty(action.payload.cdn) ?? state.cdn,
+				figmaLink: nonEmpty(action.payload.figmaLink) ?? state.figmaLink,
+				storybookLink: nonEmpty(action.payload.storybookLink) ?? state.storybookLink,
+				// Map form's notes into local form state's comment field
+				comment: nonEmpty((action.payload as any).comment) ?? nonEmpty((action.payload as any).notes) ?? state.comment,
+				description: nonEmpty(action.payload.description) ?? state.description,
+				image: (action.payload.image as File | null) || null
 			};
 		},
 		resetForm: () => initialState

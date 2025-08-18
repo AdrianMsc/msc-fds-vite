@@ -8,59 +8,49 @@ import { baseUrl } from '.';
  * @returns Promise with the updated component data
  */
 export const updateComponent = async (component: IComponentForm): Promise<AxiosResponse<IComponentForm>> => {
-	try {
-		const formData = createComponentFormData(component);
+    // Build payload including Component fields plus related arrays (status, links)
+    const base: Record<string, any> = {
+        id: component.id,
+        name: component.name,
+        description: component.description,
+        // Backend uses "notes"; our form uses "comment"
+        notes: (component as any).notes ?? component.comment,
+        // If image is a File, backend likely expects URL string handled elsewhere; only send string
+        image: typeof component.image === 'string' ? component.image : undefined,
+        categoryId: component.categoryId
+    };
 
-		return await sendUpdateRequest(component, formData);
-	} catch (error) {
-		// 🚨 Log and rethrow for proper upstream error handling
-		console.error('❌ Error updating component:', error);
-		throw error;
-	}
-};
+    // Build status relations if any stage provided
+    const rawStatus = [
+        { platformName: 'guidelines', stage: component.guidelines },
+        { platformName: 'figma', stage: component.figma },
+        { platformName: 'storybook', stage: component.storybook },
+        { platformName: 'cdn', stage: component.cdn }
+    ].filter((s) => s.stage !== '' && s.stage !== null && s.stage !== undefined);
 
-/**
- * Creates FormData from component properties
- * @param component - The component to convert to FormData
- * @returns FormData object with component properties
- */
-const createComponentFormData = (component: IComponentForm): FormData => {
-	const formData = new FormData();
+    // Build links relations if any link provided
+    const rawLinks = [
+        { platformName: 'figmaLink', link: component.figmaLink },
+        { platformName: 'storybookLink', link: component.storybookLink }
+    ].filter((l) => l.link !== '' && l.link !== null && l.link !== undefined);
 
-	// 📝 Required fields
-	formData.append('name', component.name);
-	formData.append('category', component.category);
-	formData.append('cdn', component.cdn);
-	formData.append('figma', component.figma);
-	formData.append('guidelines', component.guidelines);
-	formData.append('storybook', component.storybook);
+    const payload: Record<string, any> = {
+        ...base,
+        ...(rawStatus.length ? { status: rawStatus } : {}),
+        ...(rawLinks.length ? { links: rawLinks } : {})
+    };
 
-	// 🔖 Optional fields with fallback to empty string
-	formData.append('comment', component.comment || '');
-	formData.append('figmaLink', component.figmaLink || '');
-	formData.append('storybookLink', component.storybookLink || '');
+    // Remove empty string, null, and undefined values while preserving valid falsy values (0, false)
+    const cleanedPayload = Object.fromEntries(
+        Object.entries(payload).filter(([, value]) => value !== '' && value !== null && value !== undefined)
+    );
 
-	// 🖼️ Only append image if it's a new upload
-	if (component.image instanceof File) {
-		formData.append('image', component.image);
-	}
-
-	return formData;
-};
-
-/**
- * Sends the update request to the API
- * @param component - Component being updated (for ID and category)
- * @param formData - FormData to send with the request
- * @returns Promise with the API response
- */
-const sendUpdateRequest = async (
-	component: IComponentForm,
-	formData: FormData
-): Promise<AxiosResponse<IComponentForm>> => {
-	const url = `${baseUrl}/categories/${component.category}/components/${component.id}`;
-	const config = { headers: { 'Content-Type': 'multipart/form-data' } };
-
-	const response = await axios.put<IComponentForm>(url, formData, config);
-	return response;
+    try {
+        const url = `${baseUrl}/components/${component.id}`;
+        const response = await axios.patch<IComponentForm>(url, cleanedPayload);
+        return response;
+    } catch (error) {
+        console.error(' Error updating component:', error);
+        throw error;
+    }
 };

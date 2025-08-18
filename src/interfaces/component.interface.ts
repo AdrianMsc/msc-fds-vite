@@ -1,31 +1,18 @@
-export interface IStatusApi {
-	platformName: string;
-	stage: string;
-}
-
 export interface IComponentApi {
-	id: number;
+	id: string;
 	name: string;
-	statuses: IStatusApi[];
-	comment: string;
-	description?: string | undefined;
-	category: any;
-	createdAt: string;
-	updatedAt: string;
-	figmaLink?: string;
-	storybookLink?: string;
+	categoryId: string;
+	description?: string;
+	notes: string;
+	status: IStatusApi[];
+	link?: any;
 	image?: string;
 }
 
-export interface ICategoryApi {
-	category: string;
-	components: IComponentApi[];
-}
-
 export interface IComponentForm {
-	id?: number;
+	id?: string;
 	name: string;
-	category: string;
+	categoryId: string;
 	comment: string;
 	description?: string;
 	guidelines: string;
@@ -34,7 +21,20 @@ export interface IComponentForm {
 	cdn: string;
 	figmaLink?: string;
 	storybookLink?: string;
-	image?: File | null;
+	image?: File | string | null;
 	// Allow string indexing for dynamic field access
 	[key: string]: any;
+}
+
+export interface ICategoryApi {
+    // Backend returns both categoryId (id) and category (name) in /components/byCategory
+    // Keep category (name) for UI display; add categoryId for identity/comparisons
+    categoryId?: string;
+    category: string;
+    components: IComponentApi[];
+}
+
+export interface IStatusApi {
+	platformName: string;
+	stage: string;
 }

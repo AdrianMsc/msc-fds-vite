@@ -19,13 +19,14 @@ import { setCurrentComponent } from '../redux/slices/currentComponentSlice';
 import { mapApiToComponent } from '../utils/mapApiToComponent';
 
 const defaultValuesEmpty = {
-	id: Number(''),
+	id: '',
 	name: '',
-	category: '',
-	comment: '',
+	categoryId: '',
+	notes: '',
 	createdAt: '',
-	updatedAt: '',
-	status: [] as IStatusApi[]
+	status: [] as IStatusApi[],
+	link: '',
+	image: ''
 };
 
 const ComponentStatus: React.FC = () => {
@@ -91,6 +92,7 @@ const ComponentStatus: React.FC = () => {
 
 	const handleEdit = (component: IComponentApi) => {
 		setSelectedRecord(component);
+		console.log(component);
 		toggleModal();
 	};
 
@@ -238,21 +240,13 @@ const ComponentStatus: React.FC = () => {
 															{formatComponentName(component.name)}
 														</NavLink>
 													</th>
-													<td className="px-6 py-4 text-center">
-														{component.status[0]?.stage ? component.status[0].stage : '🧱'}
-													</td>
-													<td className="px-6 py-4 text-center">
-														{component.status[1]?.stage ? component.status[1].stage : '🧱'}
-													</td>
-													<td className="px-6 py-4 text-center">
-														{component.status[2]?.stage ? component.status[2].stage : '🧱'}
-													</td>
-													<td className="px-6 py-4 text-center">
-														{component.status[3]?.stage ? component.status[3].stage : '🧱'}
-													</td>
+													<td className="px-6 py-4 text-center">{component.status?.[0]?.stage || 'TBD'}</td>
+													<td className="px-6 py-4 text-center">{component.status?.[1]?.stage || 'TBD'}</td>
+													<td className="px-6 py-4 text-center">{component.status?.[2]?.stage || 'TBD'}</td>
+													<td className="px-6 py-4 text-center">{component.status?.[3]?.stage || 'TBD'}</td>
 													{isAuthenticated && (
 														<>
-															<td className="px-6 py-4 text-center">{component.comment}</td>
+															<td className="px-6 py-4 text-center">{component.notes}</td>
 															<td>
 																<div className="flex place-content-around items-center align-middle">
 																	<button>
