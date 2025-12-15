@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Navbar from './Navbar';
-import Sidebar from './Sidebar';
+import SidebarV2 from './SidebarV2';
 import { Outlet } from 'react-router-dom';
 import Toast from './Toast';
 import Dialog from './Dialog';
@@ -17,7 +17,7 @@ const DocsLayout = () => {
 		<>
 			<Navbar />
 			<main className="flex flex-row bg-off_white h-screen w-screen overflow-hidden">
-				<Sidebar />
+				<SidebarV2 />
 				<div className="flex flex-col overflow-y-scroll overflow-x-visible w-full">
 					<div className="flex px-8 pt-5 md:px-15 xl:px-20 flex-1">
 						<Outlet context={{ toggleModal }} />
