@@ -1,5 +1,3 @@
-.env
-
 # Logs
 logs
 *.log
@@ -26,3 +24,4 @@ dist-ssr
 *.sw?
 .env.prod
 .env.dev
+.env

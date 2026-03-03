@@ -1,8 +1,12 @@
 {
   "rewrites": [
     {
+      "source": "/api/:match*",
+      "destination": "https://fds-dev-back.vercel.app/:match*"
+    },
+    {
       "source": "/(.*)",
-      "destination": "/"
+      "destination": "/index.html"
     }
   ]
 }

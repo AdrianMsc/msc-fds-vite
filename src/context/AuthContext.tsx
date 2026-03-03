@@ -49,22 +49,32 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         return;
       }
 
+      let token: string;
       try {
         // 1. Get token from Auth0
-        const token = await getAccessTokenSilently();
+        token = await getAccessTokenSilently();
+      } catch (tokenError) {
+        console.error('[Auth] Step 1 FAILED — getAccessTokenSilently threw:', tokenError);
+        if (isMounted) {
+          setUser(null);
+          setIsSessionLoading(false);
+        }
+        return;
+      }
 
-        const extractedRole =
-          auth0User?.['https://msc-component-status-api/roles']?.[0] ||
-          auth0User?.['https://msc-component-status-api/role'] ||
-          auth0User?.['https://msc-component-status-api/user_metadata']?.role ||
-          auth0User?.app_metadata?.role ||
-          auth0User?.user_metadata?.role ||
-          auth0User?.role ||
-          auth0User?.roles?.[0] ||
-          (auth0User?.nickname !== auth0User?.name ? auth0User?.nickname : null) || // Only use nickname if it's not the same as name
-          'user';
+      const extractedRole =
+        auth0User?.['https://msc-component-status-api/roles']?.[0] ||
+        auth0User?.['https://msc-component-status-api/role'] ||
+        auth0User?.['https://msc-component-status-api/user_metadata']?.role ||
+        auth0User?.app_metadata?.role ||
+        auth0User?.user_metadata?.role ||
+        auth0User?.role ||
+        auth0User?.roles?.[0] ||
+        (auth0User?.nickname !== auth0User?.name ? auth0User?.nickname : null) || // Only use nickname if it's not the same as name
+        'user';
 
-        // 3. Exchange token for backend session cookie
+      try {
+        // 2. Exchange token for backend session cookie
         await api.post(
           '/auth/login-frontend',
           {
@@ -73,15 +83,25 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             picture: auth0User?.picture,
             role: extractedRole,
           },
-          { headers: { Authorization: `Bearer ${token}` } }, // auth header
+          { headers: { Authorization: `Bearer ${token}` } },
         );
+      } catch (postError) {
+        console.error('[Auth] Step 2 FAILED — POST /auth/login-frontend threw:', postError);
+        if (isMounted) {
+          setUser(null);
+          setIsSessionLoading(false);
+        }
+        return;
+      }
+
+      try {
         // 3. Cookie is set. Now fetch the actual user profile from the backend
         const meResponse = await api.get('/auth/me');
         if (meResponse.data.authenticated && isMounted) {
           setUser(meResponse.data.user);
         }
-      } catch (error) {
-        console.error('Failed to establish session:', error);
+      } catch (meError) {
+        console.error('[Auth] Step 3 FAILED — GET /auth/me threw:', meError);
         if (isMounted) setUser(null);
       } finally {
         if (isMounted) setIsSessionLoading(false);
