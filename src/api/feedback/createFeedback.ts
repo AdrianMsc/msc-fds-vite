@@ -11,7 +11,7 @@ export const createFeedback = async (data: IFeedback): Promise<AxiosResponse<any
       read: false,
     };
     const response = await api.post(
-      `https://msc-component-status-ws.vercel.app/message/`,
+      `https://msc-component-status-ws-dev.vercel.app/message/`,
       dataCasted,
     );
     console.log(response);
