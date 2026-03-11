@@ -26,7 +26,7 @@ const MscColors: React.FC<MscColorsProps> = ({ palette }) => {
   const selectedColors = colors[palette];
   const dispatch = useDispatch<AppDispatch>();
 
-  const copyCodeSnippet = (copy: any) => {
+  const copyCodeSnippet = (copy: string) => {
     navigator.clipboard
       .writeText(selectedColors[copy])
       .then(() => {

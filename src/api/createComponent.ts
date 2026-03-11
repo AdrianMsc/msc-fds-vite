@@ -2,7 +2,7 @@ import { AxiosResponse } from 'axios';
 import { api } from '.';
 import { IComponentForm } from '../interfaces/component.interface';
 
-export const createComponent = async (data: IComponentForm): Promise<AxiosResponse<any>> => {
+export const createComponent = async (data: IComponentForm): Promise<AxiosResponse<unknown>> => {
   console.log(data);
   try {
     const formData = new FormData();

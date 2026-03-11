@@ -55,13 +55,14 @@ const ComponentStatus: React.FC = () => {
       { threshold: 0 },
     );
 
-    if (firstButtonRef.current) {
-      observer.observe(firstButtonRef.current);
+    const buttonRef = firstButtonRef.current;
+    if (buttonRef) {
+      observer.observe(buttonRef);
     }
 
     return () => {
-      if (firstButtonRef.current) {
-        observer.unobserve(firstButtonRef.current);
+      if (buttonRef) {
+        observer.unobserve(buttonRef);
       }
     };
   }, [isAuthenticated]);

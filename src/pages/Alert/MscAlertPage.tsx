@@ -7,19 +7,20 @@ import {
   faCircleCheck,
   faExclamationTriangle,
   faCircleInfo,
+  IconDefinition,
 } from "@fortawesome/free-solid-svg-icons";
 import MscComponentSnippet from "../../components/MscComponentSnippet/MscComponentSnippet";
 
 type AlertType = "info" | "success" | "warning" | "error";
 
-const iconMap: Record<AlertType, any> = {
+const iconMap: Record<AlertType, IconDefinition> = {
   info: faCircleInfo,
   success: faCircleCheck,
   warning: faExclamationTriangle,
   error: faCircleExclamation,
 };
 
-const vanillaIconMap: Record<AlertType, any> = {
+const vanillaIconMap: Record<AlertType, string> = {
   info: "fa-circle-info",
   success: "fa-circle-check",
   warning: "fa-triangle-exclamation",

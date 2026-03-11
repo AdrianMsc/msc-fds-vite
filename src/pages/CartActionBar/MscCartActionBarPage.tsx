@@ -8,6 +8,7 @@ import {
   faReceipt,
   faShare,
   faTrash,
+  IconDefinition,
 } from "@fortawesome/free-solid-svg-icons";
 import ComponentLayout from "../../layout/ComponentLayout/ComponentLayout";
 import MscComponentSnippet from "../../components/MscComponentSnippet/MscComponentSnippet";
@@ -24,7 +25,7 @@ const buttons = [
 ];
 
 interface ButtonProps {
-  icon: any;
+  icon: IconDefinition;
   text: string;
 }
 

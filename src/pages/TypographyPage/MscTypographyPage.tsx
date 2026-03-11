@@ -6,7 +6,7 @@ import { typographyCode } from "./constants";
 const MscTypographyPage = () => {
   const [inputValue, setInputValue] = useState("");
 
-  const handleInputChange = (e: any) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
   };
 

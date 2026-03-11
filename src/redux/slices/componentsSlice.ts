@@ -18,7 +18,7 @@ export const addComponent = createAsyncThunk(
       const response = await createComponent(data);
       if (response.status === 201) {
         const newComponent: IComponentApi = {
-          id: response.data.componentId,
+          id: (response.data as { componentId: number }).componentId,
           name: data.name,
           comment: data.comment,
           description: "",
@@ -46,8 +46,9 @@ export const addComponent = createAsyncThunk(
       } else {
         return rejectWithValue("Failed to create component");
       }
-    } catch (error: any) {
-      return rejectWithValue(error.response.data);
+    } catch (error: unknown) {
+      const err = error as { response?: { data?: unknown } };
+      return rejectWithValue(err.response?.data || "An error occurred");
     }
   }
 );
@@ -79,8 +80,9 @@ export const removeComponent = createAsyncThunk(
       } else {
         return rejectWithValue("Failed to delete component");
       }
-    } catch (error: any) {
-      return rejectWithValue(error.response.data);
+    } catch (error: unknown) {
+      const err = error as { response?: { data?: unknown } };
+      return rejectWithValue(err.response?.data || "An error occurred");
     }
   }
 );

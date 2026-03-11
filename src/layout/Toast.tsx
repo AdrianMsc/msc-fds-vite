@@ -4,6 +4,7 @@ import {
   faExclamationCircle,
   faInfoCircle,
   faWarning,
+  IconDefinition,
   // faClose,
 } from "@fortawesome/free-solid-svg-icons";
 import { useSelector } from "react-redux";
@@ -12,7 +13,7 @@ import { RootState } from "../redux/store";
 import { useState, useEffect } from "react";
 
 const toastConfig: {
-  [key: string]: { icon: any; color: string; border: string };
+  [key: string]: { icon: IconDefinition; color: string; border: string };
 } = {
   success: {
     icon: faCheckCircle,

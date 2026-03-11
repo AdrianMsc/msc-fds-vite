@@ -2,7 +2,7 @@ import React, { createContext, useContext, useEffect, useState, ReactNode } from
 import { useAuth0 } from '@auth0/auth0-react';
 import { api } from '../lib/api';
 
-interface User {
+export interface User {
   id: number;
   email: string;
   name: string;
@@ -14,7 +14,7 @@ interface User {
 interface AuthContextType {
   user: User | null;
   isLoading: boolean;
-  login: (options?: any) => void;
+  login: (options?: import('@auth0/auth0-react').RedirectLoginOptions) => void;
   logout: () => void;
 }
 
@@ -103,7 +103,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     return () => {
       isMounted = false;
     };
-  }, [isAuth0Authenticated, isAuth0Loading, getAccessTokenSilently]);
+  }, [isAuth0Authenticated, isAuth0Loading, getAccessTokenSilently, auth0User?.email, auth0User?.name, auth0User?.picture]);
 
   // Handle global 401 events
   useEffect(() => {
@@ -117,7 +117,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     return () => window.removeEventListener('auth-unauthorized', handleUnauthorized);
   }, [loginWithRedirect]);
 
-  const handleLogin = (options?: any) => loginWithRedirect(options);
+  const handleLogin = (options?: import('@auth0/auth0-react').RedirectLoginOptions) => loginWithRedirect(options);
 
   const handleLogout = async () => {
     // 1. Destroy backend session cookie
@@ -139,6 +139,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   );
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (context === undefined) {

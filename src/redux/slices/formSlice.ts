@@ -13,7 +13,7 @@ export interface IFormState {
 	storybookLink: string;
 	comment: string;
 	description?: string;
-	image?: File | null;
+	image?: File | string | null;
 	atomicType: string | null;
 }
 

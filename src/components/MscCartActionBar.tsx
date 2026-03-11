@@ -7,11 +7,12 @@ import {
   faReceipt,
   faShare,
   faTrash,
+  IconDefinition,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 interface Props {
-  icon: any;
+  icon: IconDefinition;
   text: string;
 }
 

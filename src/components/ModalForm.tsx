@@ -56,9 +56,10 @@ const ATOMIC_TYPE_OPTIONS = [
 ];
 
 //* Map component data to form data structure
-export const mapComponentToFormData = (component: IComponentApi): any => {
+// eslint-disable-next-line react-refresh/only-export-components
+export const mapComponentToFormData = (component: IComponentApi): IFormState => {
 	return {
-		id: component.id,
+		id: String(component.id),
 		name: component.name,
 		category: component.category,
 		comment: component.comment,
@@ -69,8 +70,8 @@ export const mapComponentToFormData = (component: IComponentApi): any => {
 		atomicType: component.atomicType,
 		guidelines: component.statuses[0].guidelines,
 		storybook: component.statuses[0].storybook,
-		figmaLink: component.figmaLink,
-		storybookLink: component.storybookLink
+		figmaLink: component.figmaLink || '',
+		storybookLink: component.storybookLink || ''
 	};
 };
 
@@ -104,7 +105,7 @@ const ModalForm: React.FC<ModalFormProps> = ({
 			dispatch(resetForm());
 		} else {
 			const formattedData = mapComponentToFormData(selectedRecord);
-			dispatch(setComponentData(formattedData));
+			dispatch(setComponentData(formattedData as unknown as import('../interfaces/component.interface').IComponentForm));
 		}
 	}, [selectedRecord, dispatch]);
 
@@ -175,20 +176,23 @@ const ModalForm: React.FC<ModalFormProps> = ({
 
 		try {
 			//* Dispatch the appropriate action directly instead of using a variable
-			let response: any;
+			let response: unknown;
 			if (isNewComponent) {
 				response = await dispatch(addComponent(componentCasted));
 			} else {
 				response = await dispatch(updateComponentThunk(componentCasted));
 			}
 
-			if (response.payload && response.payload.id !== 0) {
+			const result = response as { payload: IComponentApi };
+
+			if (result.payload && result.payload.id !== 0) {
 				showToast('success', `Component ${actionType}`);
 
 				if (!isNewComponent) {
-					const updatedComponent: any = {
+					const updatedComponent: IComponentApi = {
 						...selectedRecord,
 						...componentCasted,
+						image: typeof componentCasted.image === 'string' ? componentCasted.image : selectedRecord.image,
 						statuses: [
 							{
 								guidelines: formState.guidelines,
@@ -197,7 +201,7 @@ const ModalForm: React.FC<ModalFormProps> = ({
 								cdn: formState.cdn
 							}
 						]
-					};
+					} as IComponentApi;
 					dispatch(setCurrentComponent(updatedComponent));
 				}
 				

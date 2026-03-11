@@ -9,6 +9,8 @@ import { RootState } from '../../redux/store';
 import { AppDispatch } from '../../redux/store';
 import showToast from '../../utils/showToast';
 
+const colors = ['bg-blue-300', 'bg-red-300', 'bg-green-500', 'bg-yellow-400', 'bg-purple-300'];
+
 const NotificationsPage = () => {
   const [selectedNotification, setSelectedNotification] = useState<IFeedback | null>(null);
   const [notiColors, setNotiColors] = useState<{ [key: string]: string }>({});
@@ -16,8 +18,6 @@ const NotificationsPage = () => {
 
   const dispatch: AppDispatch = useDispatch();
   const messages = useSelector((state: RootState) => state.feedback);
-
-  const colors = ['bg-blue-300', 'bg-red-300', 'bg-green-500', 'bg-yellow-400', 'bg-purple-300'];
 
   useEffect(() => {
     const fetchNotifications = async () => {
@@ -38,7 +38,7 @@ const NotificationsPage = () => {
       }
     };
     fetchNotifications();
-  }, []);
+  }, [dispatch]);
 
   const handleDelete = async (notification: IFeedback) => {
     try {

@@ -26,7 +26,7 @@ const codeSimilarItems = `
           <img class="h-[80px] m-auto mb-2" src="https://cdn.mscdirect.com/global/images/ProductImages/8930544-24.jpg" alt="" />
         </div>
         <p class="mb-2 text-[12px] font-bold">Chicago-Latrobe</p>
-        <p class="mb-2 text-sm font-bold">Jobber Drill: 1/64\" Dia, 118 deg Point, High Speed Steel</p>
+        <p class="mb-2 text-sm font-bold">Jobber Drill: 1/64" Dia, 118 deg Point, High Speed Steel</p>
         <button class="px-2 md:px-5 rounded-full font-bold text-sm h-7 py-1 cursor-pointer min-w-24 md:min-w-32 bg-[#186DF5] text-white">Add to Cart</button>
       </div>
       <div class="p-2 pt-6 md:pt-2 font-bold border-t-2">$5.35</div>

@@ -2,7 +2,7 @@ import { AxiosResponse } from 'axios';
 import { api } from '../../lib/api';
 import { IFeedback } from '../../redux/slices/feedbackSlice';
 
-export const createFeedback = async (data: IFeedback): Promise<AxiosResponse<any>> => {
+export const createFeedback = async (data: IFeedback): Promise<AxiosResponse<unknown>> => {
   try {
     const dataCasted = {
       ...data,

@@ -22,7 +22,7 @@ export const addFeedback = createAsyncThunk(
       const response = await createFeedback(data);
       if (response.status === 201) {
         const newFeedback = {
-          id: response.data.data.id,
+          id: (response.data as { data: { id: number } }).data.id,
           name: data.name,
           email: data.email,
           message: data.message,
@@ -34,8 +34,9 @@ export const addFeedback = createAsyncThunk(
       } else {
         return rejectWithValue("Failed to create feedback");
       }
-    } catch (error: any) {
-      return rejectWithValue(error.response.data);
+    } catch (error: unknown) {
+      const err = error as { response?: { data?: unknown } };
+      return rejectWithValue(err.response?.data || "An error occurred");
     }
   }
 );
@@ -51,8 +52,9 @@ export const removeFeedback = createAsyncThunk(
       } else {
         return rejectWithValue("Failed to delete feedback");
       }
-    } catch (error: any) {
-      return rejectWithValue(error.response.data);
+    } catch (error: unknown) {
+      const err = error as { response?: { data?: unknown } };
+      return rejectWithValue(err.response?.data || "An error occurred");
     }
   }
 );

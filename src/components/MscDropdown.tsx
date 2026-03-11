@@ -251,11 +251,11 @@ const MscDropdown = ({
           </div>
           {isOpen && (
             <div className="numeric-dropdown-options-container">
-              {numericOptions.map((option: any) => (
+              {numericOptions.map((option: NumericOption) => (
                 <div
                   key={option}
                   className="numeric-dropdown-options"
-                  onClick={() => handleNumericOptionClick(option)}
+                  onClick={() => handleNumericOptionClick(Number(option))}
                 >
                   {option}
                 </div>

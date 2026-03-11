@@ -19,6 +19,7 @@ import {
   faCompass,
   faWindowRestore,
   faListUl,
+  IconDefinition,
 } from '@fortawesome/free-solid-svg-icons';
 
 import SidebarContext from '../context/SidebarCtx';
@@ -48,7 +49,7 @@ const SidebarV2: React.FC = () => {
   interface AtomicGroup {
     id: 'atom' | 'molecule' | 'organism' | 'template' | 'page';
     title: string;
-    icon: any;
+    icon: IconDefinition;
   }
 
   // 🧪 Atomic Design Configuration
@@ -181,7 +182,7 @@ const SidebarV2: React.FC = () => {
     indent = false,
   }: {
     title: string;
-    icon?: any;
+    icon?: IconDefinition;
     children: React.ReactNode;
     lineStyle?: 'solid' | 'dotted';
     groupId: string;

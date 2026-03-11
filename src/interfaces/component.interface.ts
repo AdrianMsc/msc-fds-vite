@@ -37,6 +37,6 @@ export interface IComponentForm {
   cdn: string;
   figmaLink?: string;
   storybookLink?: string;
-  image?: File | null;
+  image?: File | string | null;
   atomicType: string | null;
 }

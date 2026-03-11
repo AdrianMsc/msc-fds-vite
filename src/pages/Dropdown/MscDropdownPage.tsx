@@ -16,13 +16,13 @@ import {
 const MscDropdownPage = () => {
 	const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 	const [isOptionSelected, setIsOptionSelected] = useState(false);
-	const [selectedValue, setSelectedValue] = useState(null);
-	const [selectedDoubleValue, setSelectedDoubleValue] = useState({
+	const [selectedValue, setSelectedValue] = useState<string | null>(null);
+	const [selectedDoubleValue, setSelectedDoubleValue] = useState<{ p1: string; p2: string }>({
 		p1: 'Est. Wed, Apr 03 from PA',
 		p2: 'Standard UPS Ground'
 	});
-	const [selectedNumericValue, setSelectedNumericValue] = useState();
-	const dropdownRef = useRef(null);
+	const [selectedNumericValue, setSelectedNumericValue] = useState<string | number>('');
+	const dropdownRef = useRef<HTMLDivElement>(null);
 
 	const options = ['Buyer 1', 'Buyer 2', 'Buyer 3'];
 	const numericOptions = ['25', '50', '75', '100'];
@@ -46,24 +46,24 @@ const MscDropdownPage = () => {
 		setOpenDropdown((prev) => (prev === key ? null : key));
 	};
 
-	const handleOptionClick = (option: any) => {
+	const handleOptionClick = (option: string) => {
 		setSelectedValue(option);
 		setIsOptionSelected(true);
 		setOpenDropdown(null);
 	};
 
-	const handleDoubleOptionClick = (option: any) => {
+	const handleDoubleOptionClick = (option: { p1: string; p2: string }) => {
 		setSelectedDoubleValue(option);
 		setIsOptionSelected(true);
 		setOpenDropdown(null);
 	};
 
-	const handleNumericOptionClick = (value: any) => {
+	const handleNumericOptionClick = (value: string | number) => {
 		setSelectedNumericValue(value);
 		setOpenDropdown(null);
 	};
 
-	const handleNumericInput = (e: any) => {
+	const handleNumericInput = (e: React.ChangeEvent<HTMLInputElement>) => {
 		e.preventDefault();
 		setSelectedNumericValue(e.target.value);
 		setOpenDropdown(null);
@@ -72,7 +72,7 @@ const MscDropdownPage = () => {
 	// Optional: close on outside click
 	useEffect(() => {
 		const handleClickOutside = (event: MouseEvent) => {
-			if (dropdownRef.current && !(dropdownRef.current as any).contains(event.target)) {
+			if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
 				setOpenDropdown(null);
 			}
 		};

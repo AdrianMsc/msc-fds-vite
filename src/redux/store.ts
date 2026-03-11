@@ -11,7 +11,7 @@ function loadFromLocalStorage() {
   }
 }
 
-function saveToLocalStorage(state: any) {
+function saveToLocalStorage(state: unknown) {
   try {
     const serializedState = JSON.stringify(state);
     localStorage.setItem("reduxState", serializedState);

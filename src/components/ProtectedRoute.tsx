@@ -1,9 +1,9 @@
 import { Navigate, Outlet } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
-import IconRefresh from './Icons/IconRefresh';
+import { useAuth, User } from '../context/AuthContext';
+import MscSpinner from './MscSpinner';
 
 interface ProtectedRouteProps {
-  allowAccess?: (user: any) => boolean;
+  allowAccess?: (user: User) => boolean;
   redirectTo?: string;
 }
 
@@ -16,7 +16,7 @@ const ProtectedRoute = ({
   if (isLoading) {
     return (
       <div className="flex h-screen w-screen items-center justify-center bg-off_white">
-        <IconRefresh addClass="animate-spin w-10 h-10 text-primary" />
+        <MscSpinner />
       </div>
     );
   }

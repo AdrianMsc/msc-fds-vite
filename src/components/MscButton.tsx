@@ -1,4 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { IconDefinition } from "@fortawesome/free-solid-svg-icons";
 
 type Variant = "solid" | "outline" | "transparent";
 type Size = "default" | "small";
@@ -8,7 +9,7 @@ interface MscButtonProps {
   variant?: Variant;
   size?: Size;
   loading?: boolean;
-  icon?: any;
+  icon?: IconDefinition;
   disabled?: boolean;
 }
 
@@ -38,11 +39,11 @@ export const MscButton: React.FC<MscButtonProps> = ({
       {loading === false ? (
         icon && label ? (
           <>
-            <FontAwesomeIcon icon={icon} />
+            <FontAwesomeIcon icon={icon as import("@fortawesome/fontawesome-svg-core").IconProp} />
             <span className="ml-2">{label}</span>
           </>
-        ) : label === "" ? (
-          <FontAwesomeIcon icon={icon} />
+        ) : label === "" && icon ? (
+          <FontAwesomeIcon icon={icon as import("@fortawesome/fontawesome-svg-core").IconProp} />
         ) : (
           label
         )

@@ -1,14 +1,14 @@
-import { ICategoryApi } from "../interfaces/component.interface";
+import { ICategoryApi, IComponentApi } from "../interfaces/component.interface";
 
 const handleDataSend = (
-  navigate: any,
+  navigate: (path: string, options?: { state?: unknown }) => void,
   path: string,
   componentName: string,
   categories: ICategoryApi[]
 ) => {
   const component = categories
     .flatMap((category: ICategoryApi) => category.components)
-    .find((comp: any) => comp.name === componentName);
+    .find((comp: IComponentApi) => comp.name === componentName);
 
   if (component) {
     navigate(path, {

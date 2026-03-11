@@ -65,8 +65,8 @@ const ModalFeedback: React.FC<ModalFeedbackProps> = ({ showModal, toggleModal })
 			...formState,
 			id: Number(formState.id)
 		};
-		const response: any = await dispatch(addFeedback(fbCasted));
-		if (response.payload.id != 0) {
+		const response = (await dispatch(addFeedback(fbCasted))) as { payload: import('../redux/slices/feedbackSlice').IFeedback };
+		if (response.payload && response.payload.id !== 0) {
 			showToast('success', 'Feedback sent', 'Thanks for your comments!');
 		}
 		dispatch(resetForm());

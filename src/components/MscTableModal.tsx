@@ -5,7 +5,7 @@ import { useEffect } from "react";
 
 const MscTableModal = ({ triggerModal, toggleModal }: ModalListProps) => {
   useEffect(() => {
-    function updateSliderPosition(toggleContainer: any) {
+    function updateSliderPosition(toggleContainer: Element) {
       const slider = toggleContainer.querySelector("#tripleToggleDot");
       const checkedRadio = toggleContainer.querySelector(
         'input[type="radio"]:checked'
@@ -13,7 +13,7 @@ const MscTableModal = ({ triggerModal, toggleModal }: ModalListProps) => {
       const radios = Array.from(
         toggleContainer.querySelectorAll('input[type="radio"]')
       );
-      const radioIndex = radios.indexOf(checkedRadio);
+      const radioIndex = radios.indexOf(checkedRadio as Element);
       const positions = [
         "left-[4px]",
         "left-[74px]",
@@ -22,7 +22,9 @@ const MscTableModal = ({ triggerModal, toggleModal }: ModalListProps) => {
       ];
 
       if (radioIndex >= 0 && radioIndex < positions.length) {
+      if (slider) {
         slider.className = `absolute w-1/4 h-3/4 bg-white shadow-md rounded-full transition-all duration-150 ease-in-out ${positions[radioIndex]}`;
+      }
       } else {
         console.error("Invalid radio index:", radioIndex);
       }

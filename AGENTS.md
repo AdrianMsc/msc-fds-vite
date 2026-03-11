@@ -1,0 +1,1 @@
+ * After any changes, run linting, typescript, and build to check for errors. if there are errors, fix them.
