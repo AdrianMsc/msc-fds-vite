@@ -55,6 +55,7 @@ import RatingPage from '../pages/Atom/RatingPage';
 import SpecificationsTablePage from '../pages/Organism/SpecificationsTablePage';
 import DocumentsSectionPage from '../pages/Organism/DocumentsSectionPage';
 import ProductFeaturesPage from '../pages/Organism/ProductFeaturesPage';
+import ProtectedRoute from '../components/ProtectedRoute';
 
 export const routesIndex = [
   {
@@ -200,7 +201,8 @@ export const routesIndex = [
       },
       {
         path: 'TableModal',
-        element: <MscTableModalPage />,
+        element: <ProtectedRoute allowAccess={(user) => user?.role === 'admin'} />,
+        children: [{ index: true, element: <MscTableModalPage /> }],
       },
       {
         path: 'Error404',
@@ -220,7 +222,8 @@ export const routesIndex = [
       },
       {
         path: 'ComponentTester',
-        element: <ComponentTesterPage />,
+        element: <ProtectedRoute allowAccess={(user) => user?.role === 'admin'} />,
+        children: [{ index: true, element: <ComponentTesterPage /> }],
       },
       {
         path: 'ChangeLog',

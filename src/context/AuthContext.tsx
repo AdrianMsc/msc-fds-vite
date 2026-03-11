@@ -62,17 +62,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         return;
       }
 
-      const extractedRole =
-        auth0User?.['https://msc-component-status-api/roles']?.[0] ||
-        auth0User?.['https://msc-component-status-api/role'] ||
-        auth0User?.['https://msc-component-status-api/user_metadata']?.role ||
-        auth0User?.app_metadata?.role ||
-        auth0User?.user_metadata?.role ||
-        auth0User?.role ||
-        auth0User?.roles?.[0] ||
-        (auth0User?.nickname !== auth0User?.name ? auth0User?.nickname : null) || // Only use nickname if it's not the same as name
-        'user';
-
       try {
         // 2. Exchange token for backend session cookie
         await api.post(
@@ -81,7 +70,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             email: auth0User?.email,
             name: auth0User?.name,
             picture: auth0User?.picture,
-            role: extractedRole,
+            // SECURITY FIX: User roles are determined securely by the backend via JWT claims.
+            // We no longer send a requested role from the client.
           },
           { headers: { Authorization: `Bearer ${token}` } },
         );
