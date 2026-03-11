@@ -15,7 +15,10 @@ Before you begin, ensure that the following are installed on your system:
 
 ### Installation
 
-1. **Clone the Repository**
+1. **Navigate to the Repository**
+   ```bash
+   cd fds-dev-front
+   ```
 2. **Install Dependencies**
    ```bash
    npm install
@@ -25,7 +28,7 @@ Before you begin, ensure that the following are installed on your system:
    ```bash
    cp .env.example .env
    ```
-   Ensure `VITE_API_URL` is set to `/api` to utilize the local Vite proxy or Vercel `vercel.json` rewrites. Update Auth0 credentials as needed.
+   Ensure `VITE_API_URL` is set to `http://localhost:4242` for local development. Update Auth0 credentials as needed.
 
 ### Running the Application
 
