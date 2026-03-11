@@ -3,6 +3,7 @@ import DocsLayout from '../layout/DocsLayout';
 import MscLinkPage from '../pages/Link/MscLinkPage';
 import MscTabsPage from '../pages/Tabs/MscTabsPage';
 import LoginPage from '../pages/LoginPage/LoginPage';
+import HomePageV2 from '../pages/Page/HomePage';
 import MscAlertPage from '../pages/Alert/MscAlertPage';
 import MscRadioPage from '../pages/Radio/MscRadioPage';
 import MscInputPage from '../pages/Input/MscInputPage';
@@ -277,7 +278,6 @@ export const routesIndex = [
         path: 'TestimonialSection',
         element: <TestimonialSectionPage />,
       },
-
       {
         path: 'Page',
         element: <PagePage />,
@@ -285,6 +285,11 @@ export const routesIndex = [
       {
         path: 'Templates',
         element: <TemplatesPage />,
+      },
+      {
+        path: 'HomepageV2',
+        element: <HomePageV2 />,
+        errorElement: 'error',
       },
     ],
   },

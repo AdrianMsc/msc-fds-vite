@@ -1,8 +1,8 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { IconDefinition } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
-type Variant = "solid" | "outline" | "transparent";
-type Size = "default" | "small";
+type Variant = 'solid' | 'outline' | 'transparent';
+type Size = 'default' | 'small';
 
 interface MscButtonProps {
   label?: string;
@@ -11,39 +11,41 @@ interface MscButtonProps {
   loading?: boolean;
   icon?: IconDefinition;
   disabled?: boolean;
+  onClick?: () => void;
 }
 
 export const MscButton: React.FC<MscButtonProps> = ({
-  label = "",
-  variant = "solid",
-  size = "default",
+  label = '',
+  variant = 'solid',
+  size = 'default',
   loading = false,
   icon,
   disabled = false,
+  onClick,
 }) => {
   const variantClasses: Record<Variant, string> = {
-    solid: "msc-btn msc-btn-blue-solid",
-    outline: "msc-btn msc-btn-blue-outline",
-    transparent: "msc-btn msc-btn-transparent",
+    solid: 'msc-btn msc-btn-blue-solid',
+    outline: 'msc-btn msc-btn-blue-outline',
+    transparent: 'msc-btn msc-btn-transparent',
   };
 
   const variantSizes: Record<Size, string> = {
-    default: "",
-    small: "msc-btn-sm",
+    default: '',
+    small: 'msc-btn-sm',
   };
 
   const className = `${variantClasses[variant]} ${variantSizes[size]}`;
 
   return (
-    <button className={className} disabled={disabled}>
+    <button className={className} disabled={disabled} onClick={onClick}>
       {loading === false ? (
         icon && label ? (
           <>
-            <FontAwesomeIcon icon={icon as import("@fortawesome/fontawesome-svg-core").IconProp} />
+            <FontAwesomeIcon icon={icon as import('@fortawesome/fontawesome-svg-core').IconProp} />
             <span className="ml-2">{label}</span>
           </>
-        ) : label === "" && icon ? (
-          <FontAwesomeIcon icon={icon as import("@fortawesome/fontawesome-svg-core").IconProp} />
+        ) : label === '' && icon ? (
+          <FontAwesomeIcon icon={icon as import('@fortawesome/fontawesome-svg-core').IconProp} />
         ) : (
           label
         )
