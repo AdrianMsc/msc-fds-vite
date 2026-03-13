@@ -10,6 +10,15 @@ import { store } from './redux/store';
 import router from './router';
 import { fetchCsrfToken } from './lib/api';
 
+const envName = import.meta.env.DEV ? 'DEVELOPMENT (Local)' : 'PRODUCTION (Vercel)';
+const envColor = import.meta.env.DEV ? '#3498db' : '#2ecc71';
+
+console.log(
+  `%c MSC Fuel Design System %c ${envName} `,
+  'background: #34495e; color: #fff; border-radius: 3px 0 0 3px; padding: 2px 5px; font-weight: bold;',
+  `background: ${envColor}; color: #fff; border-radius: 0 3px 3px 0; padding: 2px 5px; font-weight: bold;`,
+);
+
 fetchCsrfToken().finally(() => {
   createRoot(document.getElementById('root')!).render(
     <Provider store={store}>
