@@ -3,10 +3,12 @@ import MscButton from '../MscButton';
 import { faExpand, faRefresh, faCompress } from '@fortawesome/free-solid-svg-icons';
 
 interface MscIframeProps {
-  url: string;
+  url?: string;
+  content?: string;
+  title?: string;
 }
 
-const MscIframe = ({ url }: MscIframeProps) => {
+const MscIframe = ({ url, content, title = "Homepage V2" }: MscIframeProps) => {
   const [isFixed, setIsFixed] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -17,7 +19,13 @@ const MscIframe = ({ url }: MscIframeProps) => {
   const handleRefresh = () => {
     const iframe = containerRef.current?.querySelector('iframe');
     if (iframe) {
-      iframe.src = url;
+      if (url) {
+        iframe.src = url;
+      } else if (content) {
+        // If there's content instead of a URL, we can force a re-render or let React handle it.
+        // For now, refreshing the iframe srcDoc simply works by resetting it.
+        iframe.srcdoc = content;
+      }
     }
   };
 
@@ -50,8 +58,9 @@ const MscIframe = ({ url }: MscIframeProps) => {
 
       {!isFixed && <hr className="mb-4" />}
       <iframe
-        title="Homepage V2"
+        title={title}
         src={url}
+        srcDoc={content}
         style={{
           width: '100%',
           height: isFixed ? 'calc(100vh - 60px)' : '100vh',
