@@ -17,7 +17,7 @@ const MscIframe = ({ url }: MscIframeProps) => {
   const handleRefresh = () => {
     const iframe = containerRef.current?.querySelector('iframe');
     if (iframe) {
-      iframe.src = iframe.src;
+      iframe.src = url;
     }
   };
 

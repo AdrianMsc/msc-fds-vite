@@ -1,14 +1,13 @@
 import ComponentLayout from '../../layout/ComponentLayout/ComponentLayout';
 import MscIframe from '../../components/MscIframe/MscIframe';
-
-const HomePage = () => {
+const PdpPage = () => {
   return (
     <>
-      <ComponentLayout name="Slider" description="">
-        <MscIframe url={`${import.meta.env.VITE_API_URL}lab/homepage-v2/`} />
+      <ComponentLayout name="PdpPage" description="">
+        <MscIframe url={`${import.meta.env.VITE_API_URL}lab/pdp-v2/`} />
       </ComponentLayout>
     </>
   );
 };
 
-export default HomePage;
+export default PdpPage;
