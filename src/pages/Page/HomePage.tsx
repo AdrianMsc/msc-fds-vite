@@ -5,7 +5,7 @@ const HomePage = () => {
   return (
     <>
       <ComponentLayout name="Slider" description="">
-        <MscIframe url={`${import.meta.env.VITE_API_URL}/lab/homepage-v2/`} />
+        <MscIframe url={`${import.meta.env.VITE_PAGES_URL}/lab/homepage-v2/`} />
       </ComponentLayout>
     </>
   );
