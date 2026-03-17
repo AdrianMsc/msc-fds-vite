@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import ComponentLayout from '../../layout/ComponentLayout/ComponentLayout';
 import MscIframe from '../../components/MscIframe/MscIframe';
 import { getPdpPageApi } from '../../api/getPages';
+import { api } from '../../lib/api';
 
 const PdpPage = () => {
   const [content, setContent] = useState<string>('');
@@ -10,7 +11,7 @@ const PdpPage = () => {
     const fetchPage = async () => {
       try {
         const html = await getPdpPageApi();
-        const baseUrl = `${import.meta.env.VITE_API_URL}/lab/pdp-v2/`;
+        const baseUrl = `${api.defaults.baseURL}/lab/pdp-v2/`;
         const modifiedHtml = html.replace(
           '<head>',
           `<head><base href="${baseUrl}" />`

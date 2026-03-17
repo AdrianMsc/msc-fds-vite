@@ -1,7 +1,12 @@
 import axios from 'axios';
 
+const isVercel = typeof window !== 'undefined' && window.location.hostname.includes('vercel.app');
+const defaultBaseURL = isVercel 
+  ? 'https://msc-component-status-ws-dev.vercel.app' 
+  : (import.meta.env.VITE_API_URL || '/api');
+
 export const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
+  baseURL: defaultBaseURL,
   withCredentials: true,
 });
 
