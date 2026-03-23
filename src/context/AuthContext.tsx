@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
-import { api } from '../lib/api';
+import { api, setAuthToken } from '../lib/api';
 
 export interface User {
   id: number;
@@ -44,6 +44,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       if (!isAuth0Authenticated) {
         if (isMounted) {
           setUser(null);
+          setAuthToken(null);
           setIsSessionLoading(false);
         }
         return;
@@ -53,6 +54,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       try {
         // 1. Get token from Auth0
         token = await getAccessTokenSilently();
+        setAuthToken(token);
       } catch (tokenError) {
         console.error('[Auth] Step 1 FAILED — getAccessTokenSilently threw:', tokenError);
         if (isMounted) {

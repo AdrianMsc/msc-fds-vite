@@ -119,6 +119,9 @@ const ComponentStatus: React.FC = () => {
     return count + visibleInCategory;
   }, 0);
 
+  const canManageComponents = isAuthenticated && (user?.role === 'admin' || user?.role === 'editor');
+  const canDeleteComponents = isAuthenticated && user?.role === 'admin';
+
   return (
     <main className="relative pb-4 mx-auto container">
       <h1 className="font-bold text-3xl">
@@ -148,7 +151,7 @@ const ComponentStatus: React.FC = () => {
           </li>
         </ul>
 
-        {isAuthenticated && (
+        {canManageComponents && (
           <>
             <button
               ref={firstButtonRef}
@@ -278,7 +281,7 @@ const ComponentStatus: React.FC = () => {
                           </td>
                           <td className="px-6 py-4 text-center">{component.statuses[0].cdn}</td>
                           <td className="px-6 py-4 text-center">{component.comment}</td>
-                          {isAuthenticated && (
+                          {canManageComponents && (
                             <td>
                               <div className="flex place-content-around items-center align-middle">
                                 <button>
@@ -293,9 +296,11 @@ const ComponentStatus: React.FC = () => {
                                     }}
                                   />
                                 </button>
-                                <button onClick={() => handleDelete(component)}>
-                                  <FontAwesomeIcon icon={faTrash} />
-                                </button>
+                                {canDeleteComponents && (
+                                  <button onClick={() => handleDelete(component)}>
+                                    <FontAwesomeIcon icon={faTrash} />
+                                  </button>
+                                )}
                               </div>
                             </td>
                           )}

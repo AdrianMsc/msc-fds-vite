@@ -138,6 +138,7 @@ export const ComponentLayout: React.FC<ComponentLayoutProps> = ({
     [location.pathname],
   );
 
+  const canManageComponents = isAuthenticated && (user?.role === 'admin' || user?.role === 'editor');
   const hasLinks = Boolean(figmaLink || storybookLink);
 
   // 🎬 Event handlers
@@ -182,7 +183,7 @@ export const ComponentLayout: React.FC<ComponentLayoutProps> = ({
                 </div>
               )}
             </span>
-            {isAuthenticated && (
+            {canManageComponents && (
               <button
                 onClick={handleEdit}
                 aria-label="Edit component"
