@@ -54,14 +54,17 @@ const SidebarV2: React.FC = () => {
 
   // 🧪 Atomic Design Configuration
   const ATOMIC_GROUPS: AtomicGroup[] = useMemo(
-    () => [
-      { id: 'atom', title: 'Components', icon: faCog },
-      { id: 'molecule', title: 'Composite Components', icon: faLayerGroup },
-      { id: 'organism', title: 'Interaction Units', icon: faShapes },
-      { id: 'template', title: 'Layout Structures', icon: faColumns },
-      { id: 'page', title: 'View Modules', icon: faFileCode },
-    ],
-    [],
+    () => {
+      const groups: AtomicGroup[] = [
+        { id: 'atom', title: 'Components', icon: faCog },
+        { id: 'molecule', title: 'Composite Components', icon: faLayerGroup },
+        { id: 'organism', title: 'Interaction Units', icon: faShapes },
+        { id: 'template', title: 'Layout Structures', icon: faColumns },
+        { id: 'page', title: 'View Modules', icon: faFileCode },
+      ];
+      return user?.role === 'viewer' ? groups.filter((g) => g.id !== 'page') : groups;
+    },
+    [user?.role],
   );
 
   type GroupedDataType = Record<
