@@ -11,6 +11,11 @@ export const api = axios.create({
 });
 
 let csrfToken: string | null = null;
+let authToken: string | null = null;
+
+export const setAuthToken = (token: string | null) => {
+  authToken = token;
+};
 
 export const fetchCsrfToken = async () => {
   try {
@@ -27,6 +32,13 @@ api.interceptors.request.use((config) => {
       config.headers['X-CSRF-Token'] = csrfToken;
     }
   }
+
+  if (authToken) {
+    if (config.headers) {
+      config.headers.set('Authorization', `Bearer ${authToken}`);
+    }
+  }
+
   return config;
 });
 
