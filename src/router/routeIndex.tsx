@@ -280,22 +280,27 @@ export const routesIndex = [
         element: <TestimonialSectionPage />,
       },
       {
-        path: 'Page',
-        element: <PagePage />,
-      },
-      {
-        path: 'Templates',
-        element: <TemplatesPage />,
-      },
-      {
-        path: 'HomepageV2',
-        element: <HomePageV2 />,
-        errorElement: 'error',
-      },
-      {
-        path: 'PdpV2',
-        element: <PdpPage />,
-        errorElement: 'error',
+        element: <ProtectedRoute allowAccess={(user) => user?.role !== 'viewer'} />,
+        children: [
+          {
+            path: 'Page',
+            element: <PagePage />,
+          },
+          {
+            path: 'Templates',
+            element: <TemplatesPage />,
+          },
+          {
+            path: 'HomepageV2',
+            element: <HomePageV2 />,
+            errorElement: 'error',
+          },
+          {
+            path: 'PdpV2',
+            element: <PdpPage />,
+            errorElement: 'error',
+          },
+        ]
       },
     ],
   },
