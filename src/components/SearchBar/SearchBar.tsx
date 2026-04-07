@@ -10,6 +10,7 @@ import { RootState } from "../../redux/store";
 import easter from "../../assets/easter.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { useAuth } from "../../context/AuthContext";
 
 export default function SearchBar() {
   const [query, setQuery] = useState("");
@@ -18,6 +19,7 @@ export default function SearchBar() {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const componentsApiData = useSelector((state: RootState) => state.components);
   const navigate = useNavigate();
+  const { user } = useAuth();
 
   useEffect(() => {
     const fetchComponents = async () => {
@@ -35,9 +37,19 @@ export default function SearchBar() {
     fetchComponents();
   }, [componentsApiData]);
 
-  const filteredComponents = components.filter((item) =>
-    item.toLowerCase().includes(query.toLowerCase())
-  );
+  const filteredComponents = components.filter((item) => {
+    const isMatch = item.toLowerCase().includes(query.toLowerCase());
+    if (!isMatch) return false;
+    
+    const formattedName = createLinkPage(item);
+    const routeExists = routesIndex[1].children?.some((route) => route.path === formattedName);
+    const navTo = routeExists ? `/docs/${formattedName}` : `/docs/WipComponent/${formattedName}`;
+    
+    if (user?.role !== 'admin' && navTo.includes('/docs/WipComponent/')) {
+      return false;
+    }
+    return true;
+  });
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "ArrowDown") {

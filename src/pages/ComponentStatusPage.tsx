@@ -109,7 +109,7 @@ const ComponentStatus: React.FC = () => {
       const routeExists = routesIndex[1].children?.some((route) => route.path === formattedName);
       const navTo = routeExists ? `/docs/${formattedName}` : `/docs/WipComponent/${formattedName}`;
 
-      if (!isAuthenticated && navTo.includes('/docs/WipComponent/')) {
+      if (user?.role !== 'admin' && navTo.includes('/docs/WipComponent/')) {
         return innerCount;
       }
 
@@ -242,7 +242,7 @@ const ComponentStatus: React.FC = () => {
                         ? `/docs/${formattedName}`
                         : `/docs/WipComponent/${formattedName}`;
 
-                      if (!isAuthenticated && navTo.includes('/docs/WipComponent/')) {
+                      if (user?.role !== 'admin' && navTo.includes('/docs/WipComponent/')) {
                         return null;
                       }
 
@@ -250,7 +250,7 @@ const ComponentStatus: React.FC = () => {
                         <tr
                           key={idx + component.name}
                           className={`${idx % 2 === 0 ? 'bg-white' : 'bg-slate-100'} ${
-                            !isAuthenticated && navTo.includes('/docs/WipComponent/')
+                            user?.role !== 'admin' && navTo.includes('/docs/WipComponent/')
                           }`}
                         >
                           <th

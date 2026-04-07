@@ -35,7 +35,6 @@ import SkeletonMenu from './SkeletonMenu';
 const SidebarV2: React.FC = () => {
   const dispatch = useDispatch();
   const { user } = useAuth();
-  const isAuthenticated = !!user;
 
   const componentsApiData = useSelector((state: RootState) => state.components);
 
@@ -165,7 +164,7 @@ const SidebarV2: React.FC = () => {
     const routeExists = routesIndex[1]?.children?.some((route) => route.path === formattedName);
     const navTo = routeExists ? `/docs/${formattedName}` : `/docs/WipComponent/${formattedName}`;
 
-    if (!isAuthenticated && navTo.includes('/docs/WipComponent/')) {
+    if (user?.role !== 'admin' && navTo.includes('/docs/WipComponent/')) {
       return null;
     }
 

@@ -76,8 +76,9 @@ export const routesIndex = [
         element: <LoginPage />,
       },
       {
-        path: 'WipComponent/:component',
-        element: <WipComponent />,
+        path: 'WipComponent',
+        element: <ProtectedRoute allowAccess={(user) => user?.role === 'admin'} />,
+        children: [{ path: ':component', element: <WipComponent /> }],
       },
       {
         index: true,

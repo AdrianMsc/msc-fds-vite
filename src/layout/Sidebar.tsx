@@ -19,7 +19,6 @@ const Sidebar: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user } = useAuth();
-  const isAuthenticated = !!user;
 
   const componentsApiData = useSelector((state: RootState) => state.components);
 
@@ -51,7 +50,7 @@ const Sidebar: React.FC = () => {
           ? `/docs/${formattedName}`
           : `/docs/WipComponent/${formattedName}`;
 
-        if (!isAuthenticated && navTo.includes('/docs/WipComponent/')) {
+        if (user?.role !== 'admin' && navTo.includes('/docs/WipComponent/')) {
           return null;
         }
 
