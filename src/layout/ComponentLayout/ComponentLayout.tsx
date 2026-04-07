@@ -1,4 +1,4 @@
-import React, { ReactNode, useState, useCallback, useMemo } from 'react';
+import React, { ReactNode, useState, useCallback, useMemo, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -21,10 +21,10 @@ import {
 import MscStatusComponentBar from '../../components/MscStatusComponentBar/MscStatusComponentBar';
 import Links from '../../components/Links/Links';
 import ModalForm from '../../components/ModalForm';
-import { IComponentApi } from '../../interfaces/component.interface';
+import { IComponentApi, IVersionApi } from '../../interfaces/component.interface';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
-import MscTypographyPageV1 from '../../pages/TypographyPage/MscTypographyPageV1';
+import { getComponentVersionsApi } from '../../api/componentVersions';
 
 interface ComponentLayoutProps {
   id?: number;
@@ -112,7 +112,9 @@ export const ComponentLayout: React.FC<ComponentLayoutProps> = ({
   // 🏷️ State
   const [modalVisibility, setModalVisibility] = useState<'' | 'hidden'>(MODAL_VISIBILITY.HIDE);
   const [selectedRecord, setSelectedRecord] = useState<IComponentApi>(DEFAULT_VALUES);
-  const [currentVersion, setCurrentVersion] = useState('V2');
+  const [versions, setVersions] = useState<IVersionApi[]>([]);
+  const [selectedVersionId, setSelectedVersionId] = useState<number | null>(null);
+  const [isLoadingVersions, setIsLoadingVersions] = useState(false);
 
   // 🧠 Redux
   const reduxComponent = useSelector((state: RootState) => state.currentComponent.currentComponent);
@@ -155,9 +157,37 @@ export const ComponentLayout: React.FC<ComponentLayoutProps> = ({
     }
   }, [id, componentData, toggleModal]);
 
-  const handleVersionChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedVersion = event.target.value;
-    setCurrentVersion(selectedVersion);
+  // Load versions when component ID changes
+  useEffect(() => {
+    const loadVersions = async () => {
+      if (!id) return;
+      
+      setIsLoadingVersions(true);
+      try {
+        const versionsData = await getComponentVersionsApi(id);
+        setVersions(versionsData);
+        
+        // Find the latest version
+        const latestVersion = versionsData.find((v: IVersionApi) => v.is_latest);
+        if (latestVersion) {
+          setSelectedVersionId(latestVersion.id);
+        }
+      } catch (error) {
+        console.error('Error loading versions:', error);
+      } finally {
+        setIsLoadingVersions(false);
+      }
+    };
+
+    loadVersions();
+  }, [id]);
+
+  const handleVersionChange = async (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const versionId = Number(event.target.value);
+    setSelectedVersionId(versionId);
+    
+    // Optionally reload component data for the selected version
+    // This would require updating the component data in Redux or passing it down
   };
 
   return (
@@ -207,23 +237,31 @@ export const ComponentLayout: React.FC<ComponentLayoutProps> = ({
           <p className="mb-4">{description || "This component doesn't have any description yet"}</p>
         </div>
 
-        <select
-          className="px-3 py-1 bg-white justify-center rounded-md border border-monochromes-grey_xlight hidden"
-          onChange={handleVersionChange}
-        >
-          <option
-            className="w-full flex items-center justify-center text-sm text-monochromes-grey_light hover:bg-monochromes-grey_xlight hover:text-black transition-all cursor-pointer"
-            value="V2"
-          >
-            v2
-          </option>
-          <option
-            className="w-full flex items-center justify-center text-sm text-monochromes-grey_light hover:bg-monochromes-grey_xlight hover:text-black transition-all cursor-pointer"
-            value="V1"
-          >
-            v1
-          </option>
-        </select>
+        {/* Version Selector - Show when there are multiple versions */}
+        {versions.length > 0 && (
+          <div className="flex flex-col items-end gap-2">
+            <label htmlFor="version-selector" className="text-xs font-bold text-gray-500">
+              Version
+            </label>
+            <select
+              id="version-selector"
+              className="px-3 py-1 bg-white justify-center rounded-md border border-monochromes-grey_xlight text-sm"
+              value={selectedVersionId || ''}
+              onChange={handleVersionChange}
+              disabled={isLoadingVersions}
+            >
+              {isLoadingVersions ? (
+                <option value="">Loading...</option>
+              ) : (
+                versions.map((version: IVersionApi) => (
+                  <option key={version.id} value={version.id}>
+                    {version.version} {version.is_latest ? '(Latest)' : ''}
+                  </option>
+                ))
+              )}
+            </select>
+          </div>
+        )}
       </header>
 
       <ModalForm
@@ -239,17 +277,13 @@ export const ComponentLayout: React.FC<ComponentLayoutProps> = ({
 
       <section className="pb-4">
         {children ? (
-          currentVersion === 'V2' ? (
-            <div key={currentVersion}>{children}</div>
-          ) : (
-            <MscTypographyPageV1 />
-          )
+          <div>{children}</div>
         ) : image ? (
           <img src={image} alt={`${name} component visualization`} />
-        ) : currentVersion === 'V2' ? (
-          <div key={currentVersion}>{children}</div>
         ) : (
-          <MscTypographyPageV1 />
+          <div className="text-gray-400 text-center py-10">
+            No preview available for this component
+          </div>
         )}
       </section>
     </main>

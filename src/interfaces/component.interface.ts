@@ -5,6 +5,14 @@ export interface IStatusApi {
   cdn: string;
 }
 
+export interface IVersionApi {
+  id: number;
+  component_id: number;
+  version: string;
+  is_latest: boolean;
+  created_at: string;
+}
+
 export interface IComponentApi {
   id: number;
   name: string;
@@ -18,6 +26,9 @@ export interface IComponentApi {
   storybookLink?: string;
   image?: string;
   atomicType: string | null;
+  version?: string;
+  versionId?: number;
+  isLatest?: boolean;
 }
 
 export interface ICategoryApi {
@@ -39,4 +50,7 @@ export interface IComponentForm {
   storybookLink?: string;
   image?: File | string | null;
   atomicType: string | null;
+  isNewVersion?: boolean;
+  parentComponentId?: number | null;
+  version?: string;
 }

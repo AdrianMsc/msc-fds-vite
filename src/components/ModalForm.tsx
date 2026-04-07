@@ -11,6 +11,7 @@ import { addToast, removeToast } from '../redux/slices/toastSlice';
 import { getNavLinkTo } from '../utils/getNavLinkTo';
 import { isValidURL } from '../utils/urlValidator';
 import MscSpinner from './MscSpinner';
+import { getComponentListApi } from '../api/getComponentList';
 
 interface ModalFormProps {
 	triggerModal: string;
@@ -71,7 +72,10 @@ export const mapComponentToFormData = (component: IComponentApi): IFormState => 
 		guidelines: component.statuses[0].guidelines,
 		storybook: component.statuses[0].storybook,
 		figmaLink: component.figmaLink || '',
-		storybookLink: component.storybookLink || ''
+		storybookLink: component.storybookLink || '',
+		isNewVersion: false,
+		parentComponentId: null,
+		version: component.version || '1.0.0'
 	};
 };
 
@@ -91,6 +95,30 @@ const ModalForm: React.FC<ModalFormProps> = ({
 	const [fadeIn, setFadeIn] = useState(false);
 	const [isEditingImage, setIsEditingImage] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
+	const [parentComponentOptions, setParentComponentOptions] = useState<Array<{ value: string; label: string }>>([]);
+
+	// Load parent component options when isNewVersion is checked
+	useEffect(() => {
+		const loadParentComponents = async () => {
+			if (!formState.isNewVersion) {
+				setParentComponentOptions([]);
+				return;
+			}
+			
+			try {
+				const components = await getComponentListApi();
+				const options = components.map((c: { name: string; id: number }) => ({
+					value: String(c.id),
+					label: c.name
+				}));
+				setParentComponentOptions(options);
+			} catch (error) {
+				console.error('Error loading parent components:', error);
+			}
+		};
+
+		loadParentComponents();
+	}, [formState.isNewVersion]);
 
 	useEffect(() => {
 		if (triggerModal !== 'hidden') {
@@ -312,6 +340,76 @@ const ModalForm: React.FC<ModalFormProps> = ({
 									)}
 								</div>
 							</div>
+
+							{/* Version Section - Only show for new components */}
+							{formState.id === '' && (
+								<div className="flex flex-col gap-3 w-full sm:w-[600px] border p-3 rounded">
+									<div className="flex items-center gap-2">
+										<input
+											type="checkbox"
+											id="isNewVersion"
+											name="isNewVersion"
+											checked={formState.isNewVersion}
+											onChange={(e) => {
+												dispatch(updateField({
+													field: 'isNewVersion',
+													value: e.target.checked
+												}));
+											}}
+											className="w-4 h-4"
+										/>
+										<label htmlFor="isNewVersion" className="font-bold text-sm">
+											Is this a new version of an existing component?
+										</label>
+									</div>
+									
+									{/* Version input - show when checkbox is checked */}
+									{formState.isNewVersion && (
+										<div className="flex flex-col gap-3">
+											<div className="flex flex-col gap-1">
+												<label htmlFor="parentComponentId" className="text-sm font-medium">
+													Select Parent Component
+												</label>
+												<select
+													name="parentComponentId"
+													className="msc-input !p-2"
+													value={formState.parentComponentId || ''}
+													onChange={(e) => {
+														dispatch(updateField({
+															field: 'parentComponentId',
+															value: e.target.value ? Number(e.target.value) : null
+														}));
+													}}
+												>
+													<option value="">-- Select a component --</option>
+													{parentComponentOptions.map((option) => (
+														<option key={option.value} value={option.value}>
+															{option.label}
+														</option>
+													))}
+												</select>
+											</div>
+											
+											<div className="flex flex-col gap-1">
+												<label htmlFor="version" className="text-sm font-medium">
+													Version Number
+												</label>
+												<input
+													type="text"
+													name="version"
+													value={formState.version}
+													onChange={handleChange}
+													placeholder="e.g., 1.0.0, 2.0.0"
+													className="msc-input !w-full"
+												/>
+												<small className="text-gray-500">
+													Enter the version number for this component version
+												</small>
+											</div>
+										</div>
+									)}
+								</div>
+							)}
 
 							{/* Guidelines and Figma Row */}
 							<div className="flex flex-col sm:flex-row gap-2 w-full sm:w-[600px]">

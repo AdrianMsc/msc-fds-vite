@@ -15,6 +15,9 @@ export interface IFormState {
 	description?: string;
 	image?: File | string | null;
 	atomicType: string | null;
+	isNewVersion: boolean;
+	parentComponentId: number | null;
+	version: string;
 }
 
 const initialState: IFormState = {
@@ -30,20 +33,29 @@ const initialState: IFormState = {
 	comment: '',
 	description: '',
 	image: null,
-	atomicType: ''
+	atomicType: '',
+	isNewVersion: false,
+	parentComponentId: null,
+	version: '1.0.0'
 };
 
 const formSlice = createSlice({
 	name: 'form',
 	initialState,
 	reducers: {
-		updateField: (state, action: PayloadAction<{ field: keyof IFormState; value: string | File | null }>) => {
+		updateField: (state, action: PayloadAction<{ field: keyof IFormState; value: string | File | null | boolean | number }>) => {
 			const { field, value } = action.payload;
 			if (field === 'image') {
 				state.image = value as File | null;
 			} else if (field === 'atomicType') {
 				// Handle both null and string for atomicType
 				state.atomicType = (value as string | null) || null;
+			} else if (field === 'isNewVersion') {
+				state.isNewVersion = value as boolean;
+			} else if (field === 'parentComponentId') {
+				state.parentComponentId = value as number | null;
+			} else if (field === 'version') {
+				state.version = value as string;
 			} else {
 				state[field] = value as string;
 			}
@@ -63,7 +75,10 @@ const formSlice = createSlice({
 				comment: action.payload.comment,
 				description: action.payload.description || '',
 				image: action.payload.image || null,
-				atomicType: action.payload.atomicType || null
+				atomicType: action.payload.atomicType || null,
+				isNewVersion: action.payload.isNewVersion || false,
+				parentComponentId: action.payload.parentComponentId ?? null,
+				version: action.payload.version || '1.0.0'
 			};
 		},
 		resetForm: () => initialState

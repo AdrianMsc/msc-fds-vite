@@ -66,6 +66,14 @@ The frontend requires the following variables in `.env`:
 - `VITE_AUTH0_CLIENT_ID`: Your Auth0 client ID.
 - `VITE_AUTH0_AUDIENCE`: Your Auth0 API identifier.
 
+## 🧩 Component Versioning
+
+The Fuel Design System supports **component versioning**:
+
+- **Creating a new component version**: In the component creation modal, check "Is this a new version of an existing component?" to link it to an existing component with a specific version number.
+- **Version selector**: On each component's detail page, a dropdown allows switching between available versions.
+- **Version format**: Numeric semantic versioning (e.g., `1.0.0`, `2.0.0`, `1.5.0`).
+
 ## 🤝 Support and Feedback
 
 If you encounter any issues, please reach out to the development team or open an issue in the repository.
