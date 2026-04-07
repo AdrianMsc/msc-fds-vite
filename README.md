@@ -48,6 +48,15 @@ The application will be accessible at [http://localhost:5173](http://localhost:5
 - **`npm run tw-build`**: Watches and builds Tailwind CSS for the main app.
 - **`npm run tw-build:cdn`**: Watches and builds Tailwind CSS for CDN usage.
 
+## 📜 Component History (Admin)
+
+The docs app includes an admin-only page to inspect component CRUD activity:
+
+- Route: `/docs/ComponentHistory`
+- Visibility: only users with `role === 'admin'`
+- Data source: backend endpoint `GET /components/history`
+- Features: filtering by action/component/date range, pagination, and feedback notifications for loading/error/reset flows
+
 ## 🔑 Environment Variables
 
 The frontend requires the following variables in `.env`:
