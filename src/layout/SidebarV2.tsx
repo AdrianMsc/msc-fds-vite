@@ -371,6 +371,17 @@ const SidebarV2: React.FC = () => {
         >
           Playground
         </NavLink>
+        {user?.role === 'admin' && (
+          <NavLink
+            to="/docs/ComponentHistory"
+            onClick={toggleSidebar}
+            className={({ isActive }) =>
+              `font-medium hover:underline ${isActive ? 'text-black' : 'text-gray-900'}`
+            }
+          >
+            Component History
+          </NavLink>
+        )}
         <span className="text-gray-900 font-medium cursor-not-allowed opacity-75">Team</span>
         <span className="text-gray-900 font-medium cursor-not-allowed opacity-75">Contact</span>
       </div>

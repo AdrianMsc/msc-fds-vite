@@ -15,7 +15,10 @@ Before you begin, ensure that the following are installed on your system:
 
 ### Installation
 
-1. **Clone the Repository**
+1. **Navigate to the Repository**
+   ```bash
+   cd fds-dev-front
+   ```
 2. **Install Dependencies**
    ```bash
    npm install
@@ -25,7 +28,7 @@ Before you begin, ensure that the following are installed on your system:
    ```bash
    cp .env.example .env
    ```
-   Ensure `VITE_API_URL` is set to `/api` to utilize the local Vite proxy or Vercel `vercel.json` rewrites. Update Auth0 credentials as needed.
+   Ensure `VITE_API_URL` is set to `http://localhost:4242` for local development. Update Auth0 credentials as needed.
 
 ### Running the Application
 
@@ -44,6 +47,15 @@ The application will be accessible at [http://localhost:5173](http://localhost:5
 - **`npm run lint`**: Runs ESLint to check for code issues.
 - **`npm run tw-build`**: Watches and builds Tailwind CSS for the main app.
 - **`npm run tw-build:cdn`**: Watches and builds Tailwind CSS for CDN usage.
+
+## 📜 Component History (Admin)
+
+The docs app includes an admin-only page to inspect component CRUD activity:
+
+- Route: `/docs/ComponentHistory`
+- Visibility: only users with `role === 'admin'`
+- Data source: backend endpoint `GET /components/history`
+- Features: filtering by action/component/date range, pagination, and feedback notifications for loading/error/reset flows
 
 ## 🔑 Environment Variables
 

@@ -52,6 +52,7 @@ import SimilarItemsPage from '../pages/Organism/SimilarItemsPage';
 
 import PagePage from '../pages/Page/PagePage';
 import TemplatesPage from '../pages/Templates/TemplatesPage';
+import ComponentHistoryPage from '../pages/ComponentHistory/ComponentHistory';
 import BadgePage from '../pages/Atom/BadgePage';
 import RatingPage from '../pages/Atom/RatingPage';
 import SpecificationsTablePage from '../pages/Organism/SpecificationsTablePage';
@@ -226,6 +227,11 @@ export const routesIndex = [
         path: 'ComponentTester',
         element: <ProtectedRoute allowAccess={(user) => user?.role === 'admin'} />,
         children: [{ index: true, element: <ComponentTesterPage /> }],
+      },
+      {
+        path: 'ComponentHistory',
+        element: <ProtectedRoute allowAccess={(user) => user?.role === 'admin'} />,
+        children: [{ index: true, element: <ComponentHistoryPage /> }],
       },
       {
         path: 'ChangeLog',
