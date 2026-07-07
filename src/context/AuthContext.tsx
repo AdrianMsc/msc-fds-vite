@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
-import { api, setAuthToken } from '../lib/api';
+import { api, setAuthToken, setRefreshTokenFn } from '../lib/api';
 
 export interface User {
   id: number;
@@ -40,8 +40,19 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       // If Auth0 is still loading, wait.
       if (isAuth0Loading) return;
 
-      // If Auth0 says we are not logged in, ensure we clear local state
+      // If Auth0 says we are not logged in, check if backend session cookie is still valid
       if (!isAuth0Authenticated) {
+        try {
+          const meResponse = await api.get('/auth/me');
+          if (meResponse.data.authenticated && isMounted) {
+            setUser(meResponse.data.user);
+            setAuthToken(meResponse.data.csrfToken || null);
+            setIsSessionLoading(false);
+            return;
+          }
+        } catch {
+          // No valid backend session — clear state below
+        }
         if (isMounted) {
           setUser(null);
           setAuthToken(null);
@@ -55,6 +66,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         // 1. Get token from Auth0
         token = await getAccessTokenSilently();
         setAuthToken(token);
+        setRefreshTokenFn(getAccessTokenSilently);
       } catch (tokenError) {
         console.error('[Auth] Step 1 FAILED — getAccessTokenSilently threw:', tokenError);
         if (isMounted) {

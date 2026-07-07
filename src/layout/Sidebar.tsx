@@ -33,7 +33,7 @@ import { getNavLinkTo } from '../utils/getNavLinkTo';
 import { setCurrentComponent } from '../redux/slices/currentComponentSlice';
 import SkeletonMenu from './SkeletonMenu';
 
-const SidebarV2: React.FC = () => {
+const Sidebar: React.FC = () => {
   const dispatch = useDispatch();
   const { user } = useAuth();
 
@@ -352,6 +352,14 @@ const SidebarV2: React.FC = () => {
         >
           Storybook
         </a>
+        <a
+          href="https://ds-blog-ten.vercel.app/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-gray-900 font-medium hover:text-black hover:underline"
+        >
+          Release Notes
+        </a>
         <NavLink
           to="/docs/ChangeLog"
           onClick={toggleSidebar}
@@ -359,7 +367,7 @@ const SidebarV2: React.FC = () => {
             `font-medium hover:underline ${isActive ? 'text-black' : 'text-gray-900'}`
           }
         >
-          Release Notes
+          Changelog
         </NavLink>
 
         <NavLink
@@ -398,4 +406,4 @@ const SidebarV2: React.FC = () => {
   );
 };
 
-export default SidebarV2;
+export default Sidebar;

@@ -17,6 +17,12 @@ export const setAuthToken = (token: string | null) => {
   authToken = token;
 };
 
+let refreshTokenFn: (() => Promise<string>) | null = null;
+
+export const setRefreshTokenFn = (fn: () => Promise<string>) => {
+  refreshTokenFn = fn;
+};
+
 export const fetchCsrfToken = async () => {
   try {
     const res = await api.get('/csrf-token'); // Assuming backend provides this
@@ -44,11 +50,20 @@ api.interceptors.request.use((config) => {
 
 api.interceptors.response.use(
   (response) => response,
-  (error) => {
-    // Dispatch event on 401 to trigger logout or state clear, except during token exchange
+  async (error) => {
     if (error.response?.status === 401 && error.config?.url !== '/auth/login-frontend') {
-      console.warn('Session expired or unauthorized');
-      window.dispatchEvent(new Event('auth-unauthorized'));
+      if (refreshTokenFn) {
+        try {
+          const newToken = await refreshTokenFn();
+          setAuthToken(newToken);
+          error.config.headers.Authorization = `Bearer ${newToken}`;
+          return api(error.config);
+        } catch {
+          window.dispatchEvent(new Event('auth-unauthorized'));
+        }
+      } else {
+        window.dispatchEvent(new Event('auth-unauthorized'));
+      }
     }
     return Promise.reject(error);
   },

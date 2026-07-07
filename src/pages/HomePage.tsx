@@ -60,7 +60,7 @@ export default function Home() {
             <Link to="/docs">Templates</Link>
           </li>
           <li>
-            <Link to="/docs">Release Notes</Link>
+            <a href="https://ds-blog-ten.vercel.app/" target="_blank" rel="noopener noreferrer">Release Notes</a>
           </li>
           <li>
             {isAuthenticated ? (
