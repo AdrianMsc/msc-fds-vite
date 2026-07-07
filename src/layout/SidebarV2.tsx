@@ -53,19 +53,16 @@ const SidebarV2: React.FC = () => {
   }
 
   // 🧪 Atomic Design Configuration
-  const ATOMIC_GROUPS: AtomicGroup[] = useMemo(
-    () => {
-      const groups: AtomicGroup[] = [
-        { id: 'atom', title: 'Components', icon: faCog },
-        { id: 'molecule', title: 'Composite Components', icon: faLayerGroup },
-        { id: 'organism', title: 'Interaction Units', icon: faShapes },
-        { id: 'template', title: 'Layout Structures', icon: faColumns },
-        { id: 'page', title: 'View Modules', icon: faFileCode },
-      ];
-      return user?.role === 'viewer' ? groups.filter((g) => g.id !== 'page') : groups;
-    },
-    [user?.role],
-  );
+  const ATOMIC_GROUPS: AtomicGroup[] = useMemo(() => {
+    const groups: AtomicGroup[] = [
+      { id: 'atom', title: 'Components', icon: faCog },
+      { id: 'molecule', title: 'Composite Comp.', icon: faLayerGroup },
+      { id: 'organism', title: 'Interaction Units', icon: faShapes },
+      { id: 'template', title: 'Layout Structures', icon: faColumns },
+      { id: 'page', title: 'View Modules', icon: faFileCode },
+    ];
+    return user?.role === 'viewer' ? groups.filter((g) => g.id !== 'page') : groups;
+  }, [user?.role]);
 
   type GroupedDataType = Record<
     string,
@@ -171,10 +168,7 @@ const SidebarV2: React.FC = () => {
       return null;
     }
 
-    if (
-      routeExists &&
-      matchedRoute?.element?.type === ProtectedRoute
-    ) {
+    if (routeExists && matchedRoute?.element?.type === ProtectedRoute) {
       const p = matchedRoute.element.props as { allowAccess?: (u: User | null) => boolean };
       if (!user || !(p.allowAccess?.(user) ?? !!user)) {
         return null;
@@ -286,7 +280,10 @@ const SidebarV2: React.FC = () => {
       <SidebarGroup title="Start Here" icon={faHome} groupId="Start Here" lineStyle="solid">
         {['GettingStarted', 'ComponentStatus'].map((page) => (
           <div key={page} className="mb-2 last:mb-0">
-            {renderLink(page, page === 'GettingStarted' ? '/docs' : `/docs/${createLinkPage(page)}`)}
+            {renderLink(
+              page,
+              page === 'GettingStarted' ? '/docs' : `/docs/${createLinkPage(page)}`,
+            )}
           </div>
         ))}
       </SidebarGroup>
