@@ -64,12 +64,12 @@ export const routesIndex = [
   {
     path: '/',
     element: <Home />,
-    errorElement: 'error',
+    errorElement: <MscErrorPage />,
   },
   {
     path: '/docs',
     element: <DocsLayout />,
-    errorElement: 'error',
+    errorElement: <MscErrorPage />,
     children: [
       {
         path: 'login-page',
@@ -82,13 +82,11 @@ export const routesIndex = [
       },
       {
         index: true,
-        path: 'Notifications',
-        element: <NotificationsPage />,
+        element: <GettingStarted />,
       },
       {
-        index: true,
-        path: 'GettingStarted',
-        element: <GettingStarted />,
+        path: 'Notifications',
+        element: <NotificationsPage />,
       },
       {
         path: 'ComponentStatus',
@@ -300,12 +298,12 @@ export const routesIndex = [
           {
             path: 'HomepageV2',
             element: <HomePageV2 />,
-            errorElement: 'error',
+            errorElement: <MscErrorPage />,
           },
           {
             path: 'PdpV2',
             element: <PdpPage />,
-            errorElement: 'error',
+            errorElement: <MscErrorPage />,
           },
         ]
       },

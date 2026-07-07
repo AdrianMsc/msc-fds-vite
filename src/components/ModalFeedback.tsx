@@ -20,8 +20,9 @@ const ModalFeedback: React.FC<ModalFeedbackProps> = ({ showModal, toggleModal })
 
 	useEffect(() => {
 		if (showModal !== 'hidden') {
-			setIsVisible(true); // Show modal
-			setTimeout(() => setFadeIn(true), 50); // Apply fade-in
+			setIsVisible(true);
+			const timer = setTimeout(() => setFadeIn(true), 50);
+			return () => clearTimeout(timer);
 		}
 	}, [showModal]);
 

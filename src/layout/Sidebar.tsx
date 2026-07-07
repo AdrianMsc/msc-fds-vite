@@ -12,7 +12,8 @@ import chevron from '../assets/chevron-down.svg';
 import { createLinkPage } from '../utils/createLinkPage';
 import { getNavLinkTo } from '../utils/getNavLinkTo';
 import { setCurrentComponent } from '../redux/slices/currentComponentSlice';
-import { useAuth } from '../context/AuthContext';
+import { useAuth, User } from '../context/AuthContext';
+import ProtectedRoute from '../components/ProtectedRoute';
 import SkeletonMenu from './SkeletonMenu';
 
 const Sidebar: React.FC = () => {
@@ -45,13 +46,24 @@ const Sidebar: React.FC = () => {
       .sort((a, b) => a.name.localeCompare(b.name))
       .map((comp, idx) => {
         const formattedName = createLinkPage(comp.name);
-        const routeExists = routesIndex[1].children?.some((route) => route.path === formattedName);
+        const matchedRoute = routesIndex[1].children?.find((route) => route.path === formattedName);
+        const routeExists = !!matchedRoute;
         const navTo = routeExists
           ? `/docs/${formattedName}`
           : `/docs/WipComponent/${formattedName}`;
 
         if (user?.role !== 'admin' && navTo.includes('/docs/WipComponent/')) {
           return null;
+        }
+
+        if (
+          routeExists &&
+          matchedRoute?.element?.type === ProtectedRoute
+        ) {
+          const p = matchedRoute.element.props as { allowAccess?: (u: User | null) => boolean };
+          if (!user || !(p.allowAccess?.(user) ?? !!user)) {
+            return null;
+          }
         }
 
         return (
@@ -95,8 +107,6 @@ const Sidebar: React.FC = () => {
       </React.Fragment>
     ));
 
-  console.log(renderCategorySection());
-
   return (
     <aside
       className={`
@@ -113,7 +123,8 @@ const Sidebar: React.FC = () => {
       {['GettingStarted', 'ComponentStatus'].map((page) => (
         <NavLink
           key={page}
-          to={`/docs/${createLinkPage(page)}`}
+          end={page === 'GettingStarted'}
+          to={page === 'GettingStarted' ? '/docs' : `/docs/${createLinkPage(page)}`}
           onClick={toggleSidebar}
           className={({ isActive }) =>
             isActive

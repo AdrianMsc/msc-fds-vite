@@ -159,27 +159,41 @@ export const ComponentLayout: React.FC<ComponentLayoutProps> = ({
 
   // Load versions when component ID changes
   useEffect(() => {
+    if (!id) return;
+    
+    const abortController = new AbortController();
+    let isCancelled = false;
+
     const loadVersions = async () => {
-      if (!id) return;
-      
       setIsLoadingVersions(true);
       try {
         const versionsData = await getComponentVersionsApi(id);
-        setVersions(versionsData);
-        
-        // Find the latest version
-        const latestVersion = versionsData.find((v: IVersionApi) => v.is_latest);
-        if (latestVersion) {
-          setSelectedVersionId(latestVersion.id);
+        if (!isCancelled) {
+          setVersions(versionsData);
+          
+          // Find the latest version
+          const latestVersion = versionsData.find((v: IVersionApi) => v.is_latest);
+          if (latestVersion) {
+            setSelectedVersionId(latestVersion.id);
+          }
         }
       } catch (error) {
-        console.error('Error loading versions:', error);
+        if (!isCancelled) {
+          console.error('Error loading versions:', error);
+        }
       } finally {
-        setIsLoadingVersions(false);
+        if (!isCancelled) {
+          setIsLoadingVersions(false);
+        }
       }
     };
 
     loadVersions();
+
+    return () => {
+      isCancelled = true;
+      abortController.abort();
+    };
   }, [id]);
 
   const handleVersionChange = async (event: React.ChangeEvent<HTMLSelectElement>) => {

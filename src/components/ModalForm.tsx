@@ -123,7 +123,8 @@ const ModalForm: React.FC<ModalFormProps> = ({
 	useEffect(() => {
 		if (triggerModal !== 'hidden') {
 			setIsVisible(true);
-			setTimeout(() => setFadeIn(true), 50);
+			const timer = setTimeout(() => setFadeIn(true), 50);
+			return () => clearTimeout(timer);
 		}
 	}, [triggerModal]);
 

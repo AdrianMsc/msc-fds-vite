@@ -22,10 +22,13 @@ function saveToLocalStorage(state: unknown) {
 
 const store = configureStore({
   reducer: rootReducer,
-  preloadedState: loadFromLocalStorage(), // ← Se hidrata aquí
+  preloadedState: loadFromLocalStorage(),
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
-      serializableCheck: false,
+      serializableCheck: {
+        ignoredActions: ['form/updateField'],
+        ignoredPaths: ['form.image'],
+      },
     }),
 });
 

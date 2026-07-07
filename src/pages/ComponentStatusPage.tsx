@@ -205,6 +205,7 @@ const ComponentStatus: React.FC = () => {
               <table className="w-full text-sm text-left rtl:text-right text-gray-500">
                 <thead className="text-xs text-gray-700 bg-gray-50 text-center">
                   <tr>
+                    <th scope="col" className="px-2 py-3 w-8">#</th>
                     <th scope="col" className="px-6 py-3 w-[20%]">
                       Component
                     </th>
@@ -231,47 +232,54 @@ const ComponentStatus: React.FC = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {[...category.components]
-                    ?.sort((a, b) => a.name.localeCompare(b.name))
-                    .map((component, idx) => {
-                      const formattedName = createLinkPage(component.name);
-                      const routeExists = routesIndex[1].children?.some(
-                        (route) => route.path === formattedName,
-                      );
-                      const navTo = routeExists
-                        ? `/docs/${formattedName}`
-                        : `/docs/WipComponent/${formattedName}`;
+                  {(() => {
+                    let seq = 0;
+                    return [...category.components]
+                      ?.sort((a, b) => a.name.localeCompare(b.name))
+                      .map((component, idx) => {
+                        const formattedName = createLinkPage(component.name);
+                        const routeExists = routesIndex[1].children?.some(
+                          (route) => route.path === formattedName,
+                        );
+                        const navTo = routeExists
+                          ? `/docs/${formattedName}`
+                          : `/docs/WipComponent/${formattedName}`;
 
-                      if (user?.role !== 'admin' && navTo.includes('/docs/WipComponent/')) {
-                        return null;
-                      }
+                        if (user?.role !== 'admin' && navTo.includes('/docs/WipComponent/')) {
+                          return null;
+                        }
 
-                      return (
-                        <tr
-                          key={idx + component.name}
-                          className={`${idx % 2 === 0 ? 'bg-white' : 'bg-slate-100'} ${
-                            user?.role !== 'admin' && navTo.includes('/docs/WipComponent/')
-                          }`}
-                        >
-                          <th
-                            scope="row"
-                            className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap text-center"
+                        seq++;
+
+                        return (
+                          <tr
+                            key={idx + component.name}
+                            className={`${idx % 2 === 0 ? 'bg-white' : 'bg-slate-100'} ${
+                              user?.role !== 'admin' && navTo.includes('/docs/WipComponent/')
+                            }`}
                           >
-                            <NavLink
-                              key={idx}
-                              className={({ isActive }) =>
-                                isActive ? 'font-bold text-primary-blue ml-5' : 'font-bold ml-5'
-                              }
-                              to={getNavLinkTo(component)}
-                              onClick={(event) => {
-                                event.preventDefault();
-                                dispatch(setCurrentComponent(component));
-                                navigate(navTo);
-                              }}
+                            <td className="px-2 py-4 text-center text-gray-400 text-xs w-8">
+                              {seq}
+                            </td>
+                            <th
+                              scope="row"
+                              className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap text-center"
                             >
-                              {formatComponentName(component.name)}
-                            </NavLink>
-                          </th>
+                              <NavLink
+                                key={idx}
+                                className={({ isActive }) =>
+                                  isActive ? 'font-bold text-primary-blue ml-5' : 'font-bold ml-5'
+                                }
+                                to={getNavLinkTo(component)}
+                                onClick={(event) => {
+                                  event.preventDefault();
+                                  dispatch(setCurrentComponent(component));
+                                  navigate(navTo);
+                                }}
+                              >
+                                {formatComponentName(component.name)}
+                              </NavLink>
+                            </th>
                           <td className="px-6 py-4 text-center">
                             {component.statuses[0].guidelines}
                           </td>
@@ -306,7 +314,8 @@ const ComponentStatus: React.FC = () => {
                           )}
                         </tr>
                       );
-                    })}
+                    });
+                  })()}
                 </tbody>
               </table>
             </div>

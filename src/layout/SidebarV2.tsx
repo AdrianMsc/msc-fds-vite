@@ -1,7 +1,8 @@
 import React, { useContext, useEffect, useState, useMemo } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { useAuth } from '../context/AuthContext';
+import { useAuth, User } from '../context/AuthContext';
+import ProtectedRoute from '../components/ProtectedRoute';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faHome,
@@ -144,6 +145,7 @@ const SidebarV2: React.FC = () => {
   const renderLink = (name: string, navToPath: string, comp?: IComponentApi) => (
     <NavLink
       to={navToPath}
+      end={navToPath === '/docs'}
       state={comp}
       onClick={() => {
         toggleSidebar();
@@ -161,11 +163,22 @@ const SidebarV2: React.FC = () => {
 
   const renderComponentItem = (comp: IComponentApi) => {
     const formattedName = createLinkPage(comp.name);
-    const routeExists = routesIndex[1]?.children?.some((route) => route.path === formattedName);
+    const matchedRoute = routesIndex[1]?.children?.find((route) => route.path === formattedName);
+    const routeExists = !!matchedRoute;
     const navTo = routeExists ? `/docs/${formattedName}` : `/docs/WipComponent/${formattedName}`;
 
     if (user?.role !== 'admin' && navTo.includes('/docs/WipComponent/')) {
       return null;
+    }
+
+    if (
+      routeExists &&
+      matchedRoute?.element?.type === ProtectedRoute
+    ) {
+      const p = matchedRoute.element.props as { allowAccess?: (u: User | null) => boolean };
+      if (!user || !(p.allowAccess?.(user) ?? !!user)) {
+        return null;
+      }
     }
 
     return (
@@ -273,7 +286,7 @@ const SidebarV2: React.FC = () => {
       <SidebarGroup title="Start Here" icon={faHome} groupId="Start Here" lineStyle="solid">
         {['GettingStarted', 'ComponentStatus'].map((page) => (
           <div key={page} className="mb-2 last:mb-0">
-            {renderLink(page, `/docs/${createLinkPage(page)}`)}
+            {renderLink(page, page === 'GettingStarted' ? '/docs' : `/docs/${createLinkPage(page)}`)}
           </div>
         ))}
       </SidebarGroup>

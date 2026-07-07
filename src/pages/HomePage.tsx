@@ -54,13 +54,13 @@ export default function Home() {
 
         <ul className="flex gap-4 items-center text-monochromes-grey">
           <li>
-            <Link to="/docs/Gettingstarted">Components</Link>
+            <Link to="/docs">Components</Link>
           </li>
           <li>
-            <Link to="/docs/Gettingstarted">Templates</Link>
+            <Link to="/docs">Templates</Link>
           </li>
           <li>
-            <Link to="/docs/Gettingstarted">Release Notes</Link>
+            <Link to="/docs">Release Notes</Link>
           </li>
           <li>
             {isAuthenticated ? (
@@ -120,7 +120,7 @@ export default function Home() {
                 />
               </Link>
 
-              <Link className="msc-btn msc-btn-blue-solid" to="/docs/Gettingstarted">
+              <Link className="msc-btn msc-btn-blue-solid" to="/docs">
                 View Components
                 <FontAwesomeIcon icon={faArrowRight} className="ml-2" height={16} width={16} />
               </Link>

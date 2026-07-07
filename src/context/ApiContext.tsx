@@ -11,13 +11,21 @@ export const ApiProvider = ({ children }: { children: React.ReactNode }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    const abortController = new AbortController();
+
     getComponentsApi()
       .then((result) => {
-        setData(result);
+        if (!abortController.signal.aborted) {
+          setData(result);
+        }
       })
       .catch((error) => {
-        console.error("Error fetching data:", error);
+        if (!abortController.signal.aborted) {
+          console.error("Error fetching data:", error);
+        }
       });
+
+    return () => abortController.abort();
   }, []);
 
   useEffect(() => {
