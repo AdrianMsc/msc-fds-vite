@@ -40,6 +40,7 @@ import EcosystemPage from '../pages/EcosystemPage/EcosystemPage';
 import AtomPage from '../pages/Atom/AtomPage';
 import MoleculePage from '../pages/Molecule/MoleculePage';
 import OrganismPage from '../pages/Organism/OrganismPage';
+import MscLabHomepagePage from '../pages/LabHomepage/MscLabHomepagePage';
 
 import CategoryTagsPage from '../pages/Organism/CategoryTagsPage';
 import SliderPage from '../pages/Organism/SliderPage';
@@ -135,6 +136,10 @@ export const routesIndex = [
       {
         path: 'Dropdown',
         element: <MscDropdownPage />,
+      },
+      {
+        path: 'LabHomepage',
+        element: <MscLabHomepagePage />,
       },
 
       {
