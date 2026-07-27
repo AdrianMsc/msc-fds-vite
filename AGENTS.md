@@ -67,6 +67,7 @@ styles/
 - `serializableCheck` in Redux store ignores `form.image` (File object) — intentional
 - Sidebar uses React.Fragment to render category sections
 - Modals use string-based visibility (`''` / `'hidden'`) instead of boolean
+- Crear `PageLayout` wrapper reutilizable para páginas no-componente (ArchitectureFlow, GettingStarted, EcosystemPage, ChangeLog). Debe renderizar solo título + subtítulo + children, sin badge atómico, edit button, status bar, ni links de ComponentLayout. Ubicación sugerida: `src/layout/PageLayout/PageLayout.tsx`
 
 ## Development Workflow
 

@@ -1,16 +1,15 @@
-import architectureFlow from "../../assets/architecture-flow.jpg";
+import architectureFlow from '../../assets/architecture-flow.jpg';
 
 const ArchitectureFlow = () => {
   return (
-    <>
-      <main>
-        <h1 className="font-bold text-3xl mb-3 gap-2">Architecture Flow</h1>
+    <section>
+      <h1 className="font-bold text-3xl mb-1">Architecture Flow</h1>
+      <p className="text-monochromes-grey mb-6">
+        Project structure, data flow, and technology stack overview
+      </p>
 
-        <p className="mb-4"></p>
-
-        <img src={architectureFlow} className="w-full rounded" />
-      </main>
-    </>
+      <img src={architectureFlow} className="w-full rounded" />
+    </section>
   );
 };
 
